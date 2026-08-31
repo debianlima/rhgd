@@ -1,5 +1,5 @@
 import unittest
-from rhgd_u240 import *
+from rhgd_cognitive_dag import *
 class TestRHGD(unittest.TestCase):
  def test_4b_16k_semantic_units_are_schedulable(self):
   nodes=[NodeCapability('4b-a',16384,.8,2,('code',)),NodeCapability('big',131072,.7,2,('science',))]
