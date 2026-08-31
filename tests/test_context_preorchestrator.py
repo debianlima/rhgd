@@ -1,5 +1,5 @@
 import unittest
-from pgh_context_preorchestrator import ContextCandidate,ContextPreOrchestrator,ExecutorProfile
+from context_preorchestrator import ContextCandidate,ContextPreOrchestrator,ExecutorProfile
 CATALOG=[
  ContextCandidate('dev','skill',('software_engineering','algorithm_design'),1800,.9),
  ContextCandidate('algo-perf','skill',('algorithm_design','performance'),1500,.8),
