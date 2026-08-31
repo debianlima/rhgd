@@ -1,0 +1,19 @@
+projeto: rhgd
+skill_projeto: skills/rhgd/SKILL.md
+competencias:
+  - id: rhgd-project
+    tipo: projeto
+    ref: skills/rhgd/SKILL.md
+    estado: ativa
+  - id: governanca-ontologica-de-skills
+    tipo: global
+    ref: metodo/governanca-ontologica-de-skills/SKILL.md
+    versao_minima: 1.0.5
+  - id: carregamento-contextual-seletivo
+    tipo: global
+    ref: metodo/carregamento-contextual-seletivo/SKILL.md
+    versao_minima: 1.0.3
+  - id: desenvolvedor-de-software
+    tipo: global
+    ref: metodo/desenvolvedor-de-software/SKILL.md
+    versao_minima: 15

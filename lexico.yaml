@@ -1,0 +1,10 @@
+projeto: RHGD
+nome: Rede Heterogenea Governada e Distribuida
+termos:
+  RHGD: federacao governada de capacidade computacional e trabalho cognitivo
+  WorkUnit: unidade cognitiva semanticamente fechada
+  CognitiveResult: resultado estruturado de uma WorkUnit
+  RecursiveCognitiveDAG: DAG de decomposicao e reducao recursiva
+  HierarchicalReducer: redutor que preserva evidencia, dissenso e proveniencia
+  ContextEnvelope: pacote contextual e operacional minimo para uma etapa
+  CapabilityAdvertisement: anuncio verificavel de capacidade de um no

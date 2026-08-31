@@ -1,0 +1,25 @@
+projeto: rhgd
+nome: Rede Heterogenea Governada e Distribuida
+versao_contrato: 1
+release_alvo: v0.0.1
+estado_release: standby_candidate
+repositorio_planejado: debianlima/rhgd
+skill_projeto: skills/rhgd/SKILL.md
+trabalho_compartilhado: {}
+entradas:
+  - {id: 1, caminho: README.md, tipo: documentacao, status: aceito}
+  - {id: 2, caminho: VERSION, tipo: release, status: aceito}
+  - {id: 3, caminho: manifesto.yaml, tipo: estrutura, status: aceito}
+  - {id: 4, caminho: competencias.yaml, tipo: estrutura, status: aceito}
+  - {id: 5, caminho: estado.md, tipo: estrutura, status: aceito}
+  - {id: 6, caminho: lexico.yaml, tipo: estrutura, status: aceito}
+  - {id: 7, caminho: skills/rhgd/SKILL.md, tipo: competencia-projeto, status: aceito}
+  - {id: 8, caminho: docs/artigos/00-contexto-adaptativo.md, tipo: estudo, status: aceito}
+  - {id: 9, caminho: docs/artigos/01-organizacao-cognitiva-distribuida.md, tipo: estudo, status: aceito}
+  - {id: 10, caminho: docs/artigos/02-soberania-privacidade-e-conhecimento-federado.md, tipo: estudo, status: aceito}
+  - {id: 11, caminho: docs/artigos/03-economia-governanca-e-consenso.md, tipo: estudo, status: aceito}
+  - {id: 12, caminho: docs/artigos/04-verificacao-confianca-e-reducao.md, tipo: estudo, status: aceito}
+  - {id: 13, caminho: docs/arquitetura/00-modelo-logico-fase-zero.md, tipo: arquitetura, status: aceito}
+  - {id: 14, caminho: docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md, tipo: arquitetura, status: aceito}
+  - {id: 15, caminho: docs/politicas/00-politicas-consolidadas.md, tipo: politica, status: aceito}
+  - {id: 16, caminho: docs/referencias/linhagens-iniciais.md, tipo: referencia, status: aceito}
