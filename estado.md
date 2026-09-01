@@ -37,7 +37,7 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `NO_DUPLICATE_PGD_RUNTIME=PASS`.
 - `OUTCOME_EVIDENCE_OBSERVED_ONLY=PASS`.
 - `CORE_CHANGE_REQUIRED=NO`.
-- Skill ativa: `rhgd-project@0.0.4`.
+- Skill ativa: `rhgd-project@0.0.5`.
 - Próxima frente: capability discovery vivo e Context Envelope por capacidade real do executor; scheduler/lease continuam no PGD.
 
 ## U-RHGD-02 — redução determinística
@@ -56,3 +56,11 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `NO_SCHEDULER_DUPLICATION=PASS`.
 - U35 histórico preservado; `CORE_CHANGE_REQUIRED=NO`.
 - próxima frente: dissenso preservado/medido, sem colapso silencioso.
+
+## U-RHGD-04 — dissenso preservado
+- `DISSENT_PRESERVED=PASS`.
+- `SILENT_COLLAPSE_BLOCKED=PASS`.
+- `DISSENT_PROVENANCE=PASS`.
+- redução determinística preservada.
+- sem clustering/kappa implícito; `CORE_CHANGE_REQUIRED=NO`.
+- próxima frente: medir localidade/recall da árvore sem reestruturar antes da evidência.

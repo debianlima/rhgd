@@ -34,6 +34,24 @@ class TestRHGD(unittest.TestCase):
  def test_normalization_deduplicates_without_losing_determinism(self):
   rs=[CognitiveResult('a','n1',('Árvore   B+',),(),(),.5),CognitiveResult('b','n2',('ÁRVORE B+',),(),(),.5)]
   x=HierarchicalReducer().reduce(rs,fan_in=2); self.assertEqual(len(x['claims']),1)
+ def test_dissent_blocks_silent_collapse_and_keeps_supporter(self):
+  rs=[CognitiveResult('w1','n1',('A',),('e1',),(),.8),CognitiveResult('w2','n2',('A',),('e2',),('B pode ser melhor',),.7)]
+  x=HierarchicalReducer().reduce(rs,fan_in=2)
+  self.assertFalse(x['collapse_allowed']); self.assertEqual(x['resolution_status'],'DISSENT_PRESERVED')
+  self.assertEqual(len(x['dissent_records']),1); self.assertEqual(x['dissent_records'][0]['node_id'],'n2'); self.assertEqual(x['dissent_records'][0]['work_id'],'w2')
+ def test_no_dissent_remains_collapsible(self):
+  rs=[CognitiveResult('w1','n1',('A',),(),(),.8),CognitiveResult('w2','n2',('A',),(),(),.7)]
+  x=HierarchicalReducer().reduce(rs,fan_in=2); self.assertTrue(x['collapse_allowed']); self.assertEqual(x['resolution_status'],'NO_DISSENT_DECLARED')
+ def test_dissent_metadata_is_order_and_fanin_independent(self):
+  import itertools,json,hashlib
+  rs=[CognitiveResult('w1','n1',('A',),(),('D1',),.8),CognitiveResult('w2','n2',('A',),(),(' d1 ',),.7),CognitiveResult('w3','n3',('A',),(),('D2',),.9)]
+  hashes=set()
+  for fan in (2,3):
+   for perm in itertools.permutations(rs):
+    x=HierarchicalReducer().reduce(perm,fan_in=fan)
+    logical={k:x[k] for k in ('dissent','dissent_records','collapse_allowed','resolution_status')}
+    hashes.add(hashlib.sha256(json.dumps(logical,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest())
+  self.assertEqual(len(hashes),1)
  def test_commitment_is_deterministic(self):
   w=WorkUnit('x','code',2000); self.assertEqual(signed_payload_stub(w),signed_payload_stub(w))
 if __name__=='__main__': unittest.main()

@@ -1,0 +1,18 @@
+unit: U-RHGD-04-DISSENT-PRESERVED
+identity:
+  rhgd_base: f19bb3c50b9e93d242d017e5dcfe7d93182b5426
+  pgh_system_context: 2002f4ecf3a85872c9ef81418cddc7ab2eaa9f1c
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  DISSENT_PRESERVED: PASS
+  SILENT_COLLAPSE_BLOCKED: PASS
+  DISSENT_PROVENANCE: PASS
+  REDUCTION_DETERMINISTIC_PRESERVED: PASS
+  SEMANTIC_CLUSTERING_INTRODUCED: NO
+  CORE_CHANGE_REQUIRED: NO
+semantics:
+  - explicit dissent makes collapse_allowed false
+  - each dissent record preserves work_id node_id confidence and canonical identity
+  - no claim is automatically labeled true false majority or minority
+  - agreement metrics require a later explicit stance/classification contract

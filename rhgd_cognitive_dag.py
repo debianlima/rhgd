@@ -42,9 +42,16 @@ class HierarchicalReducer:
             nxt=[]
             for i in range(0,len(level),fan_in): nxt.append(self._merge(level[i:i+fan_in],depth+1))
             level=nxt; depth+=1
-        return level[0] if level else {"claims":[],"evidence":[],"dissent":[],"sources":[],"depth":0}
-    @staticmethod
-    def _leaf(r): return {"claims":list(r.claims),"evidence":list(r.evidence),"dissent":list(r.dissent),"sources":[{"work_id":r.work_id,"node_id":r.node_id,"confidence":r.confidence}],"depth":0}
+        return level[0] if level else {"claims":[],"evidence":[],"dissent":[],"dissent_records":[],"sources":[],"collapse_allowed":True,"resolution_status":"NO_DISSENT_DECLARED","depth":0}
+    @classmethod
+    def _leaf(cls,r):
+        records=[]
+        for raw in r.dissent:
+            canon=cls._canonical_text(raw)
+            records.append({"dissent":str(raw),"canonical":canon,"work_id":r.work_id,"node_id":r.node_id,"confidence":float(r.confidence)})
+        records.sort(key=lambda x:(hashlib.sha256(x["canonical"].encode("utf-8")).hexdigest(),x["work_id"],x["node_id"],x["confidence"],x["dissent"].encode("utf-8")))
+        present=bool(records)
+        return {"claims":list(r.claims),"evidence":list(r.evidence),"dissent":list(r.dissent),"dissent_records":records,"sources":[{"work_id":r.work_id,"node_id":r.node_id,"confidence":r.confidence}],"collapse_allowed":not present,"resolution_status":"DISSENT_PRESERVED" if present else "NO_DISSENT_DECLARED","depth":0}
     @staticmethod
     def _canonical_text(value:str)->str:
         value=unicodedata.normalize("NFKC",str(value))
@@ -72,8 +79,22 @@ class HierarchicalReducer:
                 uniq[key]={"work_id":key[0],"node_id":key[1],"confidence":key[2]}
         return [uniq[k] for k in sorted(uniq)]
     @classmethod
+    def _stable_dissent_records(cls,items):
+        uniq={}
+        for item in items:
+            for rec in item.get("dissent_records",()):
+                canon=cls._canonical_text(rec.get("dissent",rec.get("canonical","")))
+                key=(hashlib.sha256(canon.encode("utf-8")).hexdigest(),str(rec.get("work_id","")),str(rec.get("node_id","")),float(rec.get("confidence",0.0)))
+                candidate={"dissent":str(rec.get("dissent","")),"canonical":canon,"work_id":key[1],"node_id":key[2],"confidence":key[3]}
+                prev=uniq.get(key)
+                if prev is None or candidate["dissent"].encode("utf-8") < prev["dissent"].encode("utf-8"):
+                    uniq[key]=candidate
+        return [uniq[k] for k in sorted(uniq)]
+    @classmethod
     def _merge(cls,items,depth):
-        return {"claims":cls._stable_texts(items,"claims"),"evidence":cls._stable_texts(items,"evidence"),"dissent":cls._stable_texts(items,"dissent"),"sources":cls._stable_sources(items),"depth":depth}
+        records=cls._stable_dissent_records(items)
+        present=bool(records)
+        return {"claims":cls._stable_texts(items,"claims"),"evidence":cls._stable_texts(items,"evidence"),"dissent":cls._stable_texts(items,"dissent"),"dissent_records":records,"sources":cls._stable_sources(items),"collapse_allowed":not present,"resolution_status":"DISSENT_PRESERVED" if present else "NO_DISSENT_DECLARED","depth":depth}
 
 def signed_payload_stub(obj)->dict:
     """Commitment deterministico; assinatura real pertence ao adaptador de identidade da RHGD."""
