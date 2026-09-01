@@ -69,3 +69,6 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `TREE_LOCALITY_METRIC=PASS`; `LEVEL_RECALL_METRIC=PASS`.
 - nenhum rearranjo automático da ontologia.
 - campanha quantitativa adiada para host de simulação; `CORE_CHANGE_REQUIRED=NO`.
+
+## U-RHGD-06-SUITE-CONTEXT-RECONCILIATION — unidade aberta
+- `telemetria_inicio=2026-09-01T13:53:09Z`; objetivo: atualizar somente a projeção corrente de dependências; pins U-RHGD-01 continuam históricos.

@@ -5,7 +5,18 @@ release_alvo: v0.0.1
 estado_release: standby_candidate
 repositorio_planejado: debianlima/rhgd
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  unidade: U-RHGD-06-SUITE-CONTEXT-RECONCILIATION
+  agente: ChatGPT-Redes
+  previsao_termino: "2026-09-01T20:30:00Z"
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - dados/telemetria-unidades.jsonl
+  - dados/rhgd-0.0.1/U-RHGD-06-suite-context-reconciliation.yaml
+  - docs/arquitetura/07-suite-context-reconciliation.md
+  - tests/test_suite_context_reconciliation.py
+  descricao: Reconciliar projecao corrente RHGD com PGH/PGD/PGA atuais, preservando pins historicos U-RHGD-01 e sem duplicar runtime.
 entradas:
   - {id: 1, caminho: README.md, tipo: documentacao, status: aceito}
   - {id: 2, caminho: VERSION, tipo: release, status: aceito}
