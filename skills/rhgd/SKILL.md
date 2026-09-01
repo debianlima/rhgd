@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.1
+versao: 0.0.2
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -17,3 +17,6 @@ Começar por contratos e adapters. Sem blockchain no caminho crítico, sem token
 
 ## 4B/16K
 Uma competência detalhada por etapa; microcontexto; saída contratual; memória condensada; expansão selected -> adjacent -> global mediante insuficiência.
+
+## Adapter PGD
+`pgd-rhgd-federation/1` é a fronteira federation-facing. RHGD descobre capacidade e transporta WorkUnits autorizadas; PGD mantém admission, fila, lease, scheduler, retry, recovery e estado runtime. `authorization_ref` PGH é obrigatório; lease solicitado não é concessão. Resultado retorna `observed`.

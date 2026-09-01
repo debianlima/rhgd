@@ -6,7 +6,7 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 
 ## Dependências normativas
 - PGH 1.2 oficial + candidato PGH 2.0 como fonte de fronteiras em estudo.
-- PGD standalone ainda não materializado no momento deste bootstrap; control-plane é evidência de implementação da linhagem PGD.
+- PGD standalone está materializado; U-PGD-05 publicou `pgd-rhgd-federation/1` em `abf929598c1eeb50fa09c90c3f039d4bc8bb1f79`. A implementação estável de referência permanece `pgh-distributed-session-control-plane:v2.3.2`.
 - PGA standalone ainda não materializado no momento deste bootstrap; handoff PGA no PGH é fonte de fronteira.
 - MSGCD é visão agregadora, não autoridade adicional.
 
@@ -21,9 +21,21 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 
 ## Próximas unidades
 1. contratos JSON Schema dos objetos Fase 0;
-2. adapter PGH ContextEnvelope -> PGD WorkUnit;
+2. adapter PGH ContextEnvelope -> PGD WorkUnit — MATERIALIZADO em U-RHGD-01;
 3. capability discovery mock/determinístico;
 4. redução hierárquica com preservação de dissenso;
 5. threat model e privacy gates;
 6. adapters experimentais upstream somente após licença/pin/gates;
 7. decisão de repositório remoto e publicação.
+
+## U-RHGD-01 — conciliação PGD
+- `DELTA_INVENTORY=PASS`.
+- `LEARNING_PRESERVED=PASS`.
+- `CONTEXT_ENVELOPE_TO_PGD=PASS`.
+- `PGH_AUTHORIZATION_REQUIRED=PASS`.
+- `RESOURCE_STATE_OWNED_BY_PGD=PASS`.
+- `NO_DUPLICATE_PGD_RUNTIME=PASS`.
+- `OUTCOME_EVIDENCE_OBSERVED_ONLY=PASS`.
+- `CORE_CHANGE_REQUIRED=NO`.
+- Skill ativa: `rhgd-project@0.0.2`.
+- Próxima frente: capability discovery vivo e Context Envelope por capacidade real do executor; scheduler/lease continuam no PGD.

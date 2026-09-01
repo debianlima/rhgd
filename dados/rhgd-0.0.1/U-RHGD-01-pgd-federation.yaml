@@ -1,0 +1,22 @@
+unit: U-RHGD-01-PGD-FEDERATION-ADAPTER
+identity:
+  rhgd_base: 29194e935b838dd1c4ee4228b515911c5a0bb8e7
+  pgd_contract_ref: abf929598c1eeb50fa09c90c3f039d4bc8bb1f79
+  pgd_contract: pgd-rhgd-federation/1
+  pgh_core_ref: 3bc2b30df75d5a622fbdae3ee9e201d5113c94bc
+  pgh_core_contract: CT-PGH2-CORE-RECONCILIATION@1.0.0
+  runtime_release: v2.3.2
+  runtime_commit: cfd68602a4491d61658f564b86d550f4b498f06f
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  CONTEXT_ENVELOPE_TO_PGD: PASS
+  PGH_AUTHORIZATION_REQUIRED: PASS
+  RESOURCE_STATE_OWNED_BY_PGD: PASS
+  NO_DUPLICATE_PGD_RUNTIME: PASS
+  OUTCOME_EVIDENCE_OBSERVED_ONLY: PASS
+  CORE_CHANGE_REQUIRED: NO
+learning:
+  - obsolete_bootstrap_claim: PGD standalone not materialized
+    reconciled_to: PGD standalone materialized and federation-facing contract published
+  - preserved: RHGD discovers/federates; PGD schedules/executes

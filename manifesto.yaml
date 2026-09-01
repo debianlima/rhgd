@@ -23,3 +23,7 @@ entradas:
   - {id: 14, caminho: docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md, tipo: arquitetura, status: aceito}
   - {id: 15, caminho: docs/politicas/00-politicas-consolidadas.md, tipo: politica, status: aceito}
   - {id: 16, caminho: docs/referencias/linhagens-iniciais.md, tipo: referencia, status: aceito}
+  - {id: 17, caminho: pgd_federation_adapter.py, tipo: implementacao, status: aceito}
+  - {id: 18, caminho: tests/test_pgd_federation_adapter.py, tipo: teste, status: aceito}
+  - {id: 19, caminho: dados/rhgd-0.0.1/U-RHGD-01-pgd-federation.yaml, tipo: evidencia, status: aceito}
+  - {id: 20, caminho: docs/arquitetura/02-pgd-federation-adapter.md, tipo: arquitetura, status: aceito}
