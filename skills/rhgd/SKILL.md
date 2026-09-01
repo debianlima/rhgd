@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.6
+versao: 0.0.7
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -20,6 +20,9 @@ Uma competência detalhada por etapa; microcontexto; saída contratual; memória
 
 ## Adapter PGD
 `pgd-rhgd-federation/1` é a fronteira federation-facing. RHGD descobre capacidade e transporta WorkUnits autorizadas; PGD mantém admission, fila, lease, scheduler, retry, recovery e estado runtime. `authorization_ref` PGH é obrigatório; lease solicitado não é concessão. Resultado retorna `observed`.
+
+## Matcher federativo — LAT-02
+O tipo canônico para escolha de destino é `FederatedDestinationMatcher`: ele filtra e ranqueia destinos federados elegíveis, mas não agenda, enfileira, concede lease, faz admission, retry ou execução. `CognitiveScheduler` permanece somente como alias de compatibilidade para consumidores legados. Gate: contrato TDD vermelho antes da implementação, regressão unitária completa e `NO_SECOND_SCHEDULER`/U-RHGD-07 preservados.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.

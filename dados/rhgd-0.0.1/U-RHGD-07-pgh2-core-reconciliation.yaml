@@ -56,3 +56,10 @@ catalog:
   rhgd_project: 0.0.6
   CATALOGO_SKILLS: PASS
   SYNC_GUARD: PASS
+lat02_semantic_reconciliation:
+  status: PASS
+  canonical_type: FederatedDestinationMatcher
+  legacy_symbol: CognitiveScheduler
+  legacy_semantics: compatibility_alias_only
+  pgd_runtime_ownership_preserved: true
+  observed_at: '2026-09-01T18:05:04Z'

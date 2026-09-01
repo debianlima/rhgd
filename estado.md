@@ -90,3 +90,13 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - catálogo do núcleo em `130438da8db2bb10617b6d4bffe05d8678825999`, com `pgd-project@0.2.0` e `rhgd-project@0.0.6`;
 - `RECONCILIATION_CLOSURE=PASS`; `DEPENDENCY_REFERENCES=PASS`; `CATALOGO_SKILLS=PASS`; `SYNC_GUARD=PASS`;
 - `trabalho_compartilhado` liberado; RHGD permanece `standby_candidate` e nenhuma tag/release foi promovida.
+
+## LAT-02-RHGD-COGNITIVE-SCHEDULER-SEMANTIC-DEBT — PASS
+- `FederatedDestinationMatcher` é o tipo canônico; `CognitiveScheduler` é somente alias legado.
+- contrato TDD: falhou antes da implementação (`NameError`) e passou depois.
+- regressão: `python -m unittest discover -s tests -p test_*.py` = 28/28 PASS.
+- `RHGD_U07_PGH2_CORE_RECONCILIATION=PASS`; `RHGD_PROJECT_VERIFY=PASS`; `git diff --check=PASS`.
+- `NO_SECOND_SCHEDULER=PASS`; ownership de admission/fila/lease/scheduler/retry/recovery/runtime permanece PGD.
+- skill de projeto promovida por evidência local para `rhgd-project@0.0.7`; catálogo deve ser atualizado no mesmo turno antes do fecho recursivo PGH.
+- telemetria específica de abertura LAT-02 não foi registrada pelo commit de reserva e não é fabricada retroativamente; a unidade superior PGH U269 possui `telemetria_inicio=2026-09-01T18:00:40Z`.
+- `telemetria_fim=2026-09-01T18:05:04Z`; `trabalho_compartilhado` liberado.

@@ -21,3 +21,6 @@ O contrato `pgd-rhgd-federation/1` continua sendo a fronteira federation-facing.
 O bootstrap RHGD dizia que o PGA standalone ainda não estava materializado. Isso ficou obsoleto: PGA está materializado e reconciliado no head acima. O manifesto também mantinha apenas `repositorio_planejado`; o repositório remoto `debianlima/rhgd` já existe e passa a ser declarado como `repositorio`.
 
 A release RHGD permanece `standby_candidate` em `0.0.1`. Esta unidade não cria tag, não promove release e não altera as tags históricas PGH/PGD/PGA.
+## LAT-02 — reconciliação semântica do matcher
+
+Em 2026-09-01T18:05:04Z, a dívida nominal `CognitiveScheduler` foi reconciliada sem alterar a fronteira operacional. O tipo canônico passa a ser `FederatedDestinationMatcher`, cuja única responsabilidade é filtrar e ranquear destinos federados elegíveis. O símbolo `CognitiveScheduler` permanece como alias de compatibilidade, sem fila, admission, lease, retry, recovery ou runtime state. O scheduler continua exclusivamente no PGD.

@@ -23,9 +23,9 @@ class CognitiveResult:
     work_id:str; node_id:str; claims:tuple[str,...]; evidence:tuple[str,...]=()
     dissent:tuple[str,...]=(); confidence:float=.5
 
-class CognitiveScheduler:
-    """Agenda unidades semanticamente fechadas; nunca fragmenta uma inferencia tensor-a-tensor."""
-    def assign(self, units:Sequence[WorkUnit], nodes:Sequence[NodeCapability])->list[Assignment]:
+class FederatedDestinationMatcher:
+    """Seleciona destinos federados elegíveis; não agenda, enfileira, concede lease nem executa WorkUnits."""
+    def match(self, units:Sequence[WorkUnit], nodes:Sequence[NodeCapability])->list[Assignment]:
         out=[]
         for w in units:
             eligible=[n for n in nodes if n.available and n.context_tokens>=w.context_tokens and n.privacy_level>=w.privacy_level and (not n.domains or w.domain in n.domains)]
@@ -33,6 +33,14 @@ class CognitiveScheduler:
             def score(n): return n.trust*2 + min(1,n.context_tokens/max(1,w.context_tokens)) - .08*n.queue_depth
             best=max(eligible,key=score); out.append(Assignment(w.work_id,best.node_id,round(score(best),4)))
         return out
+
+    def assign(self, units:Sequence[WorkUnit], nodes:Sequence[NodeCapability])->list[Assignment]:
+        """Compatibilidade de API: ``assign`` apenas calcula destino; ownership operacional continua no PGD."""
+        return self.match(units,nodes)
+
+# Compatibilidade histórica: consumidores podem importar o símbolo antigo sem reintroduzir
+# semântica de scheduler no RHGD. O tipo canônico permanece FederatedDestinationMatcher.
+CognitiveScheduler = FederatedDestinationMatcher
 
 class HierarchicalReducer:
     """Reduz resultados preservando proveniencia, evidencia e dissenso."""
