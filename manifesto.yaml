@@ -5,37 +5,159 @@ release_alvo: v0.0.1
 estado_release: standby_candidate
 repositorio_planejado: debianlima/rhgd
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  unidade: U-RHGD-07-PGH2-CORE-RECONCILIATION
+  agente: ChatGPT-Redes
+  previsao_termino: '2026-09-01T22:00:00Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - competencias.yaml
+  - docs/referencias/proveniencia-normativa.md
+  - dados/telemetria-unidades.jsonl
+  - dados/rhgd-0.0.1/U-RHGD-07-pgh2-core-reconciliation.yaml
+  - docs/arquitetura/07-pgh2-core-reconciliation.md
+  - tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
+  descricao: Reconciliar RHGD com PGH2/PGD/PGA e MSGCD composto; corrigir refs bootstrap
+    obsoletos e dependências sem criar runtime/scheduler/lease/autoridade nova.
 entradas:
-  - {id: 1, caminho: README.md, tipo: documentacao, status: aceito}
-  - {id: 2, caminho: VERSION, tipo: release, status: aceito}
-  - {id: 3, caminho: manifesto.yaml, tipo: estrutura, status: aceito}
-  - {id: 4, caminho: competencias.yaml, tipo: estrutura, status: aceito}
-  - {id: 5, caminho: estado.md, tipo: estrutura, status: aceito}
-  - {id: 6, caminho: lexico.yaml, tipo: estrutura, status: aceito}
-  - {id: 7, caminho: skills/rhgd/SKILL.md, tipo: competencia-projeto, status: aceito}
-  - {id: 8, caminho: docs/artigos/00-contexto-adaptativo.md, tipo: estudo, status: aceito}
-  - {id: 9, caminho: docs/artigos/01-organizacao-cognitiva-distribuida.md, tipo: estudo, status: aceito}
-  - {id: 10, caminho: docs/artigos/02-soberania-privacidade-e-conhecimento-federado.md, tipo: estudo, status: aceito}
-  - {id: 11, caminho: docs/artigos/03-economia-governanca-e-consenso.md, tipo: estudo, status: aceito}
-  - {id: 12, caminho: docs/artigos/04-verificacao-confianca-e-reducao.md, tipo: estudo, status: aceito}
-  - {id: 13, caminho: docs/arquitetura/00-modelo-logico-fase-zero.md, tipo: arquitetura, status: aceito}
-  - {id: 14, caminho: docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md, tipo: arquitetura, status: aceito}
-  - {id: 15, caminho: docs/politicas/00-politicas-consolidadas.md, tipo: politica, status: aceito}
-  - {id: 16, caminho: docs/referencias/linhagens-iniciais.md, tipo: referencia, status: aceito}
-  - {id: 17, caminho: pgd_federation_adapter.py, tipo: implementacao, status: aceito}
-  - {id: 18, caminho: tests/test_pgd_federation_adapter.py, tipo: teste, status: aceito}
-  - {id: 19, caminho: dados/rhgd-0.0.1/U-RHGD-01-pgd-federation.yaml, tipo: evidencia, status: aceito}
-  - {id: 20, caminho: docs/arquitetura/02-pgd-federation-adapter.md, tipo: arquitetura, status: aceito}
-  - {id: 21, caminho: dados/rhgd-0.0.1/U-RHGD-02-deterministic-reduction.yaml, tipo: evidencia, status: aceito}
-  - {id: 22, caminho: docs/arquitetura/03-deterministic-reduction.md, tipo: arquitetura, status: aceito}
-  - {id: 23, caminho: hmm_capability_adapter.py, tipo: implementacao, status: aceito}
-  - {id: 24, caminho: tests/test_hmm_capability_adapter.py, tipo: teste, status: aceito}
-  - {id: 25, caminho: dados/rhgd-0.0.1/U-RHGD-03-derived-depth.yaml, tipo: evidencia, status: aceito}
-  - {id: 26, caminho: docs/arquitetura/04-derived-depth-hmm-capability.md, tipo: arquitetura, status: aceito}
-  - {id: 27, caminho: dados/rhgd-0.0.1/U-RHGD-04-dissent-preserved.yaml, tipo: evidencia, status: aceito}
-  - {id: 28, caminho: docs/arquitetura/05-dissent-preserved.md, tipo: arquitetura, status: aceito}
-  - {id: 29, caminho: knowledge_structure_metrics.py, tipo: implementacao, status: aceito}
-  - {id: 30, caminho: tests/test_knowledge_structure_metrics.py, tipo: teste, status: aceito}
-  - {id: 31, caminho: dados/rhgd-0.0.1/U-RHGD-05-tree-locality-level-recall.yaml, tipo: evidencia, status: aceito}
-  - {id: 32, caminho: docs/arquitetura/06-tree-locality-level-recall.md, tipo: arquitetura, status: aceito}
+- id: 1
+  caminho: README.md
+  tipo: documentacao
+  status: aceito
+- id: 2
+  caminho: VERSION
+  tipo: release
+  status: aceito
+- id: 3
+  caminho: manifesto.yaml
+  tipo: estrutura
+  status: aceito
+- id: 4
+  caminho: competencias.yaml
+  tipo: estrutura
+  status: aceito
+- id: 5
+  caminho: estado.md
+  tipo: estrutura
+  status: aceito
+- id: 6
+  caminho: lexico.yaml
+  tipo: estrutura
+  status: aceito
+- id: 7
+  caminho: skills/rhgd/SKILL.md
+  tipo: competencia-projeto
+  status: aceito
+- id: 8
+  caminho: docs/artigos/00-contexto-adaptativo.md
+  tipo: estudo
+  status: aceito
+- id: 9
+  caminho: docs/artigos/01-organizacao-cognitiva-distribuida.md
+  tipo: estudo
+  status: aceito
+- id: 10
+  caminho: docs/artigos/02-soberania-privacidade-e-conhecimento-federado.md
+  tipo: estudo
+  status: aceito
+- id: 11
+  caminho: docs/artigos/03-economia-governanca-e-consenso.md
+  tipo: estudo
+  status: aceito
+- id: 12
+  caminho: docs/artigos/04-verificacao-confianca-e-reducao.md
+  tipo: estudo
+  status: aceito
+- id: 13
+  caminho: docs/arquitetura/00-modelo-logico-fase-zero.md
+  tipo: arquitetura
+  status: aceito
+- id: 14
+  caminho: docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md
+  tipo: arquitetura
+  status: aceito
+- id: 15
+  caminho: docs/politicas/00-politicas-consolidadas.md
+  tipo: politica
+  status: aceito
+- id: 16
+  caminho: docs/referencias/linhagens-iniciais.md
+  tipo: referencia
+  status: aceito
+- id: 17
+  caminho: pgd_federation_adapter.py
+  tipo: implementacao
+  status: aceito
+- id: 18
+  caminho: tests/test_pgd_federation_adapter.py
+  tipo: teste
+  status: aceito
+- id: 19
+  caminho: dados/rhgd-0.0.1/U-RHGD-01-pgd-federation.yaml
+  tipo: evidencia
+  status: aceito
+- id: 20
+  caminho: docs/arquitetura/02-pgd-federation-adapter.md
+  tipo: arquitetura
+  status: aceito
+- id: 21
+  caminho: dados/rhgd-0.0.1/U-RHGD-02-deterministic-reduction.yaml
+  tipo: evidencia
+  status: aceito
+- id: 22
+  caminho: docs/arquitetura/03-deterministic-reduction.md
+  tipo: arquitetura
+  status: aceito
+- id: 23
+  caminho: hmm_capability_adapter.py
+  tipo: implementacao
+  status: aceito
+- id: 24
+  caminho: tests/test_hmm_capability_adapter.py
+  tipo: teste
+  status: aceito
+- id: 25
+  caminho: dados/rhgd-0.0.1/U-RHGD-03-derived-depth.yaml
+  tipo: evidencia
+  status: aceito
+- id: 26
+  caminho: docs/arquitetura/04-derived-depth-hmm-capability.md
+  tipo: arquitetura
+  status: aceito
+- id: 27
+  caminho: dados/rhgd-0.0.1/U-RHGD-04-dissent-preserved.yaml
+  tipo: evidencia
+  status: aceito
+- id: 28
+  caminho: docs/arquitetura/05-dissent-preserved.md
+  tipo: arquitetura
+  status: aceito
+- id: 29
+  caminho: knowledge_structure_metrics.py
+  tipo: implementacao
+  status: aceito
+- id: 30
+  caminho: tests/test_knowledge_structure_metrics.py
+  tipo: teste
+  status: aceito
+- id: 31
+  caminho: dados/rhgd-0.0.1/U-RHGD-05-tree-locality-level-recall.yaml
+  tipo: evidencia
+  status: aceito
+- id: 32
+  caminho: docs/arquitetura/06-tree-locality-level-recall.md
+  tipo: arquitetura
+  status: aceito
+- id: 33
+  caminho: dados/rhgd-0.0.1/U-RHGD-07-pgh2-core-reconciliation.yaml
+  tipo: evidencia
+  status: em_curso
+- id: 34
+  caminho: docs/arquitetura/07-pgh2-core-reconciliation.md
+  tipo: arquitetura
+  status: em_curso
+- id: 35
+  caminho: tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
+  tipo: teste
+  status: em_curso
