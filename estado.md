@@ -37,7 +37,7 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `NO_DUPLICATE_PGD_RUNTIME=PASS`.
 - `OUTCOME_EVIDENCE_OBSERVED_ONLY=PASS`.
 - `CORE_CHANGE_REQUIRED=NO`.
-- Skill ativa: `rhgd-project@0.0.5`.
+- Skill ativa: `rhgd-project@0.0.6`.
 - Próxima frente: capability discovery vivo e Context Envelope por capacidade real do executor; scheduler/lease continuam no PGD.
 
 ## U-RHGD-02 — redução determinística
@@ -64,3 +64,8 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - redução determinística preservada.
 - sem clustering/kappa implícito; `CORE_CHANGE_REQUIRED=NO`.
 - próxima frente: medir localidade/recall da árvore sem reestruturar antes da evidência.
+
+## U-RHGD-05 — instrumentos de localidade/recall
+- `TREE_LOCALITY_METRIC=PASS`; `LEVEL_RECALL_METRIC=PASS`.
+- nenhum rearranjo automático da ontologia.
+- campanha quantitativa adiada para host de simulação; `CORE_CHANGE_REQUIRED=NO`.

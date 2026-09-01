@@ -35,3 +35,7 @@ entradas:
   - {id: 26, caminho: docs/arquitetura/04-derived-depth-hmm-capability.md, tipo: arquitetura, status: aceito}
   - {id: 27, caminho: dados/rhgd-0.0.1/U-RHGD-04-dissent-preserved.yaml, tipo: evidencia, status: aceito}
   - {id: 28, caminho: docs/arquitetura/05-dissent-preserved.md, tipo: arquitetura, status: aceito}
+  - {id: 29, caminho: knowledge_structure_metrics.py, tipo: implementacao, status: aceito}
+  - {id: 30, caminho: tests/test_knowledge_structure_metrics.py, tipo: teste, status: aceito}
+  - {id: 31, caminho: dados/rhgd-0.0.1/U-RHGD-05-tree-locality-level-recall.yaml, tipo: evidencia, status: aceito}
+  - {id: 32, caminho: docs/arquitetura/06-tree-locality-level-recall.md, tipo: arquitetura, status: aceito}

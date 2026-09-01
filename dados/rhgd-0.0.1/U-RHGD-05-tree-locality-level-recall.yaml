@@ -1,0 +1,13 @@
+unit: U-RHGD-05-TREE-LOCALITY-LEVEL-RECALL
+base: 1334d69e22bbe29b4c17df8dc1862e1572e917e8
+gates:
+  MEASUREMENT_INSTRUMENT: PASS
+  TREE_LOCALITY_METRIC: PASS
+  LEVEL_RECALL_METRIC: PASS
+  AUTO_RESTRUCTURE: NO
+  EXPERIMENT_RUN: DEFERRED_TO_SIMULATION_HOST
+  CORE_CHANGE_REQUIRED: NO
+method:
+  tree_locality: transition rate crossing declared subtree prefixes
+  level_recall: compare direct indexed retrieval against hierarchical descent on the same gold leaf ids
+  threshold_policy: declare before campaign; never choose threshold after seeing results

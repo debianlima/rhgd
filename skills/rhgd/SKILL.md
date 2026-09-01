@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.5
+versao: 0.0.6
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -29,3 +29,6 @@ Consumir `hmm-capability-advertisement/1` apenas read-only. Capacidade de contex
 
 ## Dissenso preservado
 Dissenso explícito bloqueia colapso silencioso. Preservar work_id/node_id/confidence de quem sustentou cada dissenso. Não inferir maioria, verdade, oposição semântica ou métrica de concordância sem contrato de stance/classificação.
+
+## Métricas de estrutura de conhecimento
+Antes de reorganizar árvore/ontologia, medir. `TREE_LOCALITY` mede acesso cross-subtree; `LEVEL_RECALL` compara recuperação direta e descida sobre o mesmo gold set. Limiar deve ser pré-declarado e resultado experimental não pode ser fabricado por teste unitário.
