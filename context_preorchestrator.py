@@ -46,8 +46,10 @@ DEFAULT_DOMAIN_TERMS: Mapping[str,tuple[str,...]]={
  "runtime_inference":("ollama","sglang","modelo","inferencia","inferência","llm","gpu")}
 
 class ContextPreOrchestrator:
-    def __init__(self,candidates:Sequence[ContextCandidate],domain_terms=None):
+    def __init__(self,candidates:Sequence[ContextCandidate],domain_terms=None,hierarchy_level_costs:Sequence[int]=()):
         self.candidates=list(candidates); self.domain_terms=domain_terms or DEFAULT_DOMAIN_TERMS
+        self.hierarchy_level_costs=tuple(int(x) for x in hierarchy_level_costs)
+        if any(x<=0 for x in self.hierarchy_level_costs): raise ValueError("hierarchy level costs must be positive")
     def classify(self,message):
         n=re.sub(r"\s+"," ",message.casefold()); hits=[]; found=set()
         for domain,terms in self.domain_terms.items():
@@ -71,9 +73,20 @@ class ContextPreOrchestrator:
         if p.model_context_capacity>=100000 and ratio>=.65: return "sequential_hats_wide_memory"
         if usable<=10000 or p.model_context_capacity<=20000: return "microcontext_serial"
         return "selective_branches"
+    @staticmethod
+    def derive_max_depth(profile,level_costs,selection_factor):
+        remaining=max(0,int(profile.usable_tokens()*selection_factor)); depth=0
+        for cost in level_costs:
+            cost=int(cost)
+            if cost<=0: raise ValueError("hierarchy level costs must be positive")
+            if cost>remaining: break
+            remaining-=cost; depth+=1
+        return depth
     def build(self,message,profile):
         c=self.classify(message); budget=profile.usable_tokens(); strategy=self.strategy_for(profile)
-        selection_budget=max(768,int(budget*(.34 if strategy=="microcontext_serial" else .48)))
+        selection_factor=.34 if strategy=="microcontext_serial" else .48
+        selection_budget=max(768,int(budget*selection_factor))
+        derived_depth=self.derive_max_depth(profile,self.hierarchy_level_costs,selection_factor) if self.hierarchy_level_costs else None
         selected=[]; deferred=[]; used=0
         for _,item in self._rank(c):
             relevant=bool(set(item.domains).intersection(c.domains))
@@ -82,6 +95,7 @@ class ContextPreOrchestrator:
             else: deferred.append(item)
         return ContextEnvelope("pgh.context-envelope/0.1",c,profile,strategy,budget,selected,deferred[:8],{
           "default":"local_first","levels":["selected","adjacent","global_catalog"],
+          "derived_max_depth":derived_depth,"depth_source":"executor_budget+declared_level_costs" if derived_depth is not None else "undeclared",
           "global_catalog":"request" if strategy=="microcontext_serial" else "allowed",
           "trigger":"missing_skill_or_tool|insufficient_evidence|scope_limitation_detected",
           "instruction":"Se o pacote nao contiver competencia, ferramenta ou evidencia suficiente, solicite ramos adjacentes; se continuar insuficiente, solicite o catalogo global."},int(time.time()))

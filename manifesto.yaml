@@ -29,3 +29,7 @@ entradas:
   - {id: 20, caminho: docs/arquitetura/02-pgd-federation-adapter.md, tipo: arquitetura, status: aceito}
   - {id: 21, caminho: dados/rhgd-0.0.1/U-RHGD-02-deterministic-reduction.yaml, tipo: evidencia, status: aceito}
   - {id: 22, caminho: docs/arquitetura/03-deterministic-reduction.md, tipo: arquitetura, status: aceito}
+  - {id: 23, caminho: hmm_capability_adapter.py, tipo: implementacao, status: aceito}
+  - {id: 24, caminho: tests/test_hmm_capability_adapter.py, tipo: teste, status: aceito}
+  - {id: 25, caminho: dados/rhgd-0.0.1/U-RHGD-03-derived-depth.yaml, tipo: evidencia, status: aceito}
+  - {id: 26, caminho: docs/arquitetura/04-derived-depth-hmm-capability.md, tipo: arquitetura, status: aceito}

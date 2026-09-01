@@ -1,0 +1,21 @@
+unit: U-RHGD-03-DERIVED-DEPTH-HMM-CAPABILITY
+identity:
+  rhgd_base: 81cc67aa42eea35510ccd7ea07a6047736194cc5
+  hmm_capability_ref: 68bfc7371a15f36932aa1618a068ac8b039d2e69
+  hmm_contract: hmm-capability-advertisement/1
+  pgh_core_overlay: 2002f4ecf3a85872c9ef81418cddc7ab2eaa9f1c
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  HMM_CAPABILITY_CONSUMED: PASS
+  DEPTH_DERIVED: PASS
+  NO_HIDDEN_DEPTH_CONSTANT: PASS
+  NO_VRAM_TO_TOKEN_GUESS: PASS
+  NO_SCHEDULER_DUPLICATION: PASS
+  U35_HISTORICAL_PRESERVED: PASS
+  CORE_CHANGE_REQUIRED: NO
+semantics:
+  - configured_tokens and usable/effective budget must be explicit in the HMM advertisement
+  - physical VRAM/RAM/bandwidth are not converted to token capacity by RHGD
+  - hierarchy level costs are supplied by PGH/catalog metadata; RHGD never invents them
+  - maximum depth is cumulative cost fitting inside the executor-derived selection budget

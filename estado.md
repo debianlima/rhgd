@@ -37,7 +37,7 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `NO_DUPLICATE_PGD_RUNTIME=PASS`.
 - `OUTCOME_EVIDENCE_OBSERVED_ONLY=PASS`.
 - `CORE_CHANGE_REQUIRED=NO`.
-- Skill ativa: `rhgd-project@0.0.3`.
+- Skill ativa: `rhgd-project@0.0.4`.
 - Próxima frente: capability discovery vivo e Context Envelope por capacidade real do executor; scheduler/lease continuam no PGD.
 
 ## U-RHGD-02 — redução determinística
@@ -47,3 +47,12 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - dissenso continua preservado sem interpretação semântica nesta unidade.
 - `CORE_CHANGE_REQUIRED=NO`.
 - próxima frente: consumir `hmm-capability-advertisement/1` para orçamento/profundidade derivada.
+
+## U-RHGD-03 — profundidade derivada + capability HMM
+- `HMM_CAPABILITY_CONSUMED=PASS`.
+- `DEPTH_DERIVED=PASS`.
+- `NO_HIDDEN_DEPTH_CONSTANT=PASS`.
+- `NO_VRAM_TO_TOKEN_GUESS=PASS`.
+- `NO_SCHEDULER_DUPLICATION=PASS`.
+- U35 histórico preservado; `CORE_CHANGE_REQUIRED=NO`.
+- próxima frente: dissenso preservado/medido, sem colapso silencioso.

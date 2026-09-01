@@ -21,6 +21,16 @@ class TestContextPreOrchestrator(unittest.TestCase):
   self.assertEqual(e.strategy,'sequential_hats_wide_memory'); self.assertEqual(e.expansion_policy['global_catalog'],'allowed')
  def test_pressure(self):
   self.assertLess(ExecutorProfile('x',active_sessions=6).usable_tokens(),ExecutorProfile('x').usable_tokens())
+ def test_depth_is_derived_from_executor_budget(self):
+  costs=(2000,4000,8000,12000,18000)
+  r=ContextPreOrchestrator(CATALOG,hierarchy_level_costs=costs)
+  small=r.build('contexto e ontologia',ExecutorProfile('small','local',16384,16384,reserve_tokens=3072))
+  large=r.build('contexto e ontologia',ExecutorProfile('large','remote',131072,100000,reserve_tokens=8000))
+  self.assertLess(small.expansion_policy['derived_max_depth'],large.expansion_policy['derived_max_depth'])
+  self.assertEqual(small.expansion_policy['depth_source'],'executor_budget+declared_level_costs')
+ def test_depth_is_undeclared_without_level_costs(self):
+  e=self.router.build('contexto',ExecutorProfile('x'))
+  self.assertIsNone(e.expansion_policy['derived_max_depth']); self.assertEqual(e.expansion_policy['depth_source'],'undeclared')
  def test_escape(self):
   e=self.router.build('tarefa desconhecida',ExecutorProfile('x'))
   self.assertEqual(e.expansion_policy['levels'][-1],'global_catalog'); self.assertIn('insufficient_evidence',e.expansion_policy['trigger'])

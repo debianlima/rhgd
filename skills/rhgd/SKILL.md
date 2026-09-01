@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.3
+versao: 0.0.4
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -23,3 +23,6 @@ Uma competência detalhada por etapa; microcontexto; saída contratual; memória
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
+
+## Profundidade derivada
+Consumir `hmm-capability-advertisement/1` apenas read-only. Capacidade de contexto deve vir explicitamente declarada; nunca inferir tokens de VRAM/RAM. Custos de níveis vêm do PGH/catálogo. Derivar profundidade pelo orçamento restante; sem custos declarados, retornar `undeclared`.
