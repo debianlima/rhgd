@@ -4,7 +4,20 @@ versao_contrato: 1
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  unidade: LAT-02-RHGD-COGNITIVE-SCHEDULER-SEMANTIC-DEBT
+  agente: ChatGPT-Redes
+  previsao_termino: '2026-09-01T19:00:00Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - skills/rhgd/SKILL.md
+  - rhgd_cognitive_dag.py
+  - tests/test_rhgd_cognitive_dag.py
+  - tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
+  - dados/rhgd-0.0.1/U-RHGD-07-pgh2-core-reconciliation.yaml
+  - docs/arquitetura/07-pgh2-core-reconciliation.md
+  descricao: 'Reconciliar a semantica do matcher federativo RHGD com PGH2/PGD: PGD agenda/executa; RHGD apenas descobre, seleciona destino federado e transporta WorkUnits. Preservar compatibilidade do nome legado sem criar segundo scheduler.'
 entradas:
 - id: 1
   caminho: README.md
