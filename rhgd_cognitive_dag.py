@@ -2,7 +2,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Sequence
-import hashlib, json
+import hashlib, json, re, unicodedata
 
 @dataclass(frozen=True)
 class NodeCapability:
@@ -46,9 +46,34 @@ class HierarchicalReducer:
     @staticmethod
     def _leaf(r): return {"claims":list(r.claims),"evidence":list(r.evidence),"dissent":list(r.dissent),"sources":[{"work_id":r.work_id,"node_id":r.node_id,"confidence":r.confidence}],"depth":0}
     @staticmethod
-    def _merge(items,depth):
-        def uniq(k): return list(dict.fromkeys(x for item in items for x in item[k]))
-        return {"claims":uniq("claims"),"evidence":uniq("evidence"),"dissent":uniq("dissent"),"sources":[x for item in items for x in item["sources"]],"depth":depth}
+    def _canonical_text(value:str)->str:
+        value=unicodedata.normalize("NFKC",str(value))
+        value=re.sub(r"\s+"," ",value).strip()
+        return value.casefold()
+    @classmethod
+    def _stable_texts(cls,items,key):
+        chosen={}
+        for item in items:
+            for raw in item[key]:
+                canon=cls._canonical_text(raw)
+                digest=hashlib.sha256(canon.encode("utf-8")).hexdigest()
+                rank=(digest,canon)
+                candidate=str(raw)
+                prev=chosen.get(rank)
+                if prev is None or candidate.encode("utf-8") < prev.encode("utf-8"):
+                    chosen[rank]=candidate
+        return [chosen[k] for k in sorted(chosen)]
+    @staticmethod
+    def _stable_sources(items):
+        uniq={}
+        for item in items:
+            for source in item["sources"]:
+                key=(str(source.get("work_id","")),str(source.get("node_id","")),float(source.get("confidence",0.0)))
+                uniq[key]={"work_id":key[0],"node_id":key[1],"confidence":key[2]}
+        return [uniq[k] for k in sorted(uniq)]
+    @classmethod
+    def _merge(cls,items,depth):
+        return {"claims":cls._stable_texts(items,"claims"),"evidence":cls._stable_texts(items,"evidence"),"dissent":cls._stable_texts(items,"dissent"),"sources":cls._stable_sources(items),"depth":depth}
 
 def signed_payload_stub(obj)->dict:
     """Commitment deterministico; assinatura real pertence ao adaptador de identidade da RHGD."""

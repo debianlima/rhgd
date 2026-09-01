@@ -27,3 +27,5 @@ entradas:
   - {id: 18, caminho: tests/test_pgd_federation_adapter.py, tipo: teste, status: aceito}
   - {id: 19, caminho: dados/rhgd-0.0.1/U-RHGD-01-pgd-federation.yaml, tipo: evidencia, status: aceito}
   - {id: 20, caminho: docs/arquitetura/02-pgd-federation-adapter.md, tipo: arquitetura, status: aceito}
+  - {id: 21, caminho: dados/rhgd-0.0.1/U-RHGD-02-deterministic-reduction.yaml, tipo: evidencia, status: aceito}
+  - {id: 22, caminho: docs/arquitetura/03-deterministic-reduction.md, tipo: arquitetura, status: aceito}

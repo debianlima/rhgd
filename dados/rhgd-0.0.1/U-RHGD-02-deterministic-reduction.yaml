@@ -1,0 +1,16 @@
+unit: U-RHGD-02-DETERMINISTIC-REDUCTION
+base: cd98d3e5ceb0331cf51b3c4eed2167fbfa63c9d2
+contract: deterministic-reduction/1
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  REDUCTION_DETERMINISTIC: PASS
+  FAN_IN_LOGICAL_INDEPENDENCE: PASS
+  PROVENANCE_PRESERVED: PASS
+  DISSENT_SEMANTICS_CHANGED: NO
+  CORE_CHANGE_REQUIRED: NO
+notes:
+  - identity canonicalizes Unicode NFKC, whitespace and casefold before hashing
+  - deterministic representative is selected independent of arrival order
+  - source list is sorted by work_id/node_id/confidence
+  - depth remains structural metadata and may differ by fan_in
