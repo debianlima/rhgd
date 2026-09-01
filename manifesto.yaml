@@ -3,7 +3,6 @@ nome: Rede Heterogenea Governada e Distribuida
 versao_contrato: 1
 release_alvo: v0.0.1
 estado_release: standby_candidate
-repositorio_planejado: debianlima/rhgd
 skill_projeto: skills/rhgd/SKILL.md
 trabalho_compartilhado:
   unidade: U-RHGD-07-PGH2-CORE-RECONCILIATION
@@ -161,3 +160,4 @@ entradas:
   caminho: tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
   tipo: teste
   status: em_curso
+repositorio: debianlima/rhgd

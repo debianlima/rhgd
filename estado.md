@@ -7,8 +7,8 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 ## Dependências normativas
 - PGH 1.2 oficial + candidato PGH 2.0 como fonte de fronteiras em estudo.
 - PGD standalone está materializado; U-PGD-05 publicou `pgd-rhgd-federation/1` em `abf929598c1eeb50fa09c90c3f039d4bc8bb1f79`. A implementação estável de referência permanece `pgh-distributed-session-control-plane:v2.3.2`.
-- PGA standalone ainda não materializado no momento deste bootstrap; handoff PGA no PGH é fonte de fronteira.
-- MSGCD é visão agregadora, não autoridade adicional.
+- PGA standalone está materializado e reconciliado; U-RHGD-07 fixa o head corrente `c151e58adf05339eee7f762fa0a96b401e4b6985` sem ampliar autoridade RHGD.
+- MSGCD permanece composição agregadora, não autoridade adicional nem repositório/runtime standalone obrigatório.
 
 ## Não reivindicado
 - rede P2P real;
@@ -77,3 +77,10 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `telemetria_fim=2026-09-01T14:04:00Z`; interrupção por repriorização humana explícita para implementar PGD Work Context Broadcast.
 - Nenhuma evidência/implementação U06 foi homologada ou publicada; o teste TDD local não versionado foi preservado sem ser tratado como aceite.
 - `trabalho_compartilhado` liberado; retomada futura exige nova unidade/safe point e reconciliação dos HEADs.
+## U-RHGD-07-PGH2-CORE-RECONCILIATION — gates locais PASS
+- PGH=`304b9914ae44b0ac4240d912bd81f7be87d5a708`; PGD=`3f7d70e974271a0ee316df9425d5e955225fddd4`; PGA=`c151e58adf05339eee7f762fa0a96b401e4b6985`.
+- Runtime PGD consumido somente no último safe point fechado pré-U260: `df125bb64069ca87c614587d652c15634264f7bb`; U260 ativa não foi consumida nem preemptada.
+- `pgd-rhgd-federation/1` preservado; `NO_DUPLICATE_RUNTIME=PASS`; `NO_SECOND_SCHEDULER=PASS`.
+- PGA já materializado; estado bootstrap obsoleto corrigido. MSGCD permanece agregador composto, sem quarta autoridade.
+- `repositorio=debianlima/rhgd` materializado; `release_alvo=v0.0.1` continua `standby_candidate`.
+- `DELTA_INVENTORY=PASS`; `LEARNING_PRESERVED=PASS`; gates finais de fechamento/catalogação ainda pendentes.

@@ -1,0 +1,51 @@
+schema: rhgd-pgh2-core-reconciliation/1
+unit: U-RHGD-07-PGH2-CORE-RECONCILIATION
+refs:
+  PGH: 304b9914ae44b0ac4240d912bd81f7be87d5a708
+  PGD: 3f7d70e974271a0ee316df9425d5e955225fddd4
+  PGA: c151e58adf05339eee7f762fa0a96b401e4b6985
+  PGD_RUNTIME_SAFE_POINT: df125bb64069ca87c614587d652c15634264f7bb
+  MSGCD: PGH_COMPOSITION_AGGREGATION_NO_FOURTH_AUTHORITY
+authority_boundaries:
+  PGA: policy_governance_authority
+  PGH: semantic_authorization_knowledge_contracts_evidence
+  PGD: runtime_scheduler_queue_lease_retry_recovery
+  RHGD: federation_discovery_transport_no_second_scheduler
+  MSGCD: aggregation_unified_view_no_independent_authority
+reconciled_facts:
+  pga_standalone_materialized: true
+  pgd_federation_contract: pgd-rhgd-federation/1
+  runtime_parallel_prohibited: true
+  msgcd_standalone_repo_required: false
+  rhgd_release_state: standby_candidate
+  rhgd_remote_materialized: true
+  release_tags_immutable:
+    PGH: v2.0.0
+    PGD: v1.0.0
+    PGA: v1.0.0
+preserved_learning:
+  - PGH authorization_ref remains mandatory for federated WorkUnits.
+  - PGD owns admission, queue, lease, scheduler, retry, recovery and live runtime state.
+  - RHGD discovers/federates executors and transports authorized WorkUnits without a second scheduler.
+  - PGA governs policy and authority without runtime ownership.
+  - MSGCD aggregates cross-protocol views and contracts without becoming a fourth authority.
+  - RHGD release remains candidate until independent release gates are defined and passed.
+normalization:
+  manifest_repository_field: repositorio_planejado_to_repositorio
+  bootstrap_pga_statement: corrected_to_materialized
+  normative_provenance: refreshed_to_current_core_heads
+  runtime_reference: stable_closed_u259_not_active_u260
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  PGD_REF: PASS
+  PGA_REF: PASS
+  PGH_REF: PASS
+  RUNTIME_SAFE_POINT: PASS
+  MSGCD_BOUNDARY: PASS
+  AUTHORITY_BOUNDARY: PASS
+  NO_DUPLICATE_RUNTIME: PASS
+  NO_SECOND_SCHEDULER: PASS
+  RELEASE_IMMUTABILITY: PASS
+  RECONCILIATION_CLOSURE: PENDING
+  DEPENDENCY_REFERENCES: PENDING
