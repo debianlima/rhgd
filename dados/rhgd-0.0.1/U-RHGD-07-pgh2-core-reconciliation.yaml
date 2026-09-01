@@ -24,12 +24,13 @@ reconciled_facts:
     PGD: v1.0.0
     PGA: v1.0.0
 preserved_learning:
-  - PGH authorization_ref remains mandatory for federated WorkUnits.
-  - PGD owns admission, queue, lease, scheduler, retry, recovery and live runtime state.
-  - RHGD discovers/federates executors and transports authorized WorkUnits without a second scheduler.
-  - PGA governs policy and authority without runtime ownership.
-  - MSGCD aggregates cross-protocol views and contracts without becoming a fourth authority.
-  - RHGD release remains candidate until independent release gates are defined and passed.
+- PGH authorization_ref remains mandatory for federated WorkUnits.
+- PGD owns admission, queue, lease, scheduler, retry, recovery and live runtime state.
+- RHGD discovers/federates executors and transports authorized WorkUnits without a
+  second scheduler.
+- PGA governs policy and authority without runtime ownership.
+- MSGCD aggregates cross-protocol views and contracts without becoming a fourth authority.
+- RHGD release remains candidate until independent release gates are defined and passed.
 normalization:
   manifest_repository_field: repositorio_planejado_to_repositorio
   bootstrap_pga_statement: corrected_to_materialized
@@ -47,5 +48,11 @@ gates:
   NO_DUPLICATE_RUNTIME: PASS
   NO_SECOND_SCHEDULER: PASS
   RELEASE_IMMUTABILITY: PASS
-  RECONCILIATION_CLOSURE: PENDING
-  DEPENDENCY_REFERENCES: PENDING
+  RECONCILIATION_CLOSURE: PASS
+  DEPENDENCY_REFERENCES: PASS
+catalog:
+  head: 130438da8db2bb10617b6d4bffe05d8678825999
+  pgd_project: 0.2.0
+  rhgd_project: 0.0.6
+  CATALOGO_SKILLS: PASS
+  SYNC_GUARD: PASS

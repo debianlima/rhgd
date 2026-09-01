@@ -84,3 +84,9 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - PGA já materializado; estado bootstrap obsoleto corrigido. MSGCD permanece agregador composto, sem quarta autoridade.
 - `repositorio=debianlima/rhgd` materializado; `release_alvo=v0.0.1` continua `standby_candidate`.
 - `DELTA_INVENTORY=PASS`; `LEARNING_PRESERVED=PASS`; gates finais de fechamento/catalogação ainda pendentes.
+
+## Fechamento U-RHGD-07
+- implementação reconciliada em `5ebf217cdbd24acdbdb8d916e056b11253f0c66b`;
+- catálogo do núcleo em `130438da8db2bb10617b6d4bffe05d8678825999`, com `pgd-project@0.2.0` e `rhgd-project@0.0.6`;
+- `RECONCILIATION_CLOSURE=PASS`; `DEPENDENCY_REFERENCES=PASS`; `CATALOGO_SKILLS=PASS`; `SYNC_GUARD=PASS`;
+- `trabalho_compartilhado` liberado; RHGD permanece `standby_candidate` e nenhuma tag/release foi promovida.

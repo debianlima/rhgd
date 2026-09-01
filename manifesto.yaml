@@ -4,21 +4,7 @@ versao_contrato: 1
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  unidade: U-RHGD-07-PGH2-CORE-RECONCILIATION
-  agente: ChatGPT-Redes
-  previsao_termino: '2026-09-01T22:00:00Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - competencias.yaml
-  - docs/referencias/proveniencia-normativa.md
-  - dados/telemetria-unidades.jsonl
-  - dados/rhgd-0.0.1/U-RHGD-07-pgh2-core-reconciliation.yaml
-  - docs/arquitetura/07-pgh2-core-reconciliation.md
-  - tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
-  descricao: Reconciliar RHGD com PGH2/PGD/PGA e MSGCD composto; corrigir refs bootstrap
-    obsoletos e dependências sem criar runtime/scheduler/lease/autoridade nova.
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -151,13 +137,13 @@ entradas:
 - id: 33
   caminho: dados/rhgd-0.0.1/U-RHGD-07-pgh2-core-reconciliation.yaml
   tipo: evidencia
-  status: em_curso
+  status: aceito
 - id: 34
   caminho: docs/arquitetura/07-pgh2-core-reconciliation.md
   tipo: arquitetura
-  status: em_curso
+  status: aceito
 - id: 35
   caminho: tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
   tipo: teste
-  status: em_curso
+  status: aceito
 repositorio: debianlima/rhgd
