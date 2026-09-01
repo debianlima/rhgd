@@ -72,3 +72,8 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 
 ## U-RHGD-06-SUITE-CONTEXT-RECONCILIATION — unidade aberta
 - `telemetria_inicio=2026-09-01T13:53:09Z`; objetivo: atualizar somente a projeção corrente de dependências; pins U-RHGD-01 continuam históricos.
+
+## U-RHGD-06-SUITE-CONTEXT-RECONCILIATION — INTERRUPTED
+- `telemetria_fim=2026-09-01T14:04:00Z`; interrupção por repriorização humana explícita para implementar PGD Work Context Broadcast.
+- Nenhuma evidência/implementação U06 foi homologada ou publicada; o teste TDD local não versionado foi preservado sem ser tratado como aceite.
+- `trabalho_compartilhado` liberado; retomada futura exige nova unidade/safe point e reconciliação dos HEADs.
