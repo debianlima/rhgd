@@ -1,0 +1,112 @@
+schema: rhgd-persistent-reconnect-idempotency-evidence/1
+unit: U-RHGD-13-PERSISTENT-ENVELOPE-RECONNECT-IDEMPOTENCY
+implementation_commit: 631eca6d89888ff1cdd0c88025f0bfbd291d5ea0
+release:
+  version: 0.0.1
+  state: standby_candidate
+  promoted: false
+persistence:
+  backend: sqlite
+  journal_mode: WAL
+  synchronous: FULL
+  state_schema: rhgd-durable-envelope-queue-state/1
+  persist_before_http_ack: true
+  configuration_mismatch: fail_closed
+  execution_authority: NONE
+network_test:
+  kind: real_bidirectional_process_restart_reconnect
+  transport: wireguard-overlay
+  port: 18714
+  persistent_system_service_installed: false
+  hard_power_loss_tested: false
+  directions:
+  - from: terminal-wireguard
+    to: terminal-ipsec
+    sender_capacities: {egress: 2, ingress: 5}
+    receiver_capacities: {egress: 3, ingress: 7}
+    sent_sequences: [1, 2]
+    envelope_ids:
+    - 916ba5c6ba760caec1c78c422659b91f07047616d5d415ea30b4202f4710ddbc
+    - d9d49991c475c28964ad519eaf15c4cee1ff8bd0052566b6f7b9fc0424093e6b
+    pgd_execution_refs:
+    - pgd://execution/u13/wg/1
+    - pgd://execution/u13/wg/2
+    first_remote_ack_without_sender_remove: ACCEPTED
+    sender_restart_retained_head_sequence: 1
+    receiver_restart_retained_ingress_sequence: 1
+    retry_after_both_restarts: DUPLICATE
+    second_send_after_reconnect: ACCEPTED
+    sender_egress_empty_after_ack_remove: true
+    sender_next_sequence_after_restart: 3
+    receiver_consumed_sequences: [1, 2]
+    receiver_ingress_empty_after_remove: true
+    replay_after_consumption_and_restart: [ALREADY_CONSUMED, ALREADY_CONSUMED]
+  - from: terminal-ipsec
+    to: terminal-wireguard
+    sender_capacities: {egress: 3, ingress: 7}
+    receiver_capacities: {egress: 5, ingress: 3}
+    sent_sequences: [1, 2]
+    envelope_ids:
+    - 81885d49fadd222a931da01f37e37dcb83e5eddbf52cbeeed5de88187682e96b
+    - 162c04dfac26ae62a32a1ef72cfed8f77e2f8460133f6233d34eaf521f7702d0
+    pgd_execution_refs:
+    - pgd://execution/u13/ipsec/1
+    - pgd://execution/u13/ipsec/2
+    first_remote_ack_without_sender_remove: ACCEPTED
+    sender_restart_retained_head_sequence: 1
+    receiver_restart_retained_ingress_sequence: 1
+    retry_after_both_restarts: DUPLICATE
+    second_send_after_reconnect: ACCEPTED
+    sender_egress_empty_after_ack_remove: true
+    sender_next_sequence_after_restart: 3
+    receiver_consumed_sequences: [1, 2]
+    receiver_ingress_empty_after_remove: true
+    replay_after_consumption_and_restart: [ALREADY_CONSUMED, ALREADY_CONSUMED]
+evidence_sha256:
+  wireguard_sender_frames: 1cd753afebc7272f7e6e4b272ec5ed6e573d3b32b86a03846099fcb9fcecc507
+  wireguard_first_ack: 3b755fb46edc25e382f5f8da9c110a00731532f1b8715ab32e1bff8a3903f1d1
+  wireguard_reconnect: 113744a3e2eb6d01a01d0d24ba6b7df5463b57ea37ad7fe774aea66dd1930e5c
+  wireguard_consumed_replay: a9cdbd837997407edb0386729c7b9585ebce9fcb668dd916e5cbf73a4ef3eb01
+  wireguard_receiver_status_after_first: 37767605fff27ece56040ebe98e34073f5c10483e70f8735e5937fe85d8a0a39
+  wireguard_receiver_consume: dd64daa52776d4ddf29bb2f740f5fe99e415ccf0b14e7d69323500d5df183b3f
+  ipsec_receiver_status_after_first: 6e2f6180ba3db4069839cf772e7b1f0bbf894b48d413a88d5299f51317887995
+  ipsec_receiver_consume: dd8be7681b3aeba3f79b324b4f66cbbdeb55bf196f85f56c7deac983e6d7d6c1
+  ipsec_sender_frames: 5d171f53fadfdb75e162508aa3220d6306a0809de04407cdff68136f64c1412b
+  ipsec_first_ack: 2bfc1baad9139fe4fb983da4a03d9fa9bd8fc81e45c10bf12f52e51a25f76596
+  ipsec_reconnect: 6e52f14bfc58822d9f577783551ba50c849d9e4ca9b3c4f0dcb6789e7e76e331
+  ipsec_consumed_replay: e75a064c8432d1a9dc4dfa1c7926bff7f83f49509fe1c00ff9f3fe43a4737dd3
+cleanup:
+  wireguard_listener_stopped: true
+  ipsec_listener_stopped: true
+  temporary_firewall_rule_removed: true
+  wireguard_environment_verifier: INTEGRO
+  ipsec_environment_verifier: INTEGRO
+maturity:
+  durable_envelope_queue: PASS
+  sender_restart_recovery: PASS
+  receiver_restart_recovery: PASS
+  reconnect_duplicate_suppression: PASS
+  consumed_replay_suppression: PASS
+  bidirectional_real_overlay_restart_test: PASS
+  hard_power_loss: NOT_VERIFIED
+  supervised_persistent_service: NOT_VERIFIED
+  application_layer_authentication: NOT_IMPLEMENTED
+  end_to_end_pgd_lease_fence: NOT_VERIFIED
+  production: BLOCKED
+gates:
+  DURABLE_STATE: PASS
+  SQLITE_FULL_SYNC: PASS
+  PERSIST_BEFORE_ACK: PASS
+  BIDIRECTIONAL_RESTART_RECONNECT: PASS
+  SENDER_PENDING_SURVIVES_RESTART: PASS
+  RECEIVER_INGRESS_SURVIVES_RESTART: PASS
+  DUPLICATE_AFTER_RECONNECT: PASS
+  CONSUMED_REPLAY_AFTER_RESTART: PASS
+  ORDER_AND_SEQUENCE_CONTINUITY: PASS
+  PGD_EXECUTION_REF_PRESERVED: PASS
+  CROSS_PEER_IDENTITY_MATCH: PASS
+  NO_PGD_EXECUTION_QUEUE_DUPLICATION: PASS
+  NO_LEASE_MINT: PASS
+  NO_SCHEDULER_AUTHORITY: PASS
+  TEMP_NETWORK_CHANGE_ROLLBACK: PASS
+  PRODUCTION: BLOCKED
