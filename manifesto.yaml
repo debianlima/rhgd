@@ -1,6 +1,6 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 5
+versao_contrato: 6
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
@@ -8,10 +8,10 @@ trabalho_compartilhado:
   projeto: rhgd
   caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
   unidade: U-RHGD-12-LIVE-CAPABILITY-DISCOVERY-CONTRACT
-  descricao: materializar discovery vivo de capabilities por explicit join, TTL/sequence
-    e stale rejection sem segundo scheduler
+  descricao: materializar discovery vivo e distribuicao de ContextEnvelope com fila
+    assimetrica ingress/egress RHGD sem duplicar scheduler/lease PGD
   agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:31:00Z'
+  atualizado_em: '2026-09-02T04:36:00Z'
   previsao_termino: '2026-09-02T06:00:00Z'
   zona_exclusao:
   - manifesto.yaml
@@ -24,6 +24,13 @@ trabalho_compartilhado:
   - dados/rhgd-0.0.1/U-RHGD-12-live-capability-discovery.yaml
   - docs/arquitetura/12-live-capability-discovery.md
   - skills/rhgd/SKILL.md
+  - lexico.yaml
+  - contratos/rhgd-0.0.1/context-envelope-transport.schema.json
+  - context_envelope_transport.py
+  - tests/test_context_envelope_transport.py
+  - tests/verify_u_rhgd_12_context_envelope_transport.py
+  - dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml
+  - docs/arquitetura/12-context-envelope-transport.md
 entradas:
 - id: 1
   caminho: README.md
@@ -235,6 +242,30 @@ entradas:
   status: pendente
 - id: 53
   caminho: docs/arquitetura/12-live-capability-discovery.md
+  tipo: arquitetura
+  status: pendente
+- id: 54
+  caminho: contratos/rhgd-0.0.1/context-envelope-transport.schema.json
+  tipo: contrato
+  status: pendente
+- id: 55
+  caminho: context_envelope_transport.py
+  tipo: backend-integracao
+  status: pendente
+- id: 56
+  caminho: tests/test_context_envelope_transport.py
+  tipo: teste
+  status: pendente
+- id: 57
+  caminho: tests/verify_u_rhgd_12_context_envelope_transport.py
+  tipo: teste
+  status: pendente
+- id: 58
+  caminho: dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml
+  tipo: evidencia
+  status: pendente
+- id: 59
+  caminho: docs/arquitetura/12-context-envelope-transport.md
   tipo: arquitetura
   status: pendente
 repositorio: debianlima/rhgd

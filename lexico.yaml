@@ -8,3 +8,10 @@ termos:
   HierarchicalReducer: redutor que preserva evidencia, dissenso e proveniencia
   ContextEnvelope: pacote contextual e operacional minimo para uma etapa
   CapabilityAdvertisement: anuncio verificavel de capacidade de um no
+  ExecutionQueue: fila runtime de WorkUnit, assignment e lease, exclusivamente PGD
+  EnvelopeTransportQueue: fila assimetrica RHGD de transporte de ContextEnvelope,
+    separada em ingress/egress e sem autoridade de execucao
+  EnvelopeTransportSequence: ordem monotona por lane/peer para envio e recebimento
+    de ContextEnvelope
+  EnvelopeAck: confirmacao de transporte que autoriza retirada do envelope da fila
+    RHGD, sem conceder lease PGD
