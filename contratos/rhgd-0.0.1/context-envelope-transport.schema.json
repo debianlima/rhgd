@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-context-envelope-transport.schema.json",
+  "title": "RHGD ContextEnvelope Transport Frame",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "envelope_id", "correlation_id", "work_id", "model_ref",
+    "source_peer", "destination_peer", "stream_id", "sequence", "issued_at_ms",
+    "authorization_ref", "pgd_assignment_ref", "context_envelope", "transport_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "rhgd-context-envelope-transport/1"},
+    "envelope_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "work_id": {"type": "string", "minLength": 1},
+    "model_ref": {"type": "string", "minLength": 1},
+    "source_peer": {"type": "string", "minLength": 1},
+    "destination_peer": {"type": "string", "minLength": 1},
+    "stream_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 1},
+    "issued_at_ms": {"type": "integer", "minimum": 0},
+    "authorization_ref": {"type": "string", "minLength": 1},
+    "pgd_assignment_ref": {"type": "string", "minLength": 1},
+    "context_envelope": {
+      "type": "object",
+      "required": ["schema_version"],
+      "properties": {"schema_version": {"type": "string", "pattern": "^pgh\\.context-envelope/"}}
+    },
+    "transport_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queue", "scheduler", "lease_grant", "admission"],
+      "properties": {
+        "queue": {"const": "envelope_transport_only"},
+        "scheduler": {"const": false},
+        "lease_grant": {"const": false},
+        "admission": {"const": false}
+      }
+    }
+  }
+}
