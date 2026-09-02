@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.9
+versao: 0.0.10
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -29,6 +29,9 @@ O tipo canônico para escolha de destino é `FederatedDestinationMatcher`: ele f
 
 ## Freshness downstream — U-RHGD-09
 Consumidores downstream seguem o **último safe point fechado** do RHGD, nunca o HEAD de uma unidade RHGD ainda em curso. Se um consumidor mantém pin anterior enquanto possui `trabalho_compartilhado` ativo, classificar `BLOCKED_ACTIVE_OWNER_STALE`: detectar e registrar, mas não editar a zona do owner e não declarar fixed point atual. A prova deve reconstruir o estado pelo commit observado do consumidor para continuar auditável depois que o owner avançar. Gate: `tests/verify_u_rhgd_09_downstream_consumer_freshness.py`.
+
+## Freshness de provider — U-RHGD-11
+Avanço de HEAD do provider não implica reconciliação funcional do RHGD por si só. Para classificar `HEAD_DRIFT_CONTRACTS_IDENTICAL`, provar simultaneamente: commit anterior ancestral do novo; hashes dos artefatos realmente consumidos idênticos antes/depois; nenhum path semântico consumido alterado; fronteira de autoridade preservada. Evidência histórica anterior não é reescrita. Se qualquer hash/path semântico divergir, fail-closed e abrir reconciliação funcional. Gate: `tests/verify_u_rhgd_11_pga_provider_structural_drift.py`.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
