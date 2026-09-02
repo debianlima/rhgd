@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.8
+versao: 0.0.9
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -26,6 +26,9 @@ O tipo canônico para escolha de destino é `FederatedDestinationMatcher`: ele f
 
 ## Conciliação da suíte — U-RHGD-08
 `pgd-incremental-information-exchange/1` atravessa zona heterogênea por referência/federação RHGD, mas WCB, assignment, fila, lease, retry, watermark e runtime continuam PGD. `pga-network-service-agents/1` fixa rede privada por padrão, join explícito e dois papéis efêmeros; RHGD é owner da federação de rede, enquanto a materialização/execução desses agentes permanece no PGD. `pga-deterministic-priority-policy/1` não concede autoridade nem preempção. `NodeCapability` em memória e advertisement HMM read-only são capability snapshots, **não prova de capability discovery vivo**. Gate: `tests/verify_u_rhgd_08_suite_protocol_conciliation.py`; produção permanece bloqueada até discovery vivo, rede autenticada e fences end-to-end serem observados.
+
+## Freshness downstream — U-RHGD-09
+Consumidores downstream seguem o **último safe point fechado** do RHGD, nunca o HEAD de uma unidade RHGD ainda em curso. Se um consumidor mantém pin anterior enquanto possui `trabalho_compartilhado` ativo, classificar `BLOCKED_ACTIVE_OWNER_STALE`: detectar e registrar, mas não editar a zona do owner e não declarar fixed point atual. A prova deve reconstruir o estado pelo commit observado do consumidor para continuar auditável depois que o owner avançar. Gate: `tests/verify_u_rhgd_09_downstream_consumer_freshness.py`.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
