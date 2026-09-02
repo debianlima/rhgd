@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.12
+versao: 0.0.13
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -37,6 +37,11 @@ Avanço de HEAD do provider não implica reconciliação funcional do RHGD por s
 Capability discovery vivo usa peer explicitamente aderido, `boot_id`, sequência monotônica, TTL e rejeição de stale/replay; anúncio continua read-only (`scheduler=false`, `lease_grant=false`, `assignment=false`). Teste real bidirecional em dois peers da overlay passou; capability values eram `test_declared`, serviço persistente/app-auth/reconnect de produção continuam não homologados.
 
 A palavra **fila** é ambígua e deve ser qualificada: `ExecutionQueue` (WorkUnit/admission/assignment/lease/scheduler/retry/recovery) é exclusivamente PGD. `EnvelopeTransportQueue` é RHGD e controla distribuição de `ContextEnvelope` entre works/modelos com lanes ingress/egress independentes, sequência por peer, buffering de reordenação, `put/get/remove` e ACK antes da remoção do egress. Cada frame exige `authorization_ref` PGH e `pgd_execution_ref` emitido pelo contrato federation-facing `pgd-rhgd-federation/1`; RHGD nunca minta lease nem assignment. Gates: `tests/verify_u_rhgd_12_live_capability_discovery.py` e `tests/verify_u_rhgd_12_context_envelope_transport.py`.
+
+## Persistência e reconnect de EnvelopeTransportQueue — U-RHGD-13
+`EnvelopeTransportQueue` durável deve persistir mutações antes de retornar sucesso ao chamador; no receptor, `put_inbound` precisa concluir a persistência antes do ACK HTTP. Estado durável inclui egress/ingress, sequência, stream ativo e identidades já consumidas, sem lease/assignment/scheduler. Configuração persistida divergente falha fechado.
+
+Na janela ACK-remoto/remoção-local, restart do emissor pode manter o envelope pendente; o retry deve ser aceito idempotentemente como `DUPLICATE`, e só então removido do egress. Depois de consumo persistido e restart do receptor, replay da mesma sequência/id deve retornar `ALREADY_CONSUMED`; replay conflitante continua rejeitado. U13 provou isso nos dois sentidos da overlay com SQLite `WAL + synchronous=FULL`. Isso não equivale a power-loss, daemon supervisionado ou autenticação de aplicação. Gate: `tests/verify_u_rhgd_13_persistent_reconnect_idempotency.py`.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
