@@ -296,45 +296,45 @@ entradas:
 - id: 66
   caminho: contratos/rhgd-0.0.1/application-auth.schema.json
   tipo: contrato
-  status: pendente
+  status: em_curso
 - id: 67
   caminho: contratos/rhgd-0.0.1/transport-observability.schema.json
   tipo: contrato
-  status: pendente
+  status: em_curso
 - id: 68
   caminho: application_auth.py
   tipo: backend-seguranca
-  status: pendente
+  status: em_curso
 - id: 69
   caminho: transport_observability.py
   tipo: observabilidade
-  status: pendente
+  status: em_curso
 - id: 70
   caminho: deploy/rhgd-envelope.service
   tipo: deploy
-  status: pendente
+  status: em_curso
 - id: 71
   caminho: tests/test_application_auth_observability.py
   tipo: teste
-  status: pendente
+  status: em_curso
 - id: 72
   caminho: tests/u14_parallel_cases.py
   tipo: teste
-  status: pendente
+  status: em_curso
 - id: 73
   caminho: tests/run_u_rhgd_14_parallel_40.py
   tipo: teste
-  status: pendente
+  status: em_curso
 - id: 74
   caminho: tests/verify_u_rhgd_14_app_auth_supervision_observability.py
   tipo: teste
-  status: pendente
+  status: em_curso
 - id: 75
   caminho: dados/rhgd-0.0.1/U-RHGD-14-app-auth-supervision-observability.yaml
   tipo: evidencia
-  status: pendente
+  status: em_curso
 - id: 76
   caminho: docs/arquitetura/14-app-auth-supervision-observability.md
   tipo: arquitetura
-  status: pendente
+  status: em_curso
 repositorio: debianlima/rhgd
