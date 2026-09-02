@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.7
+versao: 0.0.8
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -23,6 +23,9 @@ Uma competência detalhada por etapa; microcontexto; saída contratual; memória
 
 ## Matcher federativo — LAT-02
 O tipo canônico para escolha de destino é `FederatedDestinationMatcher`: ele filtra e ranqueia destinos federados elegíveis, mas não agenda, enfileira, concede lease, faz admission, retry ou execução. `CognitiveScheduler` permanece somente como alias de compatibilidade para consumidores legados. Gate: contrato TDD vermelho antes da implementação, regressão unitária completa e `NO_SECOND_SCHEDULER`/U-RHGD-07 preservados.
+
+## Conciliação da suíte — U-RHGD-08
+`pgd-incremental-information-exchange/1` atravessa zona heterogênea por referência/federação RHGD, mas WCB, assignment, fila, lease, retry, watermark e runtime continuam PGD. `pga-network-service-agents/1` fixa rede privada por padrão, join explícito e dois papéis efêmeros; RHGD é owner da federação de rede, enquanto a materialização/execução desses agentes permanece no PGD. `pga-deterministic-priority-policy/1` não concede autoridade nem preempção. `NodeCapability` em memória e advertisement HMM read-only são capability snapshots, **não prova de capability discovery vivo**. Gate: `tests/verify_u_rhgd_08_suite_protocol_conciliation.py`; produção permanece bloqueada até discovery vivo, rede autenticada e fences end-to-end serem observados.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
