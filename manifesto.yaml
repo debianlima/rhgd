@@ -1,6 +1,6 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 1
+versao_contrato: 2
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
@@ -161,4 +161,20 @@ entradas:
   caminho: tests/verify_u_rhgd_07_pgh2_core_reconciliation.py
   tipo: teste
   status: aceito
+- id: 36
+  caminho: contratos/rhgd-0.0.1/suite-protocol-conciliation.schema.json
+  tipo: contrato
+  status: pendente
+- id: 37
+  caminho: dados/rhgd-0.0.1/U-RHGD-08-suite-protocol-conciliation.yaml
+  tipo: evidencia
+  status: pendente
+- id: 38
+  caminho: docs/arquitetura/08-suite-protocol-conciliation.md
+  tipo: arquitetura
+  status: pendente
+- id: 39
+  caminho: tests/verify_u_rhgd_08_suite_protocol_conciliation.py
+  tipo: teste
+  status: pendente
 repositorio: debianlima/rhgd
