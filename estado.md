@@ -126,3 +126,17 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - pendência técnica externa: U282 permanece `BLOCKED_EXTERNAL_SAFE_POINT` e deve reconciliar o safe point U08 dentro da própria zona; RHGD não edita nem preempta esse owner.
 - maturidade permanece: capability discovery vivo `NOT_VERIFIED`; federação real `NOT_VERIFIED`; produção `BLOCKED`.
 - `trabalho_compartilhado` RHGD liberado no commit de fechamento; nenhuma implementação runtime ou rede real foi alterada.
+
+## U-RHGD-11-PGA-PROVIDER-STRUCTURAL-DRIFT-RECONCILIATION — PASS
+- contrato estrutural avançado para `versao_contrato=4`; release permanece `0.0.1 / STANDBY_CANDIDATE`.
+- provider PGA observado: `5d1dfd93b0525db26b44efaea8bdbc56f25c185c` -> `871f0294deb0a595e7e1de49ae776dadc098f2c6`.
+- classificação homologada: `HEAD_DRIFT_CONTRACTS_IDENTICAL`; commit anterior é ancestral do novo e o delta ficou limitado a `dados/telemetria-unidades.jsonl`, `estado.md`, `manifesto.yaml` e `tests/verify_project.py`.
+- hashes dos quatro artefatos PGA consumidos pelo RHGD permaneceram byte-idênticos: contratos `network-service-agents`, `deterministic-priority-policy` e evidências U-PGA-08/U-PGA-09.
+- `PGA_HEAD_ANCESTRY=PASS`; `CONSUMED_ARTIFACT_IDENTITY=PASS`; `NO_CONSUMED_SEMANTIC_PATH_DELTA=PASS`; `AUTHORITY_BOUNDARY_UNCHANGED=PASS`; `FUNCTIONAL_RECONCILIATION_REQUIRED=NO`.
+- U08 histórica não foi reescrita; replay de U08 passou somente com o provider PGA congelado no commit observado pela própria U08, preservando evidência histórica imutável.
+- regressão local: U11 PASS; U09 PASS; U08 histórico PASS; U07 PASS; unitários `28/28 PASS`; `RHGD_PROJECT_VERIFY=PASS`.
+- Project-Skill usada nesta unidade: `rhgd-project@0.0.9`; aprendizado homologado publicado como `rhgd-project@0.0.10` no commit `4864691f5da844fd95eff9555742e77692a6aac5` para a próxima unidade.
+- catálogo atualizado para `rhgd-project@0.0.10` em `4b6e0a3a38a90273c3ba9a3c41841bd167a37cb1`, com `CATALOGO_SKILLS=PASS`, `SYNC_GUARD=PASS`, `GLOBAL_PGH_SKILL_CANDIDATE_LINES=PASS`.
+- regra homologada: avanço de HEAD do provider não invalida semanticamente o consumidor quando ancestry, identidade dos artefatos consumidos e ausência de delta em paths semânticos são todos provados; divergência em qualquer gate falha fechado e exige reconciliação funcional.
+- maturidade permanece inalterada: capability discovery vivo `NOT_VERIFIED`; federação real `NOT_VERIFIED`; produção `BLOCKED`.
+- `trabalho_compartilhado` RHGD liberado no commit de fechamento; nenhuma implementação runtime ou rede real foi alterada.

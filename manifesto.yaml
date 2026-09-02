@@ -4,23 +4,7 @@ versao_contrato: 4
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
-  unidade: U-RHGD-11-PGA-PROVIDER-STRUCTURAL-DRIFT-RECONCILIATION
-  descricao: classificar drift de provider PGA por identidade dos contratos consumidos,
-    sem reabrir autoridade RHGD
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:23:20Z'
-  previsao_termino: '2026-09-02T05:10:00Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - contratos/rhgd-0.0.1/provider-contract-freshness.schema.json
-  - dados/rhgd-0.0.1/U-RHGD-11-pga-provider-structural-drift.yaml
-  - tests/verify_u_rhgd_11_pga_provider_structural_drift.py
-  - docs/arquitetura/11-pga-provider-structural-drift.md
-  - skills/rhgd/SKILL.md
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -197,17 +181,17 @@ entradas:
 - id: 44
   caminho: contratos/rhgd-0.0.1/provider-contract-freshness.schema.json
   tipo: contrato
-  status: pendente
+  status: aceito
 - id: 45
   caminho: dados/rhgd-0.0.1/U-RHGD-11-pga-provider-structural-drift.yaml
   tipo: evidencia
-  status: pendente
+  status: aceito
 - id: 46
   caminho: tests/verify_u_rhgd_11_pga_provider_structural_drift.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 47
   caminho: docs/arquitetura/11-pga-provider-structural-drift.md
   tipo: arquitetura
-  status: pendente
+  status: aceito
 repositorio: debianlima/rhgd
