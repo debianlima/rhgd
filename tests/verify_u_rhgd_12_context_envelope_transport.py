@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import json
+import sys
+from pathlib import Path
+import jsonschema, yaml
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from context_envelope_transport import AsymmetricEnvelopeQueue, TRANSPORT_AUTHORITY
+SCHEMA=ROOT/'contratos/rhgd-0.0.1/context-envelope-transport.schema.json'
+DATA=ROOT/'dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml'
+DOC=ROOT/'docs/arquitetura/12-context-envelope-transport.md'
+LEX=ROOT/'lexico.yaml'
+BOUNDARY_DOCS=[ROOT/'docs/arquitetura/00-modelo-logico-fase-zero.md',ROOT/'docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md',ROOT/'docs/politicas/00-politicas-consolidadas.md']
+def fail(x): print('RHGD_U12_CONTEXT_ENVELOPE_TRANSPORT=FAIL',x); raise SystemExit(2)
+def main():
+    for p in (SCHEMA,DATA,DOC,LEX,*BOUNDARY_DOCS):
+        if not p.exists(): fail('missing:'+str(p.relative_to(ROOT)))
+    schema=json.loads(SCHEMA.read_text(encoding='utf-8')); jsonschema.Draft202012Validator.check_schema(schema)
+    q=AsymmetricEnvelopeQueue('a',joined_peer_ids={'b'},egress_capacity=2,ingress_capacity=5,stream_id='s',clock_ms=lambda:1700000000000)
+    frame=q.put_outbound({'schema_version':'pgh.context-envelope/0.1'},work_id='w',model_ref='m',destination_peer='b',correlation_id='c',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
+    jsonschema.validate(frame,schema)
+    if frame['transport_authority']!=TRANSPORT_AUTHORITY: fail('authority')
+    d=yaml.safe_load(DATA.read_text(encoding='utf-8'))
+    if d.get('schema')!='rhgd-context-envelope-transport-evidence/1': fail('schema')
+    if d['human_decision']['observed_in_conversation'] is not True: fail('human-decision')
+    if set(d['authority_boundary']['PGD']) < {'ExecutionQueue','assignment_authority','lease','scheduler'}: fail('pgd-boundary')
+    if set(d['authority_boundary']['RHGD']) < {'EnvelopeTransportQueue','put_envelope','get_envelope','ack_remove_envelope'}: fail('rhgd-boundary')
+    tc=d['transport_contract']
+    if tc['pgd_assignment_ref_required'] is not True or tc['execution_authority']!='NONE': fail('transport-contract')
+    dirs=d['network_test']['directions']
+    if len(dirs)!=2: fail('directions')
+    for x in dirs:
+        if x['sent_sequences']!=[1,2] or x['received_sequences']!=[1,2]: fail('order')
+        if x['ack_statuses']!=['ACCEPTED','ACCEPTED']: fail('ack')
+        if x['egress_empty_after_ack_remove'] is not True or x['ingress_empty_after_get_remove'] is not True: fail('remove')
+        if x['sender_capacities']['egress']==x['sender_capacities']['ingress']: fail('sender-not-asymmetric')
+    gates=d['gates']
+    for k in ('HUMAN_QUEUE_DECISION','ASYMMETRIC_QUEUE','BIDIRECTIONAL_TRANSPORT','ORDER_PRESERVED','ACK_BEFORE_EGRESS_REMOVE','INGRESS_GET_REMOVE','EXPLICIT_JOIN','PGD_ASSIGNMENT_REF_REQUIRED','NO_PGD_EXECUTION_QUEUE_DUPLICATION','NO_LEASE_MINT','NO_SCHEDULER_AUTHORITY','TEMP_NETWORK_CHANGE_ROLLBACK'):
+        if gates.get(k)!='PASS': fail('gate:'+k)
+    if gates.get('PRODUCTION')!='BLOCKED': fail('production')
+    lex=yaml.safe_load(LEX.read_text(encoding='utf-8'))['termos']
+    if 'ExecutionQueue' not in lex or 'EnvelopeTransportQueue' not in lex: fail('lexicon')
+    for p in BOUNDARY_DOCS:
+        text=p.read_text(encoding='utf-8')
+        if 'EnvelopeTransportQueue' not in text or 'ExecutionQueue' not in text: fail('boundary-doc:'+p.name)
+    text=DOC.read_text(encoding='utf-8')
+    for marker in ('put_outbound','get_inbound','remove_inbound','ACK','fila de transporte','fila de execução'):
+        if marker not in text: fail('doc:'+marker)
+    print('RHGD_U12_CONTEXT_ENVELOPE_TRANSPORT=PASS')
+if __name__=='__main__': main()

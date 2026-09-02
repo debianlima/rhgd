@@ -3,10 +3,10 @@
 ## Princípio fundador
 **Distribuir trabalho semântico antes de distribuir operação numérica.**
 
-A RHGD não implementa model-parallel tensor-a-tensor pela Internet como caminho padrão. PGH decompõe tarefas em unidades cognitivas semanticamente fechadas; PGD mantém DAG, fila, lease, execução e recovery; RHGD descobre/federa executores externos e transporta unidades; PGA governa política/evolução; MSGCD agrega a visão.
+A RHGD não implementa model-parallel tensor-a-tensor pela Internet como caminho padrão. PGH decompõe tarefas em unidades cognitivas semanticamente fechadas; PGD mantém DAG, `ExecutionQueue`, lease, execução e recovery; RHGD descobre/federa executores externos e controla `EnvelopeTransportQueue` ingress/egress para transportar ContextEnvelope/WorkUnit em ordem; PGA governa política/evolução; MSGCD agrega a visão.
 
 ## Fluxo
-`UserRequest -> ContextPreOrchestrator -> RecursiveCognitiveDAG -> WorkUnit -> CapabilityDiscovery -> PGD lease/execution -> CognitiveResult -> HierarchicalReducer -> OutcomeEvidenceEnvelope -> PGH reconciliation -> local finalization`.
+`UserRequest -> ContextPreOrchestrator -> RecursiveCognitiveDAG -> WorkUnit -> CapabilityDiscovery -> PGD assignment/lease -> RHGD EnvelopeTransportQueue egress -> peer ingress -> model/work -> CognitiveResult -> RHGD return envelope -> PGD/PGH evidence -> HierarchicalReducer -> local finalization`.
 
 ## Objetos Fase 0
 - `NodeIdentity`

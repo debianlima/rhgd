@@ -19,7 +19,7 @@ Gates herdados: `POLICY_SNAPSHOT_IMMUTABLE`, `AUTHORITY_PROVENANCE_COMPLETE`, `N
 
 ## PGD — execução distribuída
 1. PGH autoriza; PGD executa.
-2. Estado vivo, filas, DAG, workers, heartbeat, ResourceLease, retry, checkpoint, relocation e recovery pertencem a PGD.
+2. Estado vivo de execução, `ExecutionQueue`, DAG, workers, heartbeat, ResourceLease, retry, checkpoint, relocation e recovery pertencem a PGD. A `EnvelopeTransportQueue` RHGD não é fila de execução.
 3. Permissão operacional nunca excede autorização PGH/PGA.
 4. Efeito verificado não é sinônimo de process exit.
 5. Outcome retorna observado, com sessão e proveniência.
@@ -28,7 +28,7 @@ Gates herdados: `PGH_AUTHORIZATION_REQUIRED`, `RESOURCE_STATE_OWNED_BY_PGD`, `OP
 
 ## RHGD — políticas novas
 1. `SEMANTIC_WORK_BEFORE_NUMERIC_DISTRIBUTION`: padrão é WorkUnit autocontida, não tensor-parallel remoto.
-2. `NO_DUPLICATE_PGD_RUNTIME`: RHGD não cria scheduler/fila/lease concorrente.
+2. `NO_DUPLICATE_PGD_RUNTIME`: RHGD não cria scheduler/`ExecutionQueue`/lease concorrente; sua `EnvelopeTransportQueue` é exclusivamente de transporte de ContextEnvelope.
 3. `SOVEREIGN_LOCAL_FINALIZATION`: nó originador mantém autoridade sobre reconciliação/finalização salvo delegação explícita.
 4. `DELEGATION_NE_AUTHORITY_EXPANSION`: recursão reduz ou preserva escopo; nunca amplia.
 5. `PRIVACY_CLASS_ENFORCED`: P0..P4 limita onde WorkUnit pode executar.
@@ -36,6 +36,7 @@ Gates herdados: `PGH_AUTHORIZATION_REQUIRED`, `RESOURCE_STATE_OWNED_BY_PGD`, `OP
 7. `REMOTE_EXECUTION_MINIMIZATION`: enviar apenas contexto semanticamente necessário.
 8. `DISSENT_AND_PROVENANCE_PRESERVED`: redução não pode apagar dissenso/evidência relevante.
 9. `CAPABILITY_EVIDENCE_REQUIRED`: anúncio de capacidade tem fonte, validade e confiança.
-10. `BLOCKCHAIN_OFF_CRITICAL_PATH`: prompts, respostas, filas e telemetria não dependem de consenso on-chain na Fase 0.
+10. `BLOCKCHAIN_OFF_CRITICAL_PATH`: prompts, respostas, `ExecutionQueue`, `EnvelopeTransportQueue` e telemetria não dependem de consenso on-chain na Fase 0.
 11. `SETTLEMENT_ADAPTER_ONLY`: Bitcoin/Lightning/RGB/EVM são adapters futuros, não autoridade cognitiva.
 12. `NO_SECRET_IN_ADVERTISEMENT`: anúncios nunca carregam credenciais ou conhecimento privado bruto.
+13. `ASYMMETRIC_CONTEXT_ENVELOPE_TRANSPORT`: RHGD mantém ingress/egress independentes, ordem monotônica por peer e remoção condicionada a ACK/consumo; cada frame exige `authorization_ref` e `pgd_assignment_ref` e não concede lease.

@@ -1,0 +1,69 @@
+schema: rhgd-live-capability-discovery-evidence/1
+unit: U-RHGD-12-LIVE-CAPABILITY-DISCOVERY-CONTRACT
+implementation_commit: 8c6d8b0480d9ca524ee0fd69e8c1b2d544a6db82
+release:
+  version: 0.0.1
+  state: standby_candidate
+  promoted: false
+execution:
+  kind: real_two_peer_overlay_test
+  transport: wireguard-overlay
+  capability_values: test_declared
+  persistent_service: false
+peers:
+- logical_id: peer-a
+  role: terminal-wireguard
+  advertised_peer_id: wireguard-hub-u12
+  boot_id: wg-cap-u12
+  ttl_ms: 2000
+- logical_id: peer-b
+  role: terminal-ipsec
+  advertised_peer_id: ipsec-hub-u12
+  boot_id: ipsec-cap-u12
+  ttl_ms: 2000
+observations:
+  peer_a_discovers_peer_b:
+    sequences: [1, 2]
+    monotonic: true
+  peer_b_discovers_peer_a:
+    sequences: [1, 2]
+    monotonic: true
+  stale_snapshot_rejected_after_ttl: true
+  authority:
+    mode: read_only_advisory
+    scheduler: false
+    lease_grant: false
+    assignment: false
+security_boundary:
+  explicit_join_required: true
+  network_peer_authentication: wireguard-overlay
+  application_layer_authentication: NOT_IMPLEMENTED
+  no_secret_in_advertisement: true
+network_change:
+  temporary_test_aperture: source_restricted_runtime_only
+  persisted: false
+  rollback: PASS
+cleanup:
+  peer_a_listener_stopped: true
+  peer_b_listener_stopped: true
+  temporary_firewall_rules_removed: true
+  peer_a_environment_verifier: PASS
+  peer_b_environment_verifier: PASS
+maturity:
+  live_capability_discovery_mechanism: PASS
+  two_real_peers: PASS
+  real_overlay_transport: PASS
+  actual_production_capability_source: NOT_VERIFIED
+  persistent_service: NOT_VERIFIED
+  real_reconnect_failover: NOT_VERIFIED
+  production: BLOCKED
+gates:
+  TWO_REAL_PEERS: PASS
+  BIDIRECTIONAL_DISCOVERY: PASS
+  MONOTONIC_SEQUENCE: PASS
+  TTL_STALE_REJECTION: PASS
+  EXPLICIT_JOIN: PASS
+  NO_SCHEDULER_AUTHORITY: PASS
+  TEMP_NETWORK_CHANGE_ROLLBACK: PASS
+  LIVE_DISCOVERY_MECHANISM: PASS
+  PRODUCTION: BLOCKED
