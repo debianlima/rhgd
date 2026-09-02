@@ -1,0 +1,52 @@
+schema: rhgd-provider-contract-freshness/1
+unit: U-RHGD-11-PGA-PROVIDER-STRUCTURAL-DRIFT-RECONCILIATION
+observed_at: '2026-09-02T04:24:00Z'
+release:
+  version: 0.0.1
+  state: standby_candidate
+  promoted: false
+provider:
+  name: PGA
+  before: 5d1dfd93b0525db26b44efaea8bdbc56f25c185c
+  after: 871f0294deb0a595e7e1de49ae776dadc098f2c6
+  classification: HEAD_DRIFT_CONTRACTS_IDENTICAL
+  changed_paths:
+  - dados/telemetria-unidades.jsonl
+  - estado.md
+  - manifesto.yaml
+  - tests/verify_project.py
+  provider_release_after: homologated
+  shared_work_after: empty
+consumed_artifacts:
+- path: contratos/pga-1.0/network-service-agents.schema.json
+  sha256_before: 504df737545226ac6837fea6299d4ccd0732f9197bcdadf948f03886209a361a
+  sha256_after: 504df737545226ac6837fea6299d4ccd0732f9197bcdadf948f03886209a361a
+  identical: true
+- path: contratos/pga-1.0/deterministic-priority-policy.schema.json
+  sha256_before: 2d84c843b9d8f4debcea7efe58a44ec7b8d31d2dfabf1ed5eb393dffd9b71126
+  sha256_after: 2d84c843b9d8f4debcea7efe58a44ec7b8d31d2dfabf1ed5eb393dffd9b71126
+  identical: true
+- path: dados/pga-1.0/U-PGA-08-network-service-agents.yaml
+  sha256_before: 6bfafab444b09c3f156e49d13550e463f1bc317c57dfea1d5f1e682e68ff39a8
+  sha256_after: 6bfafab444b09c3f156e49d13550e463f1bc317c57dfea1d5f1e682e68ff39a8
+  identical: true
+- path: dados/pga-1.0/U-PGA-09-deterministic-priority-policy.yaml
+  sha256_before: 31b8ebd3e06ecd7729a076617fa6dfd9dc251fd41bf0e1ded26390c42d0f4881
+  sha256_after: 31b8ebd3e06ecd7729a076617fa6dfd9dc251fd41bf0e1ded26390c42d0f4881
+  identical: true
+consumer_effect:
+  historical_u08_pin_rewritten: false
+  functional_reconciliation_required: false
+  next_unit_may_use_provider_head: 871f0294deb0a595e7e1de49ae776dadc098f2c6
+  rule: semantic_validity_tracks_consumed_artifact_identity_not_unrelated_provider_head_drift
+  authority_boundary: PGA_policy_no_runtime_RHGD_federation_no_scheduler
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  PGA_HEAD_ANCESTRY: PASS
+  CONSUMED_ARTIFACT_IDENTITY: PASS
+  NO_CONSUMED_SEMANTIC_PATH_DELTA: PASS
+  AUTHORITY_BOUNDARY_UNCHANGED: PASS
+  HISTORICAL_EVIDENCE_IMMUTABLE: PASS
+  FUNCTIONAL_RECONCILIATION_REQUIRED: 'NO'
+  PRODUCTION_PROMOTION: 'NO'

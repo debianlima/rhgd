@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-provider-contract-freshness.schema.json",
+  "title": "RHGD Provider Contract Freshness",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "unit", "observed_at", "release", "provider", "consumed_artifacts", "consumer_effect", "gates"],
+  "properties": {
+    "schema": {"const": "rhgd-provider-contract-freshness/1"},
+    "unit": {"const": "U-RHGD-11-PGA-PROVIDER-STRUCTURAL-DRIFT-RECONCILIATION"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "release": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "state", "promoted"],
+      "properties": {"version": {"const": "0.0.1"}, "state": {"const": "standby_candidate"}, "promoted": {"const": false}}
+    },
+    "provider": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "before", "after", "classification", "changed_paths", "provider_release_after", "shared_work_after"],
+      "properties": {
+        "name": {"const": "PGA"},
+        "before": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "after": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "classification": {"const": "HEAD_DRIFT_CONTRACTS_IDENTICAL"},
+        "changed_paths": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+        "provider_release_after": {"const": "homologated"},
+        "shared_work_after": {"const": "empty"}
+      }
+    },
+    "consumed_artifacts": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "sha256_before", "sha256_after", "identical"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256_before": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "sha256_after": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "identical": {"const": true}
+        }
+      }
+    },
+    "consumer_effect": {
+      "type": "object", "additionalProperties": false,
+      "required": ["historical_u08_pin_rewritten", "functional_reconciliation_required", "next_unit_may_use_provider_head", "rule", "authority_boundary"],
+      "properties": {
+        "historical_u08_pin_rewritten": {"const": false},
+        "functional_reconciliation_required": {"const": false},
+        "next_unit_may_use_provider_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "rule": {"const": "semantic_validity_tracks_consumed_artifact_identity_not_unrelated_provider_head_drift"},
+        "authority_boundary": {"const": "PGA_policy_no_runtime_RHGD_federation_no_scheduler"}
+      }
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["DELTA_INVENTORY", "LEARNING_PRESERVED", "PGA_HEAD_ANCESTRY", "CONSUMED_ARTIFACT_IDENTITY", "NO_CONSUMED_SEMANTIC_PATH_DELTA", "AUTHORITY_BOUNDARY_UNCHANGED", "HISTORICAL_EVIDENCE_IMMUTABLE", "FUNCTIONAL_RECONCILIATION_REQUIRED", "PRODUCTION_PROMOTION"],
+      "properties": {
+        "DELTA_INVENTORY": {"const": "PASS"},
+        "LEARNING_PRESERVED": {"const": "PASS"},
+        "PGA_HEAD_ANCESTRY": {"const": "PASS"},
+        "CONSUMED_ARTIFACT_IDENTITY": {"const": "PASS"},
+        "NO_CONSUMED_SEMANTIC_PATH_DELTA": {"const": "PASS"},
+        "AUTHORITY_BOUNDARY_UNCHANGED": {"const": "PASS"},
+        "HISTORICAL_EVIDENCE_IMMUTABLE": {"const": "PASS"},
+        "FUNCTIONAL_RECONCILIATION_REQUIRED": {"const": "NO"},
+        "PRODUCTION_PROMOTION": {"const": "NO"}
+      }
+    }
+  }
+}
