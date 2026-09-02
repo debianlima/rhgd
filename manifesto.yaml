@@ -1,10 +1,29 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 7
+versao_contrato: 8
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  projeto: rhgd
+  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
+  unidade: U-RHGD-13-PERSISTENT-ENVELOPE-RECONNECT-IDEMPOTENCY
+  descricao: persistir EnvelopeTransportQueue e provar restart/reconnect idempotente
+    sem autoridade de execução PGD
+  agente: ChatGPT-Redes
+  atualizado_em: '2026-09-02T05:15:00Z'
+  previsao_termino: '2026-09-02T06:30:00Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - context_envelope_transport.py
+  - persistent_envelope_daemon.py
+  - contratos/rhgd-0.0.1/durable-envelope-queue-state.schema.json
+  - tests/test_persistent_envelope_transport.py
+  - tests/verify_u_rhgd_13_persistent_reconnect_idempotency.py
+  - dados/rhgd-0.0.1/U-RHGD-13-persistent-reconnect-idempotency.yaml
+  - docs/arquitetura/13-persistent-reconnect-idempotency.md
+  - skills/rhgd/SKILL.md
 entradas:
 - id: 1
   caminho: README.md
@@ -242,4 +261,28 @@ entradas:
   caminho: docs/arquitetura/12-context-envelope-transport.md
   tipo: arquitetura
   status: aceito
+- id: 60
+  caminho: contratos/rhgd-0.0.1/durable-envelope-queue-state.schema.json
+  tipo: contrato
+  status: pendente
+- id: 61
+  caminho: persistent_envelope_daemon.py
+  tipo: backend-integracao
+  status: pendente
+- id: 62
+  caminho: tests/test_persistent_envelope_transport.py
+  tipo: teste
+  status: pendente
+- id: 63
+  caminho: tests/verify_u_rhgd_13_persistent_reconnect_idempotency.py
+  tipo: teste
+  status: pendente
+- id: 64
+  caminho: dados/rhgd-0.0.1/U-RHGD-13-persistent-reconnect-idempotency.yaml
+  tipo: evidencia
+  status: pendente
+- id: 65
+  caminho: docs/arquitetura/13-persistent-reconnect-idempotency.md
+  tipo: arquitetura
+  status: pendente
 repositorio: debianlima/rhgd
