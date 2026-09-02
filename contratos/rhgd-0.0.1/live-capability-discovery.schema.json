@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-live-capability-discovery.schema.json",
+  "title": "RHGD Live Capability Advertisement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "peer_id", "boot_id", "sequence", "issued_at_ms", "expires_at_ms", "capabilities", "authority"],
+  "properties": {
+    "schema_version": {"const": "rhgd-live-capability/1"},
+    "peer_id": {"type": "string", "minLength": 1},
+    "boot_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 1},
+    "issued_at_ms": {"type": "integer", "minimum": 0},
+    "expires_at_ms": {"type": "integer", "minimum": 1},
+    "capabilities": {"type": "object"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "scheduler", "lease_grant", "assignment"],
+      "properties": {
+        "mode": {"const": "read_only_advisory"},
+        "scheduler": {"const": false},
+        "lease_grant": {"const": false},
+        "assignment": {"const": false}
+      }
+    }
+  }
+}
