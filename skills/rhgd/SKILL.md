@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.13
+versao: 0.0.14
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
 tipo_competencia: projeto
 ---
@@ -42,6 +42,13 @@ A palavra **fila** é ambígua e deve ser qualificada: `ExecutionQueue` (WorkUni
 `EnvelopeTransportQueue` durável deve persistir mutações antes de retornar sucesso ao chamador; no receptor, `put_inbound` precisa concluir a persistência antes do ACK HTTP. Estado durável inclui egress/ingress, sequência, stream ativo e identidades já consumidas, sem lease/assignment/scheduler. Configuração persistida divergente falha fechado.
 
 Na janela ACK-remoto/remoção-local, restart do emissor pode manter o envelope pendente; o retry deve ser aceito idempotentemente como `DUPLICATE`, e só então removido do egress. Depois de consumo persistido e restart do receptor, replay da mesma sequência/id deve retornar `ALREADY_CONSUMED`; replay conflitante continua rejeitado. U13 provou isso nos dois sentidos da overlay com SQLite `WAL + synchronous=FULL`. Isso não equivale a power-loss, daemon supervisionado ou autenticação de aplicação. Gate: `tests/verify_u_rhgd_13_persistent_reconnect_idempotency.py`.
+
+## Autenticação, supervisão e observabilidade — U-RHGD-14
+`ContextEnvelope` em transporte persistente usa autenticação de aplicação HMAC-SHA256 vinculada a método, path, `key_id`, `peer_id`, timestamp, nonce e SHA-256 do corpo. Peer precisa estar explicitamente aderido. Anti-replay é durável: persiste somente `SHA256(nonce)` por chave/TTL; segredo e nonce em claro não entram no banco. Múltiplas chaves podem coexistir.
+
+Observabilidade de transporte é deliberadamente limitada: contadores, profundidade ingress/egress e timestamps; nunca payload, assinatura ou segredo. `/rhgd/metrics` exige a mesma autenticação de aplicação. A autoridade permanece `queue=envelope_transport_only`, `scheduler=false`, `lease_grant=false`, `admission=false`; paralelismo do harness de homologação não cria scheduler RHGD.
+
+Unit file com `Restart=on-failure`, `DynamicUser`, `NoNewPrivileges`, `ProtectSystem=strict`, `UMask=0077` e `LoadCredential` prova **definição de supervisão**, não serviço persistente de produção. Só promover runtime supervisionado após observar o serviço real; até lá `LIVE_SUPERVISED_SERVICE_RUNTIME=NOT_OBSERVED` e produção permanece bloqueada. Gate: `tests/verify_u_rhgd_14_app_auth_supervision_observability.py`, campanha `U14-W01..U14-W40` 40/40 em 4 slots.
 
 ## Redução determinística
 Redução hierárquica deve ser independente da ordem de chegada. Canonicalizar identidade textual antes de deduplicar; ordenar conteúdo lógico e provenance por chave estável. `fan_in` pode alterar `depth`, nunca claims/evidence/dissent/sources finais.
