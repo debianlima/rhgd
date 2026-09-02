@@ -18,6 +18,8 @@ RHGD não recebe admission, fila, assignment, lease, scheduler, retry, recovery,
 | **PGH U278** — safe point fechado pós-U268/U269 | RHGD fornece candidatos/rotas/capacidades observadas; autorização/contexto/evidência continuam PGH | U282 ativo não é consumido no meio da unidade; apenas o safe point fechado U278 é pinado |
 | **Control Plane U250/U280** — `pgh-context-sync/1` | `federation=RHGD`, com safe point, capability e base revision | `policy=PGA`, `semantic=PGH`, `runtime=PGD`, `integration=MSGCD`; nenhum broker/scheduler paralelo |
 
+No refresh final, o control-plane abriu **U281-MSGCD-READ-MODEL-COCKPIT**. Esse owner ativo não é consumido pela U08; `9408814…` permanece o safe point fechado, e a U08 exige que ele seja ancestral do HEAD observado e que `config/3.0/context-sync.yaml` preserve o mesmo SHA-256. O mesmo princípio vale para o core PGH: U282 ativo não substitui U278 nesta unidade.
+
 MSGCD permanece composição de integração/visão agregada; não é repositório/runtime obrigatório nem quarta autoridade.
 
 ## Política de rede conciliada

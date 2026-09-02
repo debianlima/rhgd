@@ -38,14 +38,16 @@
     },
     "source_safety": {
       "type": "object", "additionalProperties": false,
-      "required": ["pgh_active_owner", "pgh_active_owner_consumed", "safe_point_policy", "pgd_shared_work", "pga_shared_work", "control_plane_shared_work"],
+      "required": ["pgh_active_owner", "pgh_active_owner_consumed", "safe_point_policy", "pgd_shared_work", "pga_shared_work", "control_plane_active_owner", "control_plane_active_owner_consumed", "control_plane_safe_point_policy"],
       "properties": {
         "pgh_active_owner": {"const": "U282-PGH-SUITE-POST-U278-FIXED-POINT-REFRESH"},
         "pgh_active_owner_consumed": {"const": false},
         "safe_point_policy": {"const": "consume_closed_u278_and_recheck_descendant_not_active_u282_delta"},
         "pgd_shared_work": {"const": "empty"},
         "pga_shared_work": {"const": "empty"},
-        "control_plane_shared_work": {"const": "empty"}
+        "control_plane_active_owner": {"const": "U281-MSGCD-READ-MODEL-COCKPIT"},
+        "control_plane_active_owner_consumed": {"const": false},
+        "control_plane_safe_point_policy": {"const": "consume_closed_u280_context_sync_only_and_verify_ancestor_plus_hash"}
       }
     },
     "authority_boundaries": {

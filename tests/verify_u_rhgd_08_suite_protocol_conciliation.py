@@ -18,8 +18,8 @@ BASE_RHGD = 'ee24a3916e964c7ec624b666daa035aa6f4e97c5'
 EXPECTED_HEADS = {
     'pgd': 'fa63a046e79e28d512dd901c43629d47a5bdea89',
     'pga': '5d1dfd93b0525db26b44efaea8bdbc56f25c185c',
-    'pgh-distributed-session-control-plane': '9408814f4af6b73c743b0dc35661caee0da5adca',
 }
+CONTROL_PLANE_SAFE_POINT = '9408814f4af6b73c743b0dc35661caee0da5adca'
 PGH_U278 = '1832fa24375a1e2f3cc207b163f1a42d0acc2042'
 CONTRACT_HASHES = {
     'pgd/contratos/pgd-1.0/rhgd-federation.schema.json': '3135f6cee8de163d55c9782b1b1de300359a0e2936f79f2a243a03941fefdc52',
@@ -59,8 +59,9 @@ def validate_local() -> dict:
     if data['refs']['RHGD_BASE'] != BASE_RHGD: fail('rhgd-base')
     if data['refs']['PGH_U278_SAFE_POINT'] != PGH_U278: fail('pgh-safe-point')
     for k, v in EXPECTED_HEADS.items():
-        key = {'pgd':'PGD','pga':'PGA','pgh-distributed-session-control-plane':'CONTROL_PLANE'}[k]
+        key = {'pgd':'PGD','pga':'PGA'}[k]
         if data['refs'][key] != v: fail('ref:'+key)
+    if data['refs']['CONTROL_PLANE'] != CONTROL_PLANE_SAFE_POINT: fail('ref:CONTROL_PLANE')
 
     boundaries = data['authority_boundaries']
     expected = {
@@ -122,6 +123,9 @@ def validate_external(root: Path, data: dict) -> None:
         repo = root / name
         if not repo.joinpath('.git').exists(): fail('external-repo:'+name)
         if git(repo, 'rev-parse', 'HEAD') != expected: fail('external-head:'+name)
+    cp = root / 'pgh-distributed-session-control-plane'
+    if not cp.joinpath('.git').exists(): fail('external-repo:pgh-distributed-session-control-plane')
+    subprocess.check_call(['git','-C',str(cp),'merge-base','--is-ancestor',CONTROL_PLANE_SAFE_POINT,'HEAD'])
     pgh = root / 'protocolo-governanca-heterogenea'
     if not pgh.joinpath('.git').exists(): fail('external-repo:protocolo-governanca-heterogenea')
     subprocess.check_call(['git','-C',str(pgh),'merge-base','--is-ancestor',PGH_U278,'HEAD'])

@@ -19,7 +19,9 @@ source_safety:
   safe_point_policy: consume_closed_u278_and_recheck_descendant_not_active_u282_delta
   pgd_shared_work: empty
   pga_shared_work: empty
-  control_plane_shared_work: empty
+  control_plane_active_owner: U281-MSGCD-READ-MODEL-COCKPIT
+  control_plane_active_owner_consumed: false
+  control_plane_safe_point_policy: consume_closed_u280_context_sync_only_and_verify_ancestor_plus_hash
 authority_boundaries:
   PGA: policy_authority_priority_gates_no_runtime
   PGH: semantic_authorization_context_knowledge_evidence
