@@ -4,34 +4,7 @@ versao_contrato: 9
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /srv/mcp-workspace/tmp/u282-shared-scan-20260902/rhgd
-  unidade: U-RHGD-14-PARALLEL-40-WORK-UNITS-ORCHESTRATION
-  descricao: 40 subunidades paralelas para app-auth, supervisao e observabilidade
-    do EnvelopeTransportQueue
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T15:06:55Z'
-  previsao_termino: '2026-09-02T16:36:55Z'
-  prorrogado_em: '2026-09-02T15:06:55Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - competencias.yaml
-  - persistent_envelope_daemon.py
-  - context_envelope_transport.py
-  - application_auth.py
-  - transport_observability.py
-  - deploy/rhgd-envelope.service
-  - contratos/rhgd-0.0.1/application-auth.schema.json
-  - contratos/rhgd-0.0.1/transport-observability.schema.json
-  - tests/test_application_auth_observability.py
-  - tests/u14_parallel_cases.py
-  - tests/run_u_rhgd_14_parallel_40.py
-  - tests/verify_u_rhgd_14_app_auth_supervision_observability.py
-  - dados/rhgd-0.0.1/U-RHGD-14-app-auth-supervision-observability.yaml
-  - docs/arquitetura/14-app-auth-supervision-observability.md
-  - skills/rhgd/SKILL.md
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -296,45 +269,45 @@ entradas:
 - id: 66
   caminho: contratos/rhgd-0.0.1/application-auth.schema.json
   tipo: contrato
-  status: em_curso
+  status: aceito
 - id: 67
   caminho: contratos/rhgd-0.0.1/transport-observability.schema.json
   tipo: contrato
-  status: em_curso
+  status: aceito
 - id: 68
   caminho: application_auth.py
   tipo: backend-seguranca
-  status: em_curso
+  status: aceito
 - id: 69
   caminho: transport_observability.py
   tipo: observabilidade
-  status: em_curso
+  status: aceito
 - id: 70
   caminho: deploy/rhgd-envelope.service
   tipo: deploy
-  status: em_curso
+  status: aceito
 - id: 71
   caminho: tests/test_application_auth_observability.py
   tipo: teste
-  status: em_curso
+  status: aceito
 - id: 72
   caminho: tests/u14_parallel_cases.py
   tipo: teste
-  status: em_curso
+  status: aceito
 - id: 73
   caminho: tests/run_u_rhgd_14_parallel_40.py
   tipo: teste
-  status: em_curso
+  status: aceito
 - id: 74
   caminho: tests/verify_u_rhgd_14_app_auth_supervision_observability.py
   tipo: teste
-  status: em_curso
+  status: aceito
 - id: 75
   caminho: dados/rhgd-0.0.1/U-RHGD-14-app-auth-supervision-observability.yaml
   tipo: evidencia
-  status: em_curso
+  status: aceito
 - id: 76
   caminho: docs/arquitetura/14-app-auth-supervision-observability.md
   tipo: arquitetura
-  status: em_curso
+  status: aceito
 repositorio: debianlima/rhgd
