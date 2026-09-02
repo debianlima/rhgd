@@ -4,23 +4,7 @@ versao_contrato: 3
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
-  unidade: U-RHGD-09-POST-U08-SUITE-INTEGRATION-CHECK
-  descricao: detectar consumidores downstream stale sem tocar owners ativos nem promover
-    produção
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:18:00Z'
-  previsao_termino: '2026-09-02T05:15:00Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - contratos/rhgd-0.0.1/downstream-consumer-freshness.schema.json
-  - dados/rhgd-0.0.1/U-RHGD-09-downstream-consumer-freshness.yaml
-  - tests/verify_u_rhgd_09_downstream_consumer_freshness.py
-  - docs/arquitetura/09-downstream-consumer-freshness.md
-  - skills/rhgd/SKILL.md
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -181,17 +165,17 @@ entradas:
 - id: 40
   caminho: contratos/rhgd-0.0.1/downstream-consumer-freshness.schema.json
   tipo: contrato
-  status: pendente
+  status: aceito
 - id: 41
   caminho: dados/rhgd-0.0.1/U-RHGD-09-downstream-consumer-freshness.yaml
   tipo: evidencia
-  status: pendente
+  status: aceito
 - id: 42
   caminho: tests/verify_u_rhgd_09_downstream_consumer_freshness.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 43
   caminho: docs/arquitetura/09-downstream-consumer-freshness.md
   tipo: arquitetura
-  status: pendente
+  status: aceito
 repositorio: debianlima/rhgd

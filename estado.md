@@ -113,3 +113,16 @@ Materializado como repositório-zero local para consolidar arquitetura e políti
 - `RECONCILIATION_CLOSURE=PASS` para o escopo U08 pinado; `DEPENDENCY_REFERENCES=PASS` para as referências consumidas. Owners ativos posteriores não são promovidos silenciosamente.
 - `telemetria_inicio=2026-09-02T03:57:59.791622Z`; tokens/custo `indisponivel`; `telemetria_fim` é emitida como último evento executável do turno após publicação do fechamento.
 - `trabalho_compartilhado` liberado no commit de fechamento; nenhuma implementação de runtime RHGD foi alterada nesta unidade.
+
+## U-RHGD-09-POST-U08-SUITE-INTEGRATION-CHECK — PASS
+- contrato estrutural avançado para `versao_contrato=3`; release permanece `0.0.1 / STANDBY_CANDIDATE`.
+- safe point RHGD fechado alvo para consumidores downstream: U08 `13b6e0aadcb59902312915130d1bc6cd2bc81fd4`; o HEAD de U09 em curso não foi promovido a alvo de sincronização.
+- observação versionada: PGH core `1d26328a34a5dd598cb77b1bd53f470cfea84070`, U282 pinando RHGD `ee24a3916e964c7ec624b666daa035aa6f4e97c5` sob owner ativo `terminal-oracle`.
+- classificação homologada: `BLOCKED_ACTIVE_OWNER_STALE`; `STALE_DETECTED=PASS`; `ACTIVE_OWNER_RESPECTED=PASS`; `AUTO_MUTATION=BLOCKED`; `DOWNSTREAM_SYNCHRONIZED=NO`; `NO_FALSE_FIXED_POINT=PASS`.
+- a prova U09 reconstrói o consumer state pelo commit observado, portanto permanece auditável depois que o owner U282 avançar.
+- regressão: U08 executada no checkout imutável do safe point U08 = PASS; U07 = PASS; unitários `28/28 PASS`; `RHGD_PROJECT_VERIFY=PASS`.
+- Project-Skill usada nesta unidade: `rhgd-project@0.0.8`; aprendizado homologado publicado como `rhgd-project@0.0.9` para a próxima unidade, commit `eb5071bbc6461eb0ff02f98985624b8b9f4af1af`.
+- catálogo atualizado para `rhgd-project@0.0.9` em `ed7b27550ade1fd05a914522737bfc17aa790f46`, com `CATALOGO_SKILLS=PASS`, `SYNC_GUARD=PASS`, `GLOBAL_PGH_SKILL_CANDIDATE_LINES=PASS`.
+- pendência técnica externa: U282 permanece `BLOCKED_EXTERNAL_SAFE_POINT` e deve reconciliar o safe point U08 dentro da própria zona; RHGD não edita nem preempta esse owner.
+- maturidade permanece: capability discovery vivo `NOT_VERIFIED`; federação real `NOT_VERIFIED`; produção `BLOCKED`.
+- `trabalho_compartilhado` RHGD liberado no commit de fechamento; nenhuma implementação runtime ou rede real foi alterada.
