@@ -24,8 +24,8 @@ def context_payload(tag='ctx'):
 class TestContextEnvelopeTransport(unittest.TestCase):
     def test_asymmetric_egress_order_and_ack_remove(self):
         q=AsymmetricEnvelopeQueue('peer-a',joined_peer_ids={'peer-b'},egress_capacity=2,ingress_capacity=5,stream_id='boot-a')
-        a=q.put_outbound(context_payload('a'),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
-        b=q.put_outbound(context_payload('b'),work_id='w2',model_ref='model-b',destination_peer='peer-b',correlation_id='c2',authorization_ref='pgh://auth/2',pgd_assignment_ref='pgd://assignment/2')
+        a=q.put_outbound(context_payload('a'),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
+        b=q.put_outbound(context_payload('b'),work_id='w2',model_ref='model-b',destination_peer='peer-b',correlation_id='c2',authorization_ref='pgh://auth/2',pgd_execution_ref='pgd://execution/2')
         self.assertEqual((a['sequence'],b['sequence']),(1,2))
         self.assertEqual(q.get_outbound('peer-b')['envelope_id'],a['envelope_id'])
         with self.assertRaises(ValueError): q.remove_outbound(b['envelope_id'])
@@ -38,8 +38,8 @@ class TestContextEnvelopeTransport(unittest.TestCase):
     def test_ingress_buffers_out_of_order_and_rejects_conflicting_replay(self):
         sender=AsymmetricEnvelopeQueue('peer-a',joined_peer_ids={'peer-b'},stream_id='boot-a')
         recv=AsymmetricEnvelopeQueue('peer-b',joined_peer_ids={'peer-a'},stream_id='boot-b')
-        one=sender.put_outbound(context_payload('1'),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
-        two=sender.put_outbound(context_payload('2'),work_id='w2',model_ref='model-b',destination_peer='peer-b',correlation_id='c2',authorization_ref='pgh://auth/2',pgd_assignment_ref='pgd://assignment/2')
+        one=sender.put_outbound(context_payload('1'),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
+        two=sender.put_outbound(context_payload('2'),work_id='w2',model_ref='model-b',destination_peer='peer-b',correlation_id='c2',authorization_ref='pgh://auth/2',pgd_execution_ref='pgd://execution/2')
         recv.put_inbound(two)
         self.assertIsNone(recv.get_inbound('peer-a'))
         recv.put_inbound(one)
@@ -54,8 +54,8 @@ class TestContextEnvelopeTransport(unittest.TestCase):
     def test_explicit_join_and_authority_boundary(self):
         q=AsymmetricEnvelopeQueue('peer-a',joined_peer_ids={'peer-b'},stream_id='boot-a')
         with self.assertRaises(PermissionError):
-            q.put_outbound(context_payload(),work_id='w',model_ref='m',destination_peer='peer-x',correlation_id='c',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
-        frame=q.put_outbound(context_payload(),work_id='w',model_ref='m',destination_peer='peer-b',correlation_id='c',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
+            q.put_outbound(context_payload(),work_id='w',model_ref='m',destination_peer='peer-x',correlation_id='c',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
+        frame=q.put_outbound(context_payload(),work_id='w',model_ref='m',destination_peer='peer-b',correlation_id='c',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
         self.assertEqual(frame['transport_authority'],{'queue':'envelope_transport_only','scheduler':False,'lease_grant':False,'admission':False})
         self.assertFalse(any(hasattr(q,x) for x in ('scheduler','lease','admission','execution_queue','runtime_state')))
 
@@ -67,7 +67,7 @@ class TestContextEnvelopeTransport(unittest.TestCase):
         server.envelope_transport_service=svc
         t=threading.Thread(target=server.serve_forever,daemon=True); t.start()
         try:
-            frame=qa.put_outbound(context_payload(),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
+            frame=qa.put_outbound(context_payload(),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
             ack=send_next_outbound(qa,'peer-b',f'http://127.0.0.1:{server.server_port}/rhgd/envelope',timeout=2.0)
             self.assertEqual(ack['envelope_id'],frame['envelope_id'])
             self.assertIsNone(qa.get_outbound('peer-b'))
@@ -81,7 +81,7 @@ class TestContextEnvelopeTransport(unittest.TestCase):
 
     def test_failed_send_keeps_envelope_for_retry(self):
         q=AsymmetricEnvelopeQueue('peer-a',joined_peer_ids={'peer-b'},stream_id='boot-a')
-        frame=q.put_outbound(context_payload(),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_assignment_ref='pgd://assignment/1')
+        frame=q.put_outbound(context_payload(),work_id='w1',model_ref='model-b',destination_peer='peer-b',correlation_id='c1',authorization_ref='pgh://auth/1',pgd_execution_ref='pgd://execution/1')
         with self.assertRaises(Exception):
             send_next_outbound(q,'peer-b','http://127.0.0.1:9/rhgd/envelope',timeout=0.2)
         self.assertEqual(q.get_outbound('peer-b')['envelope_id'],frame['envelope_id'])
