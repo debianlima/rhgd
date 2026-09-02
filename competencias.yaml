@@ -25,3 +25,19 @@ competencias:
   tipo: global
   ref: dominio/telemetry-data-visualization/SKILL.md
   versao_minima: 2
+- id: distributed-agent-control
+  tipo: dominio
+  ref: dominio/distributed-agent-control/SKILL.md
+  versao_minima: 1
+  ativa_em:
+  - backend-integracao
+  portao: TTL/stale + duplicacao/reordenacao + identidade/timestamp + observabilidade
+  evidencia: U-RHGD-12 introduz capability heartbeat/discovery vivo entre peers
+- id: network-ssh-operations
+  tipo: dominio
+  ref: dominio/network-ssh-operations/SKILL.md
+  versao_minima: 1
+  ativa_em:
+  - backend-integracao
+  portao: route-get + peer overlay + porta do servico + reconexao + rollback
+  evidencia: U-RHGD-12 executa discovery vivo sobre overlay real entre dois peers

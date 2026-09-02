@@ -1,10 +1,29 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 4
+versao_contrato: 5
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  projeto: rhgd
+  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
+  unidade: U-RHGD-12-LIVE-CAPABILITY-DISCOVERY-CONTRACT
+  descricao: materializar discovery vivo de capabilities por explicit join, TTL/sequence
+    e stale rejection sem segundo scheduler
+  agente: ChatGPT-Redes
+  atualizado_em: '2026-09-02T04:31:00Z'
+  previsao_termino: '2026-09-02T06:00:00Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - competencias.yaml
+  - estado.md
+  - live_capability_discovery.py
+  - contratos/rhgd-0.0.1/live-capability-discovery.schema.json
+  - tests/test_live_capability_discovery.py
+  - tests/verify_u_rhgd_12_live_capability_discovery.py
+  - dados/rhgd-0.0.1/U-RHGD-12-live-capability-discovery.yaml
+  - docs/arquitetura/12-live-capability-discovery.md
+  - skills/rhgd/SKILL.md
 entradas:
 - id: 1
   caminho: README.md
@@ -194,4 +213,28 @@ entradas:
   caminho: docs/arquitetura/11-pga-provider-structural-drift.md
   tipo: arquitetura
   status: aceito
+- id: 48
+  caminho: contratos/rhgd-0.0.1/live-capability-discovery.schema.json
+  tipo: contrato
+  status: pendente
+- id: 49
+  caminho: live_capability_discovery.py
+  tipo: backend-integracao
+  status: pendente
+- id: 50
+  caminho: tests/test_live_capability_discovery.py
+  tipo: teste
+  status: pendente
+- id: 51
+  caminho: tests/verify_u_rhgd_12_live_capability_discovery.py
+  tipo: teste
+  status: pendente
+- id: 52
+  caminho: dados/rhgd-0.0.1/U-RHGD-12-live-capability-discovery.yaml
+  tipo: evidencia
+  status: pendente
+- id: 53
+  caminho: docs/arquitetura/12-live-capability-discovery.md
+  tipo: arquitetura
+  status: pendente
 repositorio: debianlima/rhgd
