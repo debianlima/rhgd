@@ -25,6 +25,11 @@ competencias:
   tipo: global
   ref: dominio/telemetry-data-visualization/SKILL.md
   versao_minima: 2
+  ativa_em:
+  - observabilidade
+  portao: schema/integridade + counters monotonic + queue depth + nenhum segredo/payload
+    em metrica
+  evidencia: U-RHGD-14 introduz observabilidade operacional do EnvelopeTransportQueue
 - id: distributed-agent-control
   tipo: dominio
   ref: dominio/distributed-agent-control/SKILL.md
@@ -39,5 +44,16 @@ competencias:
   versao_minima: 1
   ativa_em:
   - backend-integracao
-  portao: route-get + peer overlay + porta do servico + reconexao + rollback
-  evidencia: U-RHGD-12 executa discovery vivo sobre overlay real entre dois peers
+  - deploy
+  portao: route-get + systemd supervision + service restart + porta + rollback/cleanup
+  evidencia: U-RHGD-14 homologa supervisao de daemon RHGD sem instalar segredo persistente
+- id: gestao-governada-de-segredos
+  tipo: dominio
+  ref: dominio/gestao-governada-de-segredos/SKILL.md
+  versao_minima: 1.0.1
+  ativa_em:
+  - backend-seguranca
+  portao: sem plaintext + binding peer/key-id + segredo fora de Git/log/telemetria
+    + replay nonce + revogacao por ausencia de key-id
+  evidencia: U-RHGD-14 introduz autenticacao de aplicacao do transporte RHGD com chave
+    somente em memoria/runtime
