@@ -28,11 +28,13 @@ authority_boundary:
 transport_contract:
   schema_version: rhgd-context-envelope-transport/1
   context_schema_prefix: pgh.context-envelope/
-  pgd_assignment_ref_required: true
   authorization_ref_required: true
   explicit_join_required: true
   delivery: at-least-once_with_idempotent_receive_and_ack_remove
   execution_authority: NONE
+  pgd_execution_ref_required: true
+  pgd_provider_contract: pgd-rhgd-federation/1
+  pgd_provider_contract_sha256: 3135f6cee8de163d55c9782b1b1de300359a0e2936f79f2a243a03941fefdc52
 network_test:
   kind: real_bidirectional_overlay_transport
   transport: wireguard-overlay
@@ -41,28 +43,60 @@ network_test:
   directions:
   - from: terminal-wireguard
     to: terminal-ipsec
-    sender_capacities: {egress: 2, ingress: 5}
-    receiver_capacities: {egress: 3, ingress: 7}
-    sent_sequences: [1, 2]
-    received_sequences: [1, 2]
+    sender_capacities:
+      egress: 2
+      ingress: 5
+    receiver_capacities:
+      egress: 3
+      ingress: 7
+    sent_sequences:
+    - 1
+    - 2
+    received_sequences:
+    - 1
+    - 2
     envelope_ids:
-    - 62058e33a2f72d5b29bda6ddb98dbc85c69bd0c0630fa11fb93e6728fcf19159
-    - 5af69221404004ac08335b6978cc8f4fa5d4879099d4491607801c0307fbf32b
-    ack_statuses: [ACCEPTED, ACCEPTED]
+    - 76420dbb2e187c633a5d6381889dc38f71b5d0ff9b2eaddcdd206696ef3e9388
+    - acd6d12a7469e5b3055035356e500c9d602db2b29a39d9a3624e483b1098cc1e
+    ack_statuses:
+    - ACCEPTED
+    - ACCEPTED
     egress_empty_after_ack_remove: true
     ingress_empty_after_get_remove: true
+    pgd_execution_refs:
+    - pgd://execution/u12/v2/wg/1
+    - pgd://execution/u12/v2/wg/2
   - from: terminal-ipsec
     to: terminal-wireguard
-    sender_capacities: {egress: 3, ingress: 7}
-    receiver_capacities: {egress: 5, ingress: 3}
-    sent_sequences: [1, 2]
-    received_sequences: [1, 2]
+    sender_capacities:
+      egress: 3
+      ingress: 7
+    receiver_capacities:
+      egress: 5
+      ingress: 3
+    sent_sequences:
+    - 1
+    - 2
+    received_sequences:
+    - 1
+    - 2
     envelope_ids:
-    - 5a5890b62812c529e46e3f98fc4c32cc77b0c6676cb6ffef5256263173c44fb6
-    - 8184c43b1e8b093be7df164951ed0090baccd85a348a97448e11b146f7bfd77c
-    ack_statuses: [ACCEPTED, ACCEPTED]
+    - 73596613b5b54e63f11706c8f136a1c019f60736bc92a78dbcdf588dad12f296
+    - 20fff05b6509ab408ba9aae5b11b661e2d3387c9ea33ea9fe7f484d0733077fc
+    ack_statuses:
+    - ACCEPTED
+    - ACCEPTED
     egress_empty_after_ack_remove: true
     ingress_empty_after_get_remove: true
+    pgd_execution_refs:
+    - pgd://execution/u12/v2/ipsec/1
+    - pgd://execution/u12/v2/ipsec/2
+  homologation: v2_provider_aligned_execution_ref
+  evidence_sha256:
+    wireguard_sender: b2897f3e99d4d7b4d14d9842f8f25133a08fc80d1169d9e8d3ddfd340d9886d4
+    wireguard_receiver: 952137f7ad51bce3dd5a062bf1a4244b9f6831c18df31bc055f6b21d31220fe2
+    ipsec_sender: efffdd5a6c5b7d8c2c722c18ba02a6c1bb79078648a5be95b408cb4f764693e9
+    ipsec_receiver: a1d39604078fa74e46f79a144c87ad02e54a9b18ea2c4c8dc164228a245c8a60
 cleanup:
   listeners_stopped: true
   temporary_firewall_rules_removed: true
@@ -83,9 +117,12 @@ gates:
   ACK_BEFORE_EGRESS_REMOVE: PASS
   INGRESS_GET_REMOVE: PASS
   EXPLICIT_JOIN: PASS
-  PGD_ASSIGNMENT_REF_REQUIRED: PASS
   NO_PGD_EXECUTION_QUEUE_DUPLICATION: PASS
   NO_LEASE_MINT: PASS
   NO_SCHEDULER_AUTHORITY: PASS
   TEMP_NETWORK_CHANGE_ROLLBACK: PASS
   PRODUCTION: BLOCKED
+  PGD_EXECUTION_REF_REQUIRED: PASS
+  PGD_PROVIDER_CONTRACT: PASS
+  CROSS_PEER_IDENTITY_MATCH: PASS
+implementation_commit: 397e03821954ebeb88780b6658efec95ecb095b7
