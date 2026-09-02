@@ -4,37 +4,7 @@ versao_contrato: 7
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
-  unidade: U-RHGD-12-LIVE-CAPABILITY-DISCOVERY-CONTRACT
-  descricao: materializar discovery vivo e distribuicao de ContextEnvelope com fila
-    assimetrica RHGD; transportar somente sob pgd_execution_ref federation-facing
-    existente
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:49:00Z'
-  previsao_termino: '2026-09-02T06:00:00Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - competencias.yaml
-  - estado.md
-  - live_capability_discovery.py
-  - contratos/rhgd-0.0.1/live-capability-discovery.schema.json
-  - tests/test_live_capability_discovery.py
-  - tests/verify_u_rhgd_12_live_capability_discovery.py
-  - dados/rhgd-0.0.1/U-RHGD-12-live-capability-discovery.yaml
-  - docs/arquitetura/12-live-capability-discovery.md
-  - skills/rhgd/SKILL.md
-  - lexico.yaml
-  - contratos/rhgd-0.0.1/context-envelope-transport.schema.json
-  - context_envelope_transport.py
-  - tests/test_context_envelope_transport.py
-  - tests/verify_u_rhgd_12_context_envelope_transport.py
-  - dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml
-  - docs/arquitetura/12-context-envelope-transport.md
-  - docs/arquitetura/00-modelo-logico-fase-zero.md
-  - docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md
-  - docs/politicas/00-politicas-consolidadas.md
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -227,49 +197,49 @@ entradas:
 - id: 48
   caminho: contratos/rhgd-0.0.1/live-capability-discovery.schema.json
   tipo: contrato
-  status: pendente
+  status: aceito
 - id: 49
   caminho: live_capability_discovery.py
   tipo: backend-integracao
-  status: pendente
+  status: aceito
 - id: 50
   caminho: tests/test_live_capability_discovery.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 51
   caminho: tests/verify_u_rhgd_12_live_capability_discovery.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 52
   caminho: dados/rhgd-0.0.1/U-RHGD-12-live-capability-discovery.yaml
   tipo: evidencia
-  status: pendente
+  status: aceito
 - id: 53
   caminho: docs/arquitetura/12-live-capability-discovery.md
   tipo: arquitetura
-  status: pendente
+  status: aceito
 - id: 54
   caminho: contratos/rhgd-0.0.1/context-envelope-transport.schema.json
   tipo: contrato
-  status: pendente
+  status: aceito
 - id: 55
   caminho: context_envelope_transport.py
   tipo: backend-integracao
-  status: pendente
+  status: aceito
 - id: 56
   caminho: tests/test_context_envelope_transport.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 57
   caminho: tests/verify_u_rhgd_12_context_envelope_transport.py
   tipo: teste
-  status: pendente
+  status: aceito
 - id: 58
   caminho: dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml
   tipo: evidencia
-  status: pendente
+  status: aceito
 - id: 59
   caminho: docs/arquitetura/12-context-envelope-transport.md
   tipo: arquitetura
-  status: pendente
+  status: aceito
 repositorio: debianlima/rhgd
