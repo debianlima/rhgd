@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-suite-protocol-conciliation.schema.json",
+  "title": "RHGD Suite Protocol Conciliation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "unit", "observed_at", "release", "refs", "source_safety",
+    "authority_boundaries", "consumed_contracts", "network_policy", "rhgd_owns",
+    "pgd_runtime_owns", "federated_destination_selection", "maturity",
+    "production_promotion_gates", "gates"
+  ],
+  "properties": {
+    "schema": {"const": "rhgd-suite-protocol-conciliation/1"},
+    "unit": {"const": "U-RHGD-08-R1-SUITE-PROTOCOL-CONCILIATION"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "release": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "state", "promoted"],
+      "properties": {
+        "version": {"const": "0.0.1"},
+        "state": {"const": "standby_candidate"},
+        "promoted": {"const": false}
+      }
+    },
+    "refs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["RHGD_BASE", "PGH_U278_SAFE_POINT", "PGH_AUTHORITY_SKILL", "PGD", "PGA", "CONTROL_PLANE", "MSGCD"],
+      "properties": {
+        "RHGD_BASE": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "PGH_U278_SAFE_POINT": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "PGH_AUTHORITY_SKILL": {"const": "pgh@1.2.0"},
+        "PGD": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "PGA": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "CONTROL_PLANE": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "MSGCD": {"const": "PGH_COMPOSITION_NO_STANDALONE_RUNTIME"}
+      }
+    },
+    "source_safety": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pgh_active_owner", "pgh_active_owner_consumed", "safe_point_policy", "pgd_shared_work", "pga_shared_work", "control_plane_shared_work"],
+      "properties": {
+        "pgh_active_owner": {"const": "U282-PGH-SUITE-POST-U278-FIXED-POINT-REFRESH"},
+        "pgh_active_owner_consumed": {"const": false},
+        "safe_point_policy": {"const": "consume_closed_u278_and_recheck_descendant_not_active_u282_delta"},
+        "pgd_shared_work": {"const": "empty"},
+        "pga_shared_work": {"const": "empty"},
+        "control_plane_shared_work": {"const": "empty"}
+      }
+    },
+    "authority_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["PGA", "PGH", "PGD", "RHGD", "MSGCD"],
+      "properties": {
+        "PGA": {"const": "policy_authority_priority_gates_no_runtime"},
+        "PGH": {"const": "semantic_authorization_context_knowledge_evidence"},
+        "PGD": {"const": "runtime_assignment_queue_lease_retry_recovery_watermark"},
+        "RHGD": {"const": "federation_discovery_transport_route_observation_no_scheduler"},
+        "MSGCD": {"const": "aggregation_integration_no_independent_authority"}
+      }
+    },
+    "consumed_contracts": {
+      "type": "array", "minItems": 6, "maxItems": 6,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "owner", "repository", "source", "sha256", "relation"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "owner": {"enum": ["PGD", "PGA", "PGH", "CONTROL_PLANE"]},
+          "repository": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "relation": {"enum": ["federation-facing", "heterogeneous-transport", "network-policy", "priority-policy", "candidate-observation", "context-sync-federation"]}
+        }
+      }
+    },
+    "network_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["default_scope", "join", "private_resources_shared_implicitly", "additional_sharing", "network_federation_owner", "service_agents"],
+      "properties": {
+        "default_scope": {"const": "private"},
+        "join": {"const": "explicit-only"},
+        "private_resources_shared_implicitly": {"const": false},
+        "additional_sharing": {"const": "explicit-grants"},
+        "network_federation_owner": {"const": "RHGD/network-owner"},
+        "service_agents": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "prefixItems": [
+            {"$ref": "#/$defs/networkControlAgent"},
+            {"$ref": "#/$defs/distributedProcessingAgent"}
+          ],
+          "items": false
+        }
+      }
+    },
+    "rhgd_owns": {
+      "type": "array", "uniqueItems": true,
+      "items": {"enum": ["capability_discovery", "federation_transport", "interdomain_provenance", "federated_route_observation", "deterministic_reduction"]}
+    },
+    "pgd_runtime_owns": {
+      "type": "array", "uniqueItems": true,
+      "items": {"enum": ["admission", "assignment", "queue", "lease", "scheduler", "retry", "recovery", "runtime_state", "watermark", "relay_cas_dedupe"]}
+    },
+    "federated_destination_selection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["canonical_type", "legacy_alias", "authority_effect", "current_input_kind", "live_discovery_claim"],
+      "properties": {
+        "canonical_type": {"const": "FederatedDestinationMatcher"},
+        "legacy_alias": {"const": "CognitiveScheduler"},
+        "authority_effect": {"const": "NONE"},
+        "current_input_kind": {"const": "in_memory_NodeCapability_snapshot"},
+        "live_discovery_claim": {"const": false}
+      }
+    },
+    "maturity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contractual_federation", "deterministic_matcher", "live_capability_discovery", "real_network_federation", "production", "tee_attestation", "upstream_adapters"],
+      "properties": {
+        "contractual_federation": {"const": "PASS"},
+        "deterministic_matcher": {"const": "PASS_LOCAL"},
+        "live_capability_discovery": {"const": "NOT_VERIFIED"},
+        "real_network_federation": {"const": "NOT_VERIFIED"},
+        "production": {"const": "BLOCKED"},
+        "tee_attestation": {"const": "OPTIONAL_NOT_REQUIRED_FOR_U08"},
+        "upstream_adapters": {"const": "OPTIONAL_NOT_REQUIRED_FOR_U08"}
+      }
+    },
+    "production_promotion_gates": {
+      "type": "array", "minItems": 6, "uniqueItems": true,
+      "items": {"enum": [
+        "LIVE_CAPABILITY_DISCOVERY_TWO_PEERS",
+        "REAL_AUTHENTICATED_NETWORK_FEDERATION",
+        "PGD_ASSIGNMENT_LEASE_FENCE_PRESERVED_END_TO_END",
+        "PRIVATE_BY_DEFAULT_EXPLICIT_JOIN_GRANTS",
+        "FAILURE_RECONNECT_IDEMPOTENCY_PROVEN",
+        "OUTCOME_PROVENANCE_OBSERVED_END_TO_END",
+        "NO_SECRET_EXPOSURE",
+        "CAPABILITY_FRESHNESS_AND_STALE_REJECTION",
+        "INDEPENDENT_OBSERVABILITY_EVIDENCE"
+      ]}
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["DELTA_INVENTORY", "LEARNING_PRESERVED", "AUTHORITY_BOUNDARY", "NO_SECOND_SCHEDULER", "PGD_CONTRACTS", "PGA_POLICY", "PGH_SAFE_POINT", "MSGCD_BOUNDARY", "CONTEXT_SYNC_BOUNDARY", "RELEASE_IMMUTABILITY", "LIVE_CAPABILITY_DISCOVERY", "REAL_NETWORK_FEDERATION", "PRODUCTION"],
+      "properties": {
+        "DELTA_INVENTORY": {"const": "PASS"},
+        "LEARNING_PRESERVED": {"const": "PASS"},
+        "AUTHORITY_BOUNDARY": {"const": "PASS"},
+        "NO_SECOND_SCHEDULER": {"const": "PASS"},
+        "PGD_CONTRACTS": {"const": "PASS"},
+        "PGA_POLICY": {"const": "PASS"},
+        "PGH_SAFE_POINT": {"const": "PASS"},
+        "MSGCD_BOUNDARY": {"const": "PASS"},
+        "CONTEXT_SYNC_BOUNDARY": {"const": "PASS"},
+        "RELEASE_IMMUTABILITY": {"const": "PASS"},
+        "LIVE_CAPABILITY_DISCOVERY": {"const": "NOT_VERIFIED"},
+        "REAL_NETWORK_FEDERATION": {"const": "NOT_VERIFIED"},
+        "PRODUCTION": {"const": "BLOCKED"}
+      }
+    }
+  },
+  "$defs": {
+    "networkControlAgent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "count", "lifecycle", "scope", "runtime_owner"],
+      "properties": {
+        "role": {"const": "network_control_agent"}, "count": {"const": 1},
+        "lifecycle": {"const": "ephemeral"}, "scope": {"const": "network-control-only"},
+        "runtime_owner": {"const": "PGD/runtime-owner"}
+      }
+    },
+    "distributedProcessingAgent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "count", "lifecycle", "scope", "runtime_owner"],
+      "properties": {
+        "role": {"const": "distributed_processing_agent"}, "count": {"const": 1},
+        "lifecycle": {"const": "ephemeral"}, "scope": {"const": "distributed-processing-only"},
+        "runtime_owner": {"const": "PGD/runtime-owner"}
+      }
+    }
+  }
+}

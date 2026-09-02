@@ -1,0 +1,137 @@
+schema: rhgd-suite-protocol-conciliation/1
+unit: U-RHGD-08-R1-SUITE-PROTOCOL-CONCILIATION
+observed_at: '2026-09-02T04:06:00Z'
+release:
+  version: 0.0.1
+  state: standby_candidate
+  promoted: false
+refs:
+  RHGD_BASE: ee24a3916e964c7ec624b666daa035aa6f4e97c5
+  PGH_U278_SAFE_POINT: 1832fa24375a1e2f3cc207b163f1a42d0acc2042
+  PGH_AUTHORITY_SKILL: pgh@1.2.0
+  PGD: fa63a046e79e28d512dd901c43629d47a5bdea89
+  PGA: 5d1dfd93b0525db26b44efaea8bdbc56f25c185c
+  CONTROL_PLANE: 9408814f4af6b73c743b0dc35661caee0da5adca
+  MSGCD: PGH_COMPOSITION_NO_STANDALONE_RUNTIME
+source_safety:
+  pgh_active_owner: U282-PGH-SUITE-POST-U278-FIXED-POINT-REFRESH
+  pgh_active_owner_consumed: false
+  safe_point_policy: consume_closed_u278_and_recheck_descendant_not_active_u282_delta
+  pgd_shared_work: empty
+  pga_shared_work: empty
+  control_plane_shared_work: empty
+authority_boundaries:
+  PGA: policy_authority_priority_gates_no_runtime
+  PGH: semantic_authorization_context_knowledge_evidence
+  PGD: runtime_assignment_queue_lease_retry_recovery_watermark
+  RHGD: federation_discovery_transport_route_observation_no_scheduler
+  MSGCD: aggregation_integration_no_independent_authority
+consumed_contracts:
+- id: pgd-rhgd-federation/1
+  owner: PGD
+  repository: debianlima/pgd
+  source: contratos/pgd-1.0/rhgd-federation.schema.json
+  sha256: 3135f6cee8de163d55c9782b1b1de300359a0e2936f79f2a243a03941fefdc52
+  relation: federation-facing
+- id: pgd-incremental-information-exchange/1
+  owner: PGD
+  repository: debianlima/pgd
+  source: contratos/pgd-1.0/incremental-information-exchange.schema.json
+  sha256: aea5c1c7c6e8f15c55eba596e1d9b4a9bdf5bbc34c15c2fcc47fafae4b496964
+  relation: heterogeneous-transport
+- id: pga-network-service-agents/1
+  owner: PGA
+  repository: debianlima/pga
+  source: contratos/pga-1.0/network-service-agents.schema.json
+  sha256: 504df737545226ac6837fea6299d4ccd0732f9197bcdadf948f03886209a361a
+  relation: network-policy
+- id: pga-deterministic-priority-policy/1
+  owner: PGA
+  repository: debianlima/pga
+  source: contratos/pga-1.0/deterministic-priority-policy.schema.json
+  sha256: 2d84c843b9d8f4debcea7efe58a44ec7b8d31d2dfabf1ed5eb393dffd9b71126
+  relation: priority-policy
+- id: CT-PGH2-DETERMINISTIC-ELECTION-FABRIC@1.0.0
+  owner: PGH
+  repository: debianlima/protocolo-governanca-heterogenea
+  source: contratos/pgh-2.0/deterministic-election-fabric.schema.json
+  sha256: 5005c84423c1a09dab686d2640c6faf040f548cf6eedcfe688f55ba05c9eb6a3
+  relation: candidate-observation
+- id: pgh-context-sync/1
+  owner: CONTROL_PLANE
+  repository: debianlima/pgh-distributed-session-control-plane
+  source: config/3.0/context-sync.yaml
+  sha256: e01af951c82e4fb56e00c511eb91cc17a22d855492e36a25ef6e5de6e96a22c0
+  relation: context-sync-federation
+network_policy:
+  default_scope: private
+  join: explicit-only
+  private_resources_shared_implicitly: false
+  additional_sharing: explicit-grants
+  network_federation_owner: RHGD/network-owner
+  service_agents:
+  - role: network_control_agent
+    count: 1
+    lifecycle: ephemeral
+    scope: network-control-only
+    runtime_owner: PGD/runtime-owner
+  - role: distributed_processing_agent
+    count: 1
+    lifecycle: ephemeral
+    scope: distributed-processing-only
+    runtime_owner: PGD/runtime-owner
+rhgd_owns:
+- capability_discovery
+- federation_transport
+- interdomain_provenance
+- federated_route_observation
+- deterministic_reduction
+pgd_runtime_owns:
+- admission
+- assignment
+- queue
+- lease
+- scheduler
+- retry
+- recovery
+- runtime_state
+- watermark
+- relay_cas_dedupe
+federated_destination_selection:
+  canonical_type: FederatedDestinationMatcher
+  legacy_alias: CognitiveScheduler
+  authority_effect: NONE
+  current_input_kind: in_memory_NodeCapability_snapshot
+  live_discovery_claim: false
+maturity:
+  contractual_federation: PASS
+  deterministic_matcher: PASS_LOCAL
+  live_capability_discovery: NOT_VERIFIED
+  real_network_federation: NOT_VERIFIED
+  production: BLOCKED
+  tee_attestation: OPTIONAL_NOT_REQUIRED_FOR_U08
+  upstream_adapters: OPTIONAL_NOT_REQUIRED_FOR_U08
+production_promotion_gates:
+- LIVE_CAPABILITY_DISCOVERY_TWO_PEERS
+- REAL_AUTHENTICATED_NETWORK_FEDERATION
+- PGD_ASSIGNMENT_LEASE_FENCE_PRESERVED_END_TO_END
+- PRIVATE_BY_DEFAULT_EXPLICIT_JOIN_GRANTS
+- FAILURE_RECONNECT_IDEMPOTENCY_PROVEN
+- OUTCOME_PROVENANCE_OBSERVED_END_TO_END
+- NO_SECRET_EXPOSURE
+- CAPABILITY_FRESHNESS_AND_STALE_REJECTION
+- INDEPENDENT_OBSERVABILITY_EVIDENCE
+gates:
+  DELTA_INVENTORY: PASS
+  LEARNING_PRESERVED: PASS
+  AUTHORITY_BOUNDARY: PASS
+  NO_SECOND_SCHEDULER: PASS
+  PGD_CONTRACTS: PASS
+  PGA_POLICY: PASS
+  PGH_SAFE_POINT: PASS
+  MSGCD_BOUNDARY: PASS
+  CONTEXT_SYNC_BOUNDARY: PASS
+  RELEASE_IMMUTABILITY: PASS
+  LIVE_CAPABILITY_DISCOVERY: NOT_VERIFIED
+  REAL_NETWORK_FEDERATION: NOT_VERIFIED
+  PRODUCTION: BLOCKED
