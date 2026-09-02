@@ -67,17 +67,21 @@ def external_validate(root: Path, data: dict) -> None:
     if not core.joinpath('.git').exists(): fail('missing-core-repo')
     # Producer safe point must remain an ancestor of the current in-progress RHGD head.
     subprocess.check_call(['git','-C',str(rhgd),'merge-base','--is-ancestor',U08_CLOSED_SAFE_POINT,'HEAD'])
-    u282 = yaml.safe_load(core.joinpath(U282_DATA).read_text(encoding='utf-8'))
-    manifest = yaml.safe_load(core.joinpath('manifesto.yaml').read_text(encoding='utf-8'))
+    observed_core = data['consumer']['observed_core_head']
+    observed_rhgd = data['producer']['observed_active_head']
+    subprocess.check_call(['git','-C',str(core),'merge-base','--is-ancestor',observed_core,'HEAD'])
+    subprocess.check_call(['git','-C',str(rhgd),'merge-base','--is-ancestor',observed_rhgd,'HEAD'])
+    # Reconstruct the observation from the exact consumer commit so later owner progress
+    # cannot rewrite the historical classification.
+    u282 = yaml.safe_load(git(core, 'show', f'{observed_core}:{U282_DATA}'))
+    manifest = yaml.safe_load(git(core, 'show', f'{observed_core}:manifesto.yaml'))
     sw = manifest.get('trabalho_compartilhado') or {}
-    if sw.get('unidade') != U282_UNIT: fail('u282-not-active-owner')
+    if sw.get('unidade') != U282_UNIT: fail('u282-not-active-owner-at-observation')
     pinned = (u282.get('snapshot_refs') or {}).get('rhgd')
-    if pinned != data['consumer']['observed_rhgd_pin']: fail('consumer-pin-drift')
+    if pinned != data['consumer']['observed_rhgd_pin']: fail('consumer-pin-observation-mismatch')
     if pinned == U08_CLOSED_SAFE_POINT: fail('expected-stale-but-fresh')
     if data['consumer']['observed_owner'] != sw.get('agente'): fail('consumer-owner')
     if data['consumer']['observed_owner_until'] != sw.get('previsao_termino'): fail('consumer-owner-until')
-    if data['consumer']['observed_core_head'] != git(core, 'rev-parse', 'HEAD'): fail('core-head-drift')
-    if data['producer']['observed_active_head'] != git(rhgd, 'rev-parse', 'HEAD'): fail('producer-head-drift')
     print('DOWNSTREAM_EXTERNAL_OBSERVATION=PASS')
 
 

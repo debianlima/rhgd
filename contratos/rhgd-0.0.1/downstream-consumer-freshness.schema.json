@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-downstream-consumer-freshness.schema.json",
+  "title": "RHGD Downstream Consumer Freshness",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "unit",
+    "observed_at",
+    "producer",
+    "consumer",
+    "gates"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rhgd-downstream-consumer-freshness/1"
+    },
+    "unit": {
+      "const": "U-RHGD-09-POST-U08-SUITE-INTEGRATION-CHECK"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "version",
+        "release_state",
+        "closed_safe_point",
+        "observed_active_head",
+        "target_rule"
+      ],
+      "properties": {
+        "repository": {
+          "const": "debianlima/rhgd"
+        },
+        "version": {
+          "const": "0.0.1"
+        },
+        "release_state": {
+          "const": "standby_candidate"
+        },
+        "closed_safe_point": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "observed_active_head": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "target_rule": {
+          "const": "downstream_consumers_follow_last_closed_safe_point_not_in_progress_head"
+        }
+      }
+    },
+    "consumer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "unit",
+        "snapshot_source",
+        "observed_core_head",
+        "observed_rhgd_pin",
+        "freshness",
+        "classification",
+        "observed_owner",
+        "observed_owner_until",
+        "mutation_allowed",
+        "required_next_action"
+      ],
+      "properties": {
+        "repository": {
+          "const": "debianlima/protocolo-governanca-heterogenea"
+        },
+        "unit": {
+          "const": "U282-PGH-SUITE-POST-U278-FIXED-POINT-REFRESH"
+        },
+        "snapshot_source": {
+          "const": "dados/pgh-2.0/U282-suite-post-u278-fixed-point-refresh.yaml"
+        },
+        "observed_core_head": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "observed_rhgd_pin": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "freshness": {
+          "const": "STALE"
+        },
+        "classification": {
+          "const": "BLOCKED_ACTIVE_OWNER_STALE"
+        },
+        "observed_owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_owner_until": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mutation_allowed": {
+          "const": false
+        },
+        "required_next_action": {
+          "const": "owner_reconcile_after_active_work_or_within_own_zone"
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PRODUCER_SAFE_POINT",
+        "CONSUMER_PIN_READ",
+        "STALE_DETECTED",
+        "ACTIVE_OWNER_RESPECTED",
+        "AUTO_MUTATION",
+        "DOWNSTREAM_SYNCHRONIZED",
+        "NO_FALSE_FIXED_POINT"
+      ],
+      "properties": {
+        "PRODUCER_SAFE_POINT": {
+          "const": "PASS"
+        },
+        "CONSUMER_PIN_READ": {
+          "const": "PASS"
+        },
+        "STALE_DETECTED": {
+          "const": "PASS"
+        },
+        "ACTIVE_OWNER_RESPECTED": {
+          "const": "PASS"
+        },
+        "AUTO_MUTATION": {
+          "const": "BLOCKED"
+        },
+        "DOWNSTREAM_SYNCHRONIZED": {
+          "const": "NO"
+        },
+        "NO_FALSE_FIXED_POINT": {
+          "const": "PASS"
+        }
+      }
+    }
+  }
+}
