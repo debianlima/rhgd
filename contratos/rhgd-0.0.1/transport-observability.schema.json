@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-transport-observability.schema.json",
+  "title": "RHGD Transport Observability Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "observed_at_ms", "last_activity_ms", "counters", "queue_depth", "authority"],
+  "properties": {
+    "schema_version": {"const": "rhgd-transport-observability/1"},
+    "observed_at_ms": {"type": "integer", "minimum": 0},
+    "last_activity_ms": {"type": "integer", "minimum": 0},
+    "counters": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requests_total", "transport_accepted", "transport_duplicate", "transport_already_consumed", "auth_failure", "auth_replay", "transport_rejected"],
+      "properties": {
+        "requests_total": {"type": "integer", "minimum": 0},
+        "transport_accepted": {"type": "integer", "minimum": 0},
+        "transport_duplicate": {"type": "integer", "minimum": 0},
+        "transport_already_consumed": {"type": "integer", "minimum": 0},
+        "auth_failure": {"type": "integer", "minimum": 0},
+        "auth_replay": {"type": "integer", "minimum": 0},
+        "transport_rejected": {"type": "integer", "minimum": 0}
+      }
+    },
+    "queue_depth": {
+      "type": "object", "additionalProperties": false,
+      "required": ["egress", "ingress"],
+      "properties": {
+        "egress": {"type": "integer", "minimum": 0},
+        "ingress": {"type": "integer", "minimum": 0}
+      }
+    },
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["queue", "scheduler", "lease_grant", "admission"],
+      "properties": {
+        "queue": {"const": "envelope_transport_only"},
+        "scheduler": {"const": false},
+        "lease_grant": {"const": false},
+        "admission": {"const": false}
+      }
+    }
+  }
+}

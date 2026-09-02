@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-application-auth.schema.json",
+  "title": "RHGD Application Authentication Metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "key_id", "peer_id", "timestamp_ms", "nonce", "body_sha256", "signature"],
+  "properties": {
+    "schema_version": {"const": "rhgd-application-auth/1"},
+    "key_id": {"type": "string", "minLength": 1},
+    "peer_id": {"type": "string", "minLength": 1},
+    "timestamp_ms": {"type": "integer", "minimum": 0},
+    "nonce": {"type": "string", "minLength": 12, "maxLength": 128},
+    "body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "signature": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

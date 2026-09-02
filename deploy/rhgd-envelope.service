@@ -1,0 +1,30 @@
+[Unit]
+Description=RHGD authenticated durable ContextEnvelope transport
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=rhgd
+RuntimeDirectory=rhgd
+EnvironmentFile=/etc/rhgd/rhgd-envelope.conf
+LoadCredential=rhgd_auth_key:/run/rhgd/rhgd_auth_key
+ExecStart=/usr/bin/python3 /opt/rhgd/persistent_envelope_daemon.py serve --bind ${RHGD_BIND} --port ${RHGD_PORT} --peer-id ${RHGD_PEER_ID} --joined-peer-id ${RHGD_REMOTE_PEER_ID} --state-db /var/lib/rhgd/envelope.sqlite3 --auth-state-db /var/lib/rhgd/auth-nonce.sqlite3 --auth-binding ${RHGD_AUTH_KEY_ID}:${RHGD_REMOTE_PEER_ID}:${CREDENTIALS_DIRECTORY}/rhgd_auth_key --stream-id ${RHGD_STREAM_ID} --egress-capacity ${RHGD_EGRESS_CAPACITY} --ingress-capacity ${RHGD_INGRESS_CAPACITY}
+Restart=on-failure
+RestartSec=1s
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
