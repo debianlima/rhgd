@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rhgd-durable-envelope-queue-state.schema.json",
+  "title": "RHGD Durable EnvelopeTransportQueue State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "authority", "local_peer_id", "joined_peer_ids",
+    "egress_capacity", "ingress_capacity", "stream_id", "egress_next",
+    "egress", "ingress", "ingress_expected", "ingress_stream_for_peer",
+    "ingress_consumed"
+  ],
+  "properties": {
+    "schema_version": {"const": "rhgd-durable-envelope-queue-state/1"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queue", "scheduler", "lease_grant", "admission"],
+      "properties": {
+        "queue": {"const": "envelope_transport_only"},
+        "scheduler": {"const": false},
+        "lease_grant": {"const": false},
+        "admission": {"const": false}
+      }
+    },
+    "local_peer_id": {"type": "string", "minLength": 1},
+    "joined_peer_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "egress_capacity": {"type": "integer", "minimum": 1},
+    "ingress_capacity": {"type": "integer", "minimum": 1},
+    "stream_id": {"type": "string", "minLength": 1},
+    "egress_next": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["destination_peer", "next_sequence"],
+        "properties": {
+          "destination_peer": {"type": "string", "minLength": 1},
+          "next_sequence": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "egress": {"type": "array", "items": {"$ref": "context-envelope-transport.schema.json"}},
+    "ingress": {"type": "array", "items": {"$ref": "context-envelope-transport.schema.json"}},
+    "ingress_expected": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_peer", "stream_id", "next_sequence"],
+        "properties": {
+          "source_peer": {"type": "string", "minLength": 1},
+          "stream_id": {"type": "string", "minLength": 1},
+          "next_sequence": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "ingress_stream_for_peer": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_peer", "stream_id"],
+        "properties": {
+          "source_peer": {"type": "string", "minLength": 1},
+          "stream_id": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "ingress_consumed": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_peer", "stream_id", "sequence", "envelope_id"],
+        "properties": {
+          "source_peer": {"type": "string", "minLength": 1},
+          "stream_id": {"type": "string", "minLength": 1},
+          "sequence": {"type": "integer", "minimum": 1},
+          "envelope_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

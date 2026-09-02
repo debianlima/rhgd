@@ -9,10 +9,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sqlite3
+import threading
 import time
 import uuid
 from collections import defaultdict
 from http.server import BaseHTTPRequestHandler
+from pathlib import Path
 from typing import Callable, Mapping
 from urllib.request import Request, urlopen
 
@@ -234,6 +237,184 @@ class AsymmetricEnvelopeQueue:
         self._ingress_consumed[(source, stream, seq)] = envelope_id
         self._ingress_expected[key] += 1
         return dict(frame)
+
+
+DURABLE_STATE_SCHEMA_VERSION = "rhgd-durable-envelope-queue-state/1"
+
+
+class DurableEnvelopeQueue(AsymmetricEnvelopeQueue):
+    """Crash-recoverable EnvelopeTransportQueue backed by a local SQLite journal.
+
+    SQLite is the persistence mechanism only; transport semantics and execution
+    authority are unchanged. Every mutating operation is persisted with
+    ``synchronous=FULL`` before it returns to its caller. A receiver therefore
+    persists an inbound frame before the HTTP service can emit an ACK.
+    """
+
+    def __init__(
+        self,
+        local_peer_id: str,
+        *,
+        joined_peer_ids: set[str],
+        state_db: str | Path,
+        egress_capacity: int = 128,
+        ingress_capacity: int = 256,
+        stream_id: str | None = None,
+        clock_ms: Callable[[], int] = _clock_ms,
+    ) -> None:
+        self.state_db = Path(state_db)
+        self.state_db.parent.mkdir(parents=True, exist_ok=True)
+        self._state_lock = threading.RLock()
+        super().__init__(
+            local_peer_id,
+            joined_peer_ids=joined_peer_ids,
+            egress_capacity=egress_capacity,
+            ingress_capacity=ingress_capacity,
+            stream_id=stream_id,
+            clock_ms=clock_ms,
+        )
+        self._db = sqlite3.connect(str(self.state_db), timeout=5.0, check_same_thread=False)
+        self._db.execute("PRAGMA journal_mode=WAL")
+        self._db.execute("PRAGMA synchronous=FULL")
+        self._db.execute("PRAGMA busy_timeout=5000")
+        self._db.execute(
+            "CREATE TABLE IF NOT EXISTS queue_state ("
+            "id INTEGER PRIMARY KEY CHECK(id=1), "
+            "payload TEXT NOT NULL, updated_at_ms INTEGER NOT NULL)"
+        )
+        row = self._db.execute("SELECT payload FROM queue_state WHERE id=1").fetchone()
+        if row is None:
+            self._persist_unlocked()
+        else:
+            persisted = json.loads(row[0])
+            self._validate_persisted_config(persisted)
+            self._restore_unlocked(persisted)
+
+    def _validate_persisted_config(self, state: Mapping[str, object]) -> None:
+        expected = {
+            "schema_version": DURABLE_STATE_SCHEMA_VERSION,
+            "authority": TRANSPORT_AUTHORITY,
+            "local_peer_id": self.local_peer_id,
+            "joined_peer_ids": sorted(self.joined_peer_ids),
+            "egress_capacity": self.egress_capacity,
+            "ingress_capacity": self.ingress_capacity,
+            "stream_id": self.stream_id,
+        }
+        for key, value in expected.items():
+            if state.get(key) != value:
+                raise ValueError(f"persisted queue configuration mismatch: {key}")
+
+    def _snapshot_unlocked(self) -> dict:
+        egress = [
+            dict(frame)
+            for destination in sorted(self._egress)
+            for frame in sorted(self._egress[destination], key=lambda x: x["sequence"])
+        ]
+        ingress = [
+            dict(frame)
+            for key in sorted(self._ingress)
+            for _, frame in sorted(self._ingress[key].items())
+        ]
+        return {
+            "schema_version": DURABLE_STATE_SCHEMA_VERSION,
+            "authority": dict(TRANSPORT_AUTHORITY),
+            "local_peer_id": self.local_peer_id,
+            "joined_peer_ids": sorted(self.joined_peer_ids),
+            "egress_capacity": self.egress_capacity,
+            "ingress_capacity": self.ingress_capacity,
+            "stream_id": self.stream_id,
+            "egress_next": [
+                {"destination_peer": peer, "next_sequence": seq}
+                for peer, seq in sorted(self._egress_next.items())
+            ],
+            "egress": egress,
+            "ingress": ingress,
+            "ingress_expected": [
+                {"source_peer": source, "stream_id": stream, "next_sequence": seq}
+                for (source, stream), seq in sorted(self._ingress_expected.items())
+            ],
+            "ingress_stream_for_peer": [
+                {"source_peer": peer, "stream_id": stream}
+                for peer, stream in sorted(self._ingress_stream_for_peer.items())
+            ],
+            "ingress_consumed": [
+                {"source_peer": source, "stream_id": stream, "sequence": seq, "envelope_id": envelope_id}
+                for (source, stream, seq), envelope_id in sorted(self._ingress_consumed.items())
+            ],
+        }
+
+    def snapshot_state(self) -> dict:
+        with self._state_lock:
+            return self._snapshot_unlocked()
+
+    def _restore_unlocked(self, state: Mapping[str, object]) -> None:
+        self._egress = defaultdict(list)
+        self._egress_next = defaultdict(lambda: 1)
+        self._egress_index = {}
+        self._ingress = defaultdict(dict)
+        self._ingress_expected = defaultdict(lambda: 1)
+        self._ingress_stream_for_peer = {}
+        self._ingress_index = {}
+        self._ingress_consumed = {}
+        for item in state.get("egress_next", []):
+            self._egress_next[item["destination_peer"]] = item["next_sequence"]
+        for frame in state.get("egress", []):
+            x = validate_transport_frame(frame)
+            self._egress[x["destination_peer"]].append(x)
+            self._egress_index[x["envelope_id"]] = x["destination_peer"]
+        for frame in state.get("ingress", []):
+            x = validate_transport_frame(frame)
+            key = (x["source_peer"], x["stream_id"])
+            self._ingress[key][x["sequence"]] = x
+            self._ingress_index[x["envelope_id"]] = (x["source_peer"], x["stream_id"], x["sequence"])
+        for item in state.get("ingress_expected", []):
+            self._ingress_expected[(item["source_peer"], item["stream_id"])] = item["next_sequence"]
+        for item in state.get("ingress_stream_for_peer", []):
+            self._ingress_stream_for_peer[item["source_peer"]] = item["stream_id"]
+        for item in state.get("ingress_consumed", []):
+            self._ingress_consumed[(item["source_peer"], item["stream_id"], item["sequence"])] = item["envelope_id"]
+
+    def _persist_unlocked(self) -> None:
+        state = self._snapshot_unlocked()
+        payload = json.dumps(state, sort_keys=True, separators=(",", ":"))
+        updated = int(self.clock_ms())
+        with self._db:
+            self._db.execute(
+                "INSERT INTO queue_state(id,payload,updated_at_ms) VALUES(1,?,?) "
+                "ON CONFLICT(id) DO UPDATE SET payload=excluded.payload, updated_at_ms=excluded.updated_at_ms",
+                (payload, updated),
+            )
+
+    def _durable_mutation(self, operation: Callable[[], object]) -> object:
+        with self._state_lock:
+            before = self._snapshot_unlocked()
+            result = operation()
+            try:
+                self._persist_unlocked()
+            except Exception:
+                self._restore_unlocked(before)
+                raise
+            return result
+
+    def put_outbound(self, *args: object, **kwargs: object) -> dict:
+        return self._durable_mutation(lambda: super(DurableEnvelopeQueue, self).put_outbound(*args, **kwargs))
+
+    def remove_outbound(self, envelope_id: str) -> dict:
+        return self._durable_mutation(lambda: super(DurableEnvelopeQueue, self).remove_outbound(envelope_id))
+
+    def put_inbound(self, frame: Mapping[str, object]) -> dict:
+        return self._durable_mutation(lambda: super(DurableEnvelopeQueue, self).put_inbound(frame))
+
+    def remove_inbound(self, envelope_id: str) -> dict:
+        return self._durable_mutation(lambda: super(DurableEnvelopeQueue, self).remove_inbound(envelope_id))
+
+    def close(self) -> None:
+        with self._state_lock:
+            db = getattr(self, "_db", None)
+            if db is not None:
+                db.execute("PRAGMA wal_checkpoint(FULL)")
+                db.close()
+                self._db = None
 
 
 class EnvelopeTransportService:
