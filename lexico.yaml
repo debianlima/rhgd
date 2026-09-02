@@ -15,3 +15,5 @@ termos:
     de ContextEnvelope
   EnvelopeAck: confirmacao de transporte que autoriza retirada do envelope da fila
     RHGD, sem conceder lease PGD
+  PGDExecutionRef: referencia opaca de execucao retornada pelo contrato PGD federation-facing;
+    autoriza correlacao de transporte, nao concede lease pelo RHGD

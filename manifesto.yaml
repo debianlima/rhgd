@@ -1,6 +1,6 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 6
+versao_contrato: 7
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
@@ -9,9 +9,10 @@ trabalho_compartilhado:
   caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
   unidade: U-RHGD-12-LIVE-CAPABILITY-DISCOVERY-CONTRACT
   descricao: materializar discovery vivo e distribuicao de ContextEnvelope com fila
-    assimetrica ingress/egress RHGD sem duplicar scheduler/lease PGD
+    assimetrica RHGD; transportar somente sob pgd_execution_ref federation-facing
+    existente
   agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:43:00Z'
+  atualizado_em: '2026-09-02T04:49:00Z'
   previsao_termino: '2026-09-02T06:00:00Z'
   zona_exclusao:
   - manifesto.yaml
