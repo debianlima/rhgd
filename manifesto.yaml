@@ -11,7 +11,7 @@ trabalho_compartilhado:
   descricao: materializar discovery vivo e distribuicao de ContextEnvelope com fila
     assimetrica ingress/egress RHGD sem duplicar scheduler/lease PGD
   agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T04:36:00Z'
+  atualizado_em: '2026-09-02T04:43:00Z'
   previsao_termino: '2026-09-02T06:00:00Z'
   zona_exclusao:
   - manifesto.yaml
@@ -31,6 +31,9 @@ trabalho_compartilhado:
   - tests/verify_u_rhgd_12_context_envelope_transport.py
   - dados/rhgd-0.0.1/U-RHGD-12-context-envelope-transport.yaml
   - docs/arquitetura/12-context-envelope-transport.md
+  - docs/arquitetura/00-modelo-logico-fase-zero.md
+  - docs/arquitetura/01-fronteiras-pgh-pgd-pga-msgcd-rhgd.md
+  - docs/politicas/00-politicas-consolidadas.md
 entradas:
 - id: 1
   caminho: README.md
