@@ -20,6 +20,7 @@ trabalho_compartilhado:
   - dados/rhgd-0.0.1/U-RHGD-11-pga-provider-structural-drift.yaml
   - tests/verify_u_rhgd_11_pga_provider_structural_drift.py
   - docs/arquitetura/11-pga-provider-structural-drift.md
+  - skills/rhgd/SKILL.md
 entradas:
 - id: 1
   caminho: README.md
