@@ -4,22 +4,7 @@ versao_contrato: 2
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /srv/mcp-workspace/tmp/rhgd-protocol-reconcile-20260902/rhgd
-  unidade: U-RHGD-08-R1-SUITE-PROTOCOL-CONCILIATION
-  descricao: conciliar RHGD 0.0.1 com HEADs/contratos atuais PGH, PGD e PGA sem promover produção ou criar segundo scheduler
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-02T03:58:40Z'
-  previsao_termino: '2026-09-02T05:10:00Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - dados/rhgd-0.0.1/U-RHGD-08-suite-protocol-conciliation.yaml
-  - docs/arquitetura/08-suite-protocol-conciliation.md
-  - tests/verify_u_rhgd_08_suite_protocol_conciliation.py
-  - skills/rhgd/SKILL.md
-  - competencias.yaml
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -164,17 +149,17 @@ entradas:
 - id: 36
   caminho: contratos/rhgd-0.0.1/suite-protocol-conciliation.schema.json
   tipo: contrato
-  status: pendente
+  status: aceito
 - id: 37
   caminho: dados/rhgd-0.0.1/U-RHGD-08-suite-protocol-conciliation.yaml
   tipo: evidencia
-  status: pendente
+  status: aceito
 - id: 38
   caminho: docs/arquitetura/08-suite-protocol-conciliation.md
   tipo: arquitetura
-  status: pendente
+  status: aceito
 - id: 39
   caminho: tests/verify_u_rhgd_08_suite_protocol_conciliation.py
   tipo: teste
-  status: pendente
+  status: aceito
 repositorio: debianlima/rhgd
