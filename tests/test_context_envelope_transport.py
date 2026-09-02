@@ -50,6 +50,9 @@ class TestContextEnvelopeTransport(unittest.TestCase):
         self.assertFalse(duplicate['inserted'])
         conflict=dict(two); conflict['envelope_id']='different-id'
         with self.assertRaises(ValueError): recv.put_inbound(conflict)
+        recv.remove_inbound(two['envelope_id'])
+        consumed_conflict=dict(one); consumed_conflict['envelope_id']='different-consumed-id'
+        with self.assertRaises(ValueError): recv.put_inbound(consumed_conflict)
 
     def test_explicit_join_and_authority_boundary(self):
         q=AsymmetricEnvelopeQueue('peer-a',joined_peer_ids={'peer-b'},stream_id='boot-a')

@@ -39,4 +39,4 @@ Gates herdados: `PGH_AUTHORIZATION_REQUIRED`, `RESOURCE_STATE_OWNED_BY_PGD`, `OP
 10. `BLOCKCHAIN_OFF_CRITICAL_PATH`: prompts, respostas, `ExecutionQueue`, `EnvelopeTransportQueue` e telemetria não dependem de consenso on-chain na Fase 0.
 11. `SETTLEMENT_ADAPTER_ONLY`: Bitcoin/Lightning/RGB/EVM são adapters futuros, não autoridade cognitiva.
 12. `NO_SECRET_IN_ADVERTISEMENT`: anúncios nunca carregam credenciais ou conhecimento privado bruto.
-13. `ASYMMETRIC_CONTEXT_ENVELOPE_TRANSPORT`: RHGD mantém ingress/egress independentes, ordem monotônica por peer e remoção condicionada a ACK/consumo; cada frame exige `authorization_ref` e `pgd_assignment_ref` e não concede lease.
+13. `ASYMMETRIC_CONTEXT_ENVELOPE_TRANSPORT`: RHGD mantém ingress/egress independentes, ordem monotônica por peer e remoção condicionada a ACK/consumo; cada frame exige `authorization_ref` e `pgd_execution_ref` e não concede lease.

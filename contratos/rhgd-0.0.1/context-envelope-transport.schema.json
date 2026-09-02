@@ -7,7 +7,7 @@
   "required": [
     "schema_version", "envelope_id", "correlation_id", "work_id", "model_ref",
     "source_peer", "destination_peer", "stream_id", "sequence", "issued_at_ms",
-    "authorization_ref", "pgd_assignment_ref", "context_envelope", "transport_authority"
+    "authorization_ref", "pgd_execution_ref", "context_envelope", "transport_authority"
   ],
   "properties": {
     "schema_version": {"const": "rhgd-context-envelope-transport/1"},
@@ -21,7 +21,7 @@
     "sequence": {"type": "integer", "minimum": 1},
     "issued_at_ms": {"type": "integer", "minimum": 0},
     "authorization_ref": {"type": "string", "minLength": 1},
-    "pgd_assignment_ref": {"type": "string", "minLength": 1},
+    "pgd_execution_ref": {"type": "string", "minLength": 1},
     "context_envelope": {
       "type": "object",
       "required": ["schema_version"],

@@ -13,9 +13,9 @@ Portanto `NO_DUPLICATE_PGD_RUNTIME` não significa “RHGD não pode enfileirar 
 PGH cria/autoriza ContextEnvelope
         |
         v
-PGD confirma assignment/lease/fence de execução
+PGD admite/agenda e retorna `execution_ref` (e lease/fence quando aplicável)
         |
-        | pgd_assignment_ref
+        | pgd_execution_ref
         v
 RHGD EnvelopeTransportQueue EGRESS
   put -> ordem monotônica por peer -> get/peek
@@ -31,7 +31,7 @@ resultado/envelope de retorno faz o caminho inverso
 
 A retirada do egress só ocorre depois de ACK remoto. Falha de envio mantém o envelope para retry. No ingress, frames fora de ordem ficam bufferizados e só o próximo `sequence` esperado é entregue; a remoção ocorre após o consumidor local obter o envelope.
 
-Cada frame exige `authorization_ref` PGH e `pgd_assignment_ref`. RHGD não cria assignment, não concede lease e não decide admission. A fila controla **ordem de transporte**, não ordem de execução.
+Cada frame exige `authorization_ref` PGH e `pgd_execution_ref`. `pgd_execution_ref` vem do contrato `pgd-rhgd-federation/1`; RHGD não cria assignment, não concede lease e não decide admission. A fila controla **ordem de transporte**, não ordem de execução.
 
 ## Assimetria
 

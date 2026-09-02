@@ -3,7 +3,7 @@
 The queue owned here is a *transport* queue: it orders and buffers envelopes
 between explicitly joined peers/models. PGD remains the sole owner of the
 execution queue, admission, assignment decision, leases, scheduler and runtime.
-An outbound envelope therefore requires a pre-existing ``pgd_assignment_ref``.
+An outbound envelope therefore requires a pre-existing ``pgd_execution_ref``.
 """
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ def validate_transport_frame(frame: Mapping[str, object]) -> dict:
         raise ValueError("unsupported transport frame schema")
     for key in (
         "envelope_id", "correlation_id", "work_id", "model_ref", "source_peer",
-        "destination_peer", "stream_id", "authorization_ref", "pgd_assignment_ref",
+        "destination_peer", "stream_id", "authorization_ref", "pgd_execution_ref",
     ):
         _require_text(key, x.get(key))
     sequence = x.get("sequence")
@@ -99,6 +99,7 @@ class AsymmetricEnvelopeQueue:
         self._ingress_expected: dict[tuple[str, str], int] = defaultdict(lambda: 1)
         self._ingress_stream_for_peer: dict[str, str] = {}
         self._ingress_index: dict[str, tuple[str, str, int]] = {}
+        self._ingress_consumed: dict[tuple[str, str, int], str] = {}
 
     def capacities(self) -> dict[str, int]:
         return {"egress": self.egress_capacity, "ingress": self.ingress_capacity}
@@ -118,7 +119,7 @@ class AsymmetricEnvelopeQueue:
         destination_peer: str,
         correlation_id: str,
         authorization_ref: str,
-        pgd_assignment_ref: str,
+        pgd_execution_ref: str,
     ) -> dict:
         destination_peer = _require_text("destination_peer", destination_peer)
         if destination_peer not in self.joined_peer_ids:
@@ -129,7 +130,7 @@ class AsymmetricEnvelopeQueue:
         _require_text("model_ref", model_ref)
         _require_text("correlation_id", correlation_id)
         _require_text("authorization_ref", authorization_ref)
-        _require_text("pgd_assignment_ref", pgd_assignment_ref)
+        _require_text("pgd_execution_ref", pgd_execution_ref)
         if not isinstance(context_envelope, Mapping):
             raise ValueError("context_envelope must be an object")
         schema = context_envelope.get("schema_version")
@@ -152,7 +153,7 @@ class AsymmetricEnvelopeQueue:
             "sequence": sequence,
             "issued_at_ms": issued,
             "authorization_ref": authorization_ref,
-            "pgd_assignment_ref": pgd_assignment_ref,
+            "pgd_execution_ref": pgd_execution_ref,
             "context_envelope": dict(context_envelope),
             "transport_authority": dict(TRANSPORT_AUTHORITY),
         }
@@ -196,7 +197,10 @@ class AsymmetricEnvelopeQueue:
         seq = x["sequence"]
         expected = self._ingress_expected[key]
         if seq < expected:
-            return {"inserted": False, "status": "ALREADY_CONSUMED", "envelope_id": x["envelope_id"], "sequence": seq}
+            consumed_id = self._ingress_consumed.get((source, stream, seq))
+            if consumed_id == x["envelope_id"]:
+                return {"inserted": False, "status": "ALREADY_CONSUMED", "envelope_id": x["envelope_id"], "sequence": seq}
+            raise ValueError("conflicting replay for already consumed transport sequence")
         existing = self._ingress[key].get(seq)
         if existing is not None:
             if existing["envelope_id"] == x["envelope_id"] and existing == x:
@@ -227,6 +231,7 @@ class AsymmetricEnvelopeQueue:
             raise ValueError("cannot remove inbound envelope out of order")
         frame = self._ingress[key].pop(seq)
         del self._ingress_index[envelope_id]
+        self._ingress_consumed[(source, stream, seq)] = envelope_id
         self._ingress_expected[key] += 1
         return dict(frame)
 
