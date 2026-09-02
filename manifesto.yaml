@@ -20,6 +20,7 @@ trabalho_compartilhado:
   - dados/rhgd-0.0.1/U-RHGD-09-downstream-consumer-freshness.yaml
   - tests/verify_u_rhgd_09_downstream_consumer_freshness.py
   - docs/arquitetura/09-downstream-consumer-freshness.md
+  - skills/rhgd/SKILL.md
 entradas:
 - id: 1
   caminho: README.md
