@@ -4,29 +4,7 @@ versao_contrato: 10
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado:
-  projeto: rhgd
-  caminho: /dev/shm/rhgd-u15-transport-path
-  unidade: U-RHGD-15-TRANSPORT-PATH-EVIDENCE-NETMAKER
-  descricao: formalizar TransportPathEvidence para Netmaker/LAN/WireGuard/IPsec e
-    ranking federado advisory sem scheduler/lease/assignment
-  agente: ChatGPT-Redes
-  atualizado_em: '2026-09-06T05:48:58Z'
-  previsao_termino: '2026-09-06T07:48:58Z'
-  zona_exclusao:
-  - manifesto.yaml
-  - estado.md
-  - contratos/rhgd-0.0.1/transport-path-evidence.schema.json
-  - transport_path_evidence.py
-  - rhgd_cognitive_dag.py
-  - tests/test_transport_path_evidence.py
-  - tests/verify_u_rhgd_15_transport_path_evidence.py
-  - dados/rhgd-0.0.1/U-RHGD-15-transport-path-evidence.yaml
-  - docs/arquitetura/15-transport-path-evidence-netmaker.md
-  - dados/rhgd-0.0.1/U-RHGD-15-telemetria-inicio.json
-  - dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
-  - skills/rhgd/SKILL.md
-  - competencias.yaml
+trabalho_compartilhado: {}
 entradas:
 - id: 1
   caminho: README.md
@@ -367,5 +345,5 @@ entradas:
 - id: 85
   caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
   tipo: evidencia
-  status: pendente
+  status: aceito
 repositorio: debianlima/rhgd

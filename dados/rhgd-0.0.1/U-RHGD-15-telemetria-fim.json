@@ -1,0 +1,26 @@
+{
+  "event": "telemetria_fim",
+  "timestamp_utc": "2026-09-06T06:04:19.090947Z",
+  "project": "rhgd",
+  "unit": "U-RHGD-15-TRANSPORT-PATH-EVIDENCE-NETMAKER",
+  "classification": "observado",
+  "result": "PASS_CLOSED",
+  "project_skill_used": "rhgd-project@0.0.14",
+  "project_skill_produced": "rhgd-project@0.0.15",
+  "project_skill_commit": "c568d6a934708937d0e97e8d5fa8a4027cd54c76",
+  "catalog_commit": "a9da679a648be7dff694669f6288e3447307c717",
+  "gates": [
+    "RHGD_U15_TRANSPORT_PATH=PASS",
+    "RHGD_U07_U15_VERIFY=PASS",
+    "UNIT_REGRESSION=34/34_PASS",
+    "TRANSPORT_NAME_NEUTRAL=PASS",
+    "STALE_PATH_ZERO_BONUS=PASS",
+    "NO_SECOND_SCHEDULER=PASS",
+    "CATALOG_SYNC=PASS",
+    "DELTA_INVENTORY=PASS",
+    "LEARNING_PRESERVED=PASS",
+    "DEPENDENCY_REFERENCES=PASS",
+    "RECONCILIATION_CLOSURE=PASS"
+  ],
+  "tokens": "indisponivel"
+}

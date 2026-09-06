@@ -7,7 +7,7 @@
 - scheduler/lease/assignment/admission continuam falsos; PGD permanece autoridade de execução.
 - gates: U15 focal PASS; U07→U15 verify PASS; unit regression 34/34 PASS; ProjectVerify pendente somente por `telemetria_fim`.
 - amostra U15 é vetor sintético estrutural e **não** benchmark físico de Netmaker.
-- entradas 77–84 aceitas; aprendizado preparado em `rhgd-project@0.0.15`; catálogo ainda `PENDING`; 85 permanece pendente até o evento final.
+- `PASS_CLOSED`; entradas 77–85 aceitas; `rhgd-project@0.0.15`; catálogo `a9da679a648be7dff694669f6288e3447307c717` PASS; `DELTA_INVENTORY=PASS`; `LEARNING_PRESERVED=PASS`; `DEPENDENCY_REFERENCES=PASS`; `RECONCILIATION_CLOSURE=PASS`; reserva liberada.
 
 # Estado — 2026-09-02 — contrato v8
 
