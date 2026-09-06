@@ -1,10 +1,32 @@
 projeto: rhgd
 nome: Rede Heterogenea Governada e Distribuida
-versao_contrato: 9
+versao_contrato: 10
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  projeto: rhgd
+  caminho: /dev/shm/rhgd-u15-transport-path
+  unidade: U-RHGD-15-TRANSPORT-PATH-EVIDENCE-NETMAKER
+  descricao: formalizar TransportPathEvidence para Netmaker/LAN/WireGuard/IPsec e
+    ranking federado advisory sem scheduler/lease/assignment
+  agente: ChatGPT-Redes
+  atualizado_em: '2026-09-06T05:48:58Z'
+  previsao_termino: '2026-09-06T07:48:58Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - contratos/rhgd-0.0.1/transport-path-evidence.schema.json
+  - transport_path_evidence.py
+  - rhgd_cognitive_dag.py
+  - tests/test_transport_path_evidence.py
+  - tests/verify_u_rhgd_15_transport_path_evidence.py
+  - dados/rhgd-0.0.1/U-RHGD-15-transport-path-evidence.yaml
+  - docs/arquitetura/15-transport-path-evidence-netmaker.md
+  - dados/rhgd-0.0.1/U-RHGD-15-telemetria-inicio.json
+  - dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
+  - skills/rhgd/SKILL.md
+  - competencias.yaml
 entradas:
 - id: 1
   caminho: README.md
@@ -310,4 +332,40 @@ entradas:
   caminho: docs/arquitetura/14-app-auth-supervision-observability.md
   tipo: arquitetura
   status: aceito
+- id: 77
+  caminho: contratos/rhgd-0.0.1/transport-path-evidence.schema.json
+  tipo: contrato
+  status: pendente
+- id: 78
+  caminho: rhgd_cognitive_dag.py
+  tipo: backend-integracao
+  status: pendente
+- id: 79
+  caminho: transport_path_evidence.py
+  tipo: observabilidade
+  status: pendente
+- id: 80
+  caminho: tests/test_transport_path_evidence.py
+  tipo: teste
+  status: pendente
+- id: 81
+  caminho: tests/verify_u_rhgd_15_transport_path_evidence.py
+  tipo: teste
+  status: pendente
+- id: 82
+  caminho: dados/rhgd-0.0.1/U-RHGD-15-transport-path-evidence.yaml
+  tipo: evidencia
+  status: pendente
+- id: 83
+  caminho: docs/arquitetura/15-transport-path-evidence-netmaker.md
+  tipo: arquitetura
+  status: pendente
+- id: 84
+  caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-inicio.json
+  tipo: evidencia
+  status: pendente
+- id: 85
+  caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
+  tipo: evidencia
+  status: pendente
 repositorio: debianlima/rhgd
