@@ -1,7 +1,7 @@
 ---
 name: rhgd-project
-versao: 0.0.14
-description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado.
+versao: 0.0.15
+description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado com evidência de caminho de transporte modelada sem autoridade de execução.
 tipo_competencia: projeto
 ---
 # RHGD Project Skill
@@ -61,3 +61,7 @@ Dissenso explícito bloqueia colapso silencioso. Preservar work_id/node_id/confi
 
 ## Métricas de estrutura de conhecimento
 Antes de reorganizar árvore/ontologia, medir. `TREE_LOCALITY` mede acesso cross-subtree; `LEVEL_RECALL` compara recuperação direta e descida sobre o mesmo gold set. Limiar deve ser pré-declarado e resultado experimental não pode ser fabricado por teste unitário.
+## TransportPathEvidence e Netmaker — U-RHGD-15
+`rhgd-transport-path-evidence/1` projeta RTT, banda, perda, MTU e freshness para `NETMAKER`, `LAN`, `WIREGUARD_DIRECT`, `IPSEC`, `HUB` ou `UNKNOWN`. O **nome do transporte nunca recebe bônus hardcoded**: somente métricas frescas e classificadas podem influenciar o `FederatedDestinationMatcher`; evidência stale/indisponível vale zero.
+
+A projeção é `source_of_truth=false`, `rebuildable=true`, `authority_effect=NONE`, `scheduler=false`, `lease_grant=false`, `assignment=false`, `admission=false`. Sem path evidence, o ranking histórico permanece idêntico. PGD continua dono de assignment/lease/execution; RHGD apenas filtra/ranqueia destinos e transporta. Gate: `tests/test_transport_path_evidence.py` + `tests/verify_u_rhgd_15_transport_path_evidence.py`.
