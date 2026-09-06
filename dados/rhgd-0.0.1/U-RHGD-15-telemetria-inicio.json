@@ -1,0 +1,12 @@
+{
+  "event": "telemetria_inicio",
+  "timestamp_utc": "2026-09-06T05:49:24.186262Z",
+  "project": "rhgd",
+  "unit": "U-RHGD-15-TRANSPORT-PATH-EVIDENCE-NETMAKER",
+  "classification": "observado",
+  "project_skill": "rhgd-project@0.0.14",
+  "pgd_workgraph_commit": "fd41fd544a2894ac87c9c9fb7a8a856c9f99a0de",
+  "control_plane_registry_commit": "470826ec8d8b8604792aa864a573ba5b64c4599d",
+  "target_release": "PGH 2.2.0",
+  "tokens": "indisponivel"
+}

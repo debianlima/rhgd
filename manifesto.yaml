@@ -351,7 +351,7 @@ entradas:
 - id: 81
   caminho: tests/verify_u_rhgd_15_transport_path_evidence.py
   tipo: teste
-  status: pendente
+  status: em_curso
 - id: 82
   caminho: dados/rhgd-0.0.1/U-RHGD-15-transport-path-evidence.yaml
   tipo: evidencia
@@ -363,7 +363,7 @@ entradas:
 - id: 84
   caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-inicio.json
   tipo: evidencia
-  status: pendente
+  status: em_curso
 - id: 85
   caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
   tipo: evidencia
