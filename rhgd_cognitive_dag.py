@@ -1,7 +1,8 @@
 """RHGD Fase 0: decomposicao cognitiva e reducao hierarquica, sem model-parallel remoto."""
 from __future__ import annotations
 from dataclasses import dataclass, asdict
-from typing import Sequence
+from typing import Sequence, Mapping
+from transport_path_evidence import TransportPathEvidence, transport_path_bonus
 import hashlib, json, re, unicodedata
 
 @dataclass(frozen=True)
@@ -25,12 +26,15 @@ class CognitiveResult:
 
 class FederatedDestinationMatcher:
     """Seleciona destinos federados elegíveis; não agenda, enfileira, concede lease nem executa WorkUnits."""
-    def match(self, units:Sequence[WorkUnit], nodes:Sequence[NodeCapability])->list[Assignment]:
+    def match(self, units:Sequence[WorkUnit], nodes:Sequence[NodeCapability], *, path_evidence:Mapping[str,TransportPathEvidence]|None=None, now_ms:int=0)->list[Assignment]:
         out=[]
+        path_evidence = path_evidence or {}
         for w in units:
             eligible=[n for n in nodes if n.available and n.context_tokens>=w.context_tokens and n.privacy_level>=w.privacy_level and (not n.domains or w.domain in n.domains)]
             if not eligible: continue
-            def score(n): return n.trust*2 + min(1,n.context_tokens/max(1,w.context_tokens)) - .08*n.queue_depth
+            def score(n):
+                base=n.trust*2 + min(1,n.context_tokens/max(1,w.context_tokens)) - .08*n.queue_depth
+                return base + transport_path_bonus(path_evidence.get(n.node_id),now_ms=int(now_ms))
             best=max(eligible,key=score); out.append(Assignment(w.work_id,best.node_id,round(score(best),4)))
         return out
 

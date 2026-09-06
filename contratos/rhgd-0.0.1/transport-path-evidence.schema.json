@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"rhgd-transport-path-evidence.schema.json",
+  "title":"RHGD Transport Path Evidence",
+  "type":"object","additionalProperties":false,
+  "required":["schema_version","path_id","source_peer","destination_peer","transport","observed_at_ms","expires_at_ms","classification","source_ref","route_observed","metrics","projection","authority"],
+  "properties":{
+    "schema_version":{"const":"rhgd-transport-path-evidence/1"},
+    "path_id":{"type":"string","minLength":1},"source_peer":{"type":"string","minLength":1},"destination_peer":{"type":"string","minLength":1},
+    "transport":{"enum":["NETMAKER","LAN","WIREGUARD_DIRECT","IPSEC","HUB","UNKNOWN"]},
+    "observed_at_ms":{"type":"integer","minimum":0},"expires_at_ms":{"type":"integer","minimum":1},
+    "classification":{"enum":["observado","derivado","estimado","indisponivel"]},"source_ref":{"type":"string","minLength":1},"route_observed":{"type":"boolean"},
+    "metrics":{"type":"object","additionalProperties":false,"required":["rtt_ms","bandwidth_mib_s","packet_loss_pct","mtu"],"properties":{"rtt_ms":{"type":["number","null"],"minimum":0},"bandwidth_mib_s":{"type":["number","null"],"minimum":0},"packet_loss_pct":{"type":["number","null"],"minimum":0,"maximum":100},"mtu":{"type":["integer","null"],"minimum":576}}},
+    "projection":{"type":"object","additionalProperties":false,"required":["source_of_truth","rebuildable"],"properties":{"source_of_truth":{"const":false},"rebuildable":{"const":true}}},
+    "authority":{"type":"object","additionalProperties":false,"required":["effect","scheduler","lease_grant","assignment","admission"],"properties":{"effect":{"const":"NONE"},"scheduler":{"const":false},"lease_grant":{"const":false},"assignment":{"const":false},"admission":{"const":false}}}
+  }
+}

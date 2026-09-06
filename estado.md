@@ -1,3 +1,14 @@
+# Estado — 2026-09-06 — U-RHGD-15 TransportPathEvidence / Netmaker
+
+## Estado corrente
+- `rhgd-transport-path-evidence/1` materializado para NETMAKER/LAN/WIREGUARD_DIRECT/IPSEC/HUB/UNKNOWN com RTT, banda, perda, MTU e freshness.
+- o nome do transporte não ganha preferência fixa; o `FederatedDestinationMatcher` recebe somente bônus derivado de métricas frescas. Sem evidência, o score histórico permanece idêntico.
+- evidência stale/indisponível recebe bônus zero; `source_of_truth=false`, `rebuildable=true`, `authority_effect=NONE`.
+- scheduler/lease/assignment/admission continuam falsos; PGD permanece autoridade de execução.
+- gates: U15 focal PASS; U07→U15 verify PASS; unit regression 34/34 PASS; ProjectVerify pendente somente por `telemetria_fim`.
+- amostra U15 é vetor sintético estrutural e **não** benchmark físico de Netmaker.
+- entradas 77–84 aceitas; 85 permanece pendente até o evento final.
+
 # Estado — 2026-09-02 — contrato v8
 
 Release: `0.0.1 / STANDBY_CANDIDATE`.

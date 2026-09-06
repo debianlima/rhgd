@@ -1,0 +1,35 @@
+schema: rhgd-u15-transport-path-evidence/1
+unit: U-RHGD-15-TRANSPORT-PATH-EVIDENCE-NETMAKER
+contract: rhgd-transport-path-evidence/1
+ranking:
+  transport_name_preference: false
+  stale_evidence_bonus: 0
+  authority_effect: NONE
+  matcher: FederatedDestinationMatcher
+sample:
+  source_peer: ipsec
+  destination_peer: federated-worker
+  transport: NETMAKER
+  classification: estimado
+  note: synthetic gate vector; not a physical benchmark
+boundaries:
+  scheduler: false
+  lease_grant: false
+  assignment: false
+  admission: false
+  source_of_truth: false
+  rebuildable: true
+gates:
+  fresh_metrics_rank: PASS
+  stale_zero_bonus: PASS
+  transport_name_neutral: PASS
+  no_second_scheduler: PASS
+observed_gates:
+  U15_FOCAL: PASS
+  U07_U15_VERIFY: PASS
+  UNIT_REGRESSION: 34/34 PASS
+  PROJECT_VERIFY: PENDING_TELEMETRIA_FIM_ONLY
+  NO_SECOND_SCHEDULER: PASS
+  TRANSPORT_NAME_NEUTRAL: PASS
+  STALE_PATH_ZERO_BONUS: PASS
+runtime_claim: STRUCTURAL_ADVISORY_ONLY_NO_PHYSICAL_THROUGHPUT_CLAIM
