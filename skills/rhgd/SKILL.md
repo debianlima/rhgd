@@ -1,6 +1,6 @@
 ---
 name: rhgd-project
-versao: 0.0.15
+versao: 0.0.16
 description: Skill de projeto da RHGD Fase 0 para federacao de trabalho cognitivo heterogeneo governado com evidência de caminho de transporte modelada sem autoridade de execução.
 tipo_competencia: projeto
 ---
@@ -65,3 +65,9 @@ Antes de reorganizar árvore/ontologia, medir. `TREE_LOCALITY` mede acesso cross
 `rhgd-transport-path-evidence/1` projeta RTT, banda, perda, MTU e freshness para `NETMAKER`, `LAN`, `WIREGUARD_DIRECT`, `IPSEC`, `HUB` ou `UNKNOWN`. O **nome do transporte nunca recebe bônus hardcoded**: somente métricas frescas e classificadas podem influenciar o `FederatedDestinationMatcher`; evidência stale/indisponível vale zero.
 
 A projeção é `source_of_truth=false`, `rebuildable=true`, `authority_effect=NONE`, `scheduler=false`, `lease_grant=false`, `assignment=false`, `admission=false`. Sem path evidence, o ranking histórico permanece idêntico. PGD continua dono de assignment/lease/execution; RHGD apenas filtra/ranqueia destinos e transporta. Gate: `tests/test_transport_path_evidence.py` + `tests/verify_u_rhgd_15_transport_path_evidence.py`.
+## Hagger Code Context Federation — U-RHGD-16
+`code_context_ref` emitido pelo PGH pode ser materializado pelo `HaggerCodeContextAdapter` somente como contexto read-only ligado ao commit. Git/source continua autoridade executável; Hagger/Code-Graph-RAG é projeção derivada. O adapter aceita apenas `file://` dentro do `index_root` configurado e a allowlist `summary|resolve|definition|callers|callees|importers|implementors|overrides|tests-reaching`.
+
+A consulta valida `repo_ref`, `source_commit`, provider/versão/commit, `manifest_sha256` e `source_dirty=false` contra o `code_context_ref`; divergência é fail-closed e nunca vira contexto vazio. `mutable_tools=disabled` é obrigatório. Shell, escrita, replace, rename, wipe/reset e Cypher arbitrário não são capabilities RHGD.
+
+O resultado pode ser anexado ao `ContextEnvelope` e atravessar a `EnvelopeTransportQueue`, mas conserva `effect=NONE`, `scheduler=false`, `lease_grant=false`, `assignment=false` e `admission=false`. RHGD federa/transporta contexto; PGH contextualiza/autoriza; PGD continua dono da execução. Gate focal: `tests/verify_u_rhgd_16_hagger_code_context.py`. Uma alteração de source só fecha Graph-First após o commit candidato ser indexado pelo Hagger, o índice declarar o mesmo SHA e `HaggerCodeContextAdapter` resolver no grafo esperado.

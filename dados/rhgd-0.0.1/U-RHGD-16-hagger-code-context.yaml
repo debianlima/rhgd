@@ -1,0 +1,64 @@
+schema: rhgd-u16-hagger-code-context/1
+unit: U-RHGD-16-HAGGER-CODE-CONTEXT-FEDERATION
+status: FUNCTIONAL_CANDIDATE_PENDING_GRAPH_INDEX
+telemetry:
+  macro_unit: U276-CODE-GRAPH-RAG-INTEGRATION
+  separate_u16_start_event: NOT_MATERIALIZED_RETROACTIVELY
+provider:
+  id: code-graph-rag
+  alias: hagger
+  version: 0.0.932
+  commit: dee19db154e14e3a4d87589523068a066ac9f109
+  mode: offline-protobuf
+contract:
+  schema: rhgd-hagger-code-context/1
+  read_only: true
+  allowed_operations:
+  - summary
+  - resolve
+  - definition
+  - callers
+  - callees
+  - importers
+  - implementors
+  - overrides
+  - tests-reaching
+authority:
+  effect: NONE
+  scheduler: false
+  lease_grant: false
+  assignment: false
+  admission: false
+  source_authority: git
+  mutable_tools: disabled
+functional_gates:
+  adapter_unit_tests: 6/6 PASS
+  schema: PASS
+  transport_authority_growth: NONE
+  unit_regression: 58/58 PASS
+  verify_u07_u16: PASS
+  project_verify: PASS
+  secret_diff_scan: PASS
+graph_first:
+  candidate_commit: PENDING_FUNCTIONAL_COMMIT
+  index_status: GRAPH_INDEX_PENDING
+  required_symbol: HaggerCodeContextAdapter
+  source_fallback_reason: null
+catalog:
+  engenharia_graph_first: 1.0.5
+  desenvolvedor_de_software: '18'
+  carregamento_contextual_seletivo: 1.0.5
+  distributed_agent_control: '3'
+preexisting_regressions_repaired:
+  durable_queue_constructor_sqlite_handle:
+    base_commit: c0f4b10542576f70678576a6e6f27676e5a612a7
+    base_reproduction: FAIL WinError32 locked q.sqlite3
+    fix: close _db and clear handle before re-raising constructor validation error
+    persistent_suite: 5/5 PASS
+  u14_hash_portability:
+    file: application_auth.py
+    git_blob_lf_sha256: 32c72330a519abf1fac058273f2f2636884ecfd2518c2263a6e9cb5730e6a2dc
+    windows_crlf_checkout_sha256: 3da0baaca4f669bf3da7016a7b20bebb29ad3cce4e772e5090051f5a306cc5d9
+    fix: historical verifier hashes canonical LF text, preserving historical evidence
+    verify_u14: PASS
+observed_at: '2026-09-16T15:08:49Z'

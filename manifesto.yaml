@@ -374,4 +374,28 @@ entradas:
   caminho: dados/rhgd-0.0.1/U-RHGD-15-telemetria-fim.json
   tipo: evidencia
   status: aceito
+- id: 86
+  caminho: contratos/rhgd-0.0.1/hagger-code-context.schema.json
+  tipo: contrato
+  status: aceito
+- id: 87
+  caminho: hagger_code_context_adapter.py
+  tipo: backend-integracao
+  status: aceito
+- id: 88
+  caminho: tests/test_hagger_code_context_adapter.py
+  tipo: teste
+  status: aceito
+- id: 89
+  caminho: tests/verify_u_rhgd_16_hagger_code_context.py
+  tipo: teste
+  status: aceito
+- id: 90
+  caminho: dados/rhgd-0.0.1/U-RHGD-16-hagger-code-context.yaml
+  tipo: evidencia
+  status: aceito
+- id: 91
+  caminho: docs/arquitetura/16-hagger-code-context-federation.md
+  tipo: arquitetura
+  status: aceito
 repositorio: debianlima/rhgd

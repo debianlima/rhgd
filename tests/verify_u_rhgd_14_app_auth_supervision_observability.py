@@ -12,7 +12,7 @@ OBS=ROOT/'contratos/rhgd-0.0.1/transport-observability.schema.json'
 UNIT_TEST=ROOT/'tests/test_application_auth_observability.py'
 
 def fail(x): print('RHGD_U14_APP_AUTH_SUPERVISION_OBSERVABILITY=FAIL',x); raise SystemExit(2)
-def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def sha(p): return hashlib.sha256(p.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
 def main():
     for p in (DATA,DOC,AUTH,OBS,UNIT_TEST):
         if not p.exists(): fail('missing:'+str(p.relative_to(ROOT)))

@@ -1,3 +1,15 @@
+# Estado — 2026-09-16 — U-RHGD-16 Hagger Code Context Federation
+
+## Estado corrente
+- `HaggerCodeContextAdapter` materializa `code_context_ref` somente leitura e ligado ao commit; nenhuma capability mutável do provider é herdada.
+- Git/source permanece autoridade; Hagger/Code-Graph-RAG é projeção derivada por commit.
+- resultado Hagger pode atravessar `ContextEnvelope`/`EnvelopeTransportQueue` com `effect=NONE`, sem scheduler, lease, assignment ou admission.
+- testes focais do adapter: 6/6 PASS; contrato JSON Schema válido; regressão unitária RHGD 58/58 PASS; verificadores U07→U16 e ProjectVerify PASS.
+- U16 também corrigiu dois defeitos preexistentes necessários para regressão Windows: handle SQLite não fechado em constructor fail-closed e verificador U14 dependente de CRLF/LF; evidência histórica U14 não foi alterada.
+- Graph-First: `GRAPH_INDEX_PENDING` até o commit funcional U16 existir e ser indexado; não declarar fechamento antes desse gate.
+- competências: `rhgd-project@0.0.16`, `engenharia-graph-first@1.0.5`, `desenvolvedor-de-software@18`, `carregamento-contextual-seletivo@1.0.5`, `distributed-agent-control@3`.
+- produção RHGD permanece `STANDBY_CANDIDATE`; U16 não promove daemon nem autoridade de execução.
+
 # Estado — 2026-09-06 — U-RHGD-15 TransportPathEvidence / Netmaker
 
 ## Estado corrente

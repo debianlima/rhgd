@@ -274,21 +274,26 @@ class DurableEnvelopeQueue(AsymmetricEnvelopeQueue):
             clock_ms=clock_ms,
         )
         self._db = sqlite3.connect(str(self.state_db), timeout=5.0, check_same_thread=False)
-        self._db.execute("PRAGMA journal_mode=WAL")
-        self._db.execute("PRAGMA synchronous=FULL")
-        self._db.execute("PRAGMA busy_timeout=5000")
-        self._db.execute(
-            "CREATE TABLE IF NOT EXISTS queue_state ("
-            "id INTEGER PRIMARY KEY CHECK(id=1), "
-            "payload TEXT NOT NULL, updated_at_ms INTEGER NOT NULL)"
-        )
-        row = self._db.execute("SELECT payload FROM queue_state WHERE id=1").fetchone()
-        if row is None:
-            self._persist_unlocked()
-        else:
-            persisted = json.loads(row[0])
-            self._validate_persisted_config(persisted)
-            self._restore_unlocked(persisted)
+        try:
+            self._db.execute("PRAGMA journal_mode=WAL")
+            self._db.execute("PRAGMA synchronous=FULL")
+            self._db.execute("PRAGMA busy_timeout=5000")
+            self._db.execute(
+                "CREATE TABLE IF NOT EXISTS queue_state ("
+                "id INTEGER PRIMARY KEY CHECK(id=1), "
+                "payload TEXT NOT NULL, updated_at_ms INTEGER NOT NULL)"
+            )
+            row = self._db.execute("SELECT payload FROM queue_state WHERE id=1").fetchone()
+            if row is None:
+                self._persist_unlocked()
+            else:
+                persisted = json.loads(row[0])
+                self._validate_persisted_config(persisted)
+                self._restore_unlocked(persisted)
+        except Exception:
+            self._db.close()
+            self._db = None
+            raise
 
     def _validate_persisted_config(self, state: Mapping[str, object]) -> None:
         expected = {

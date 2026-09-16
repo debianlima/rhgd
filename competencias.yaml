@@ -12,11 +12,11 @@ competencias:
 - id: carregamento-contextual-seletivo
   tipo: global
   ref: metodo/carregamento-contextual-seletivo/SKILL.md
-  versao_minima: 1.0.3
+  versao_minima: 1.0.5
 - id: desenvolvedor-de-software
   tipo: global
   ref: metodo/desenvolvedor-de-software/SKILL.md
-  versao_minima: 15
+  versao_minima: 18
 - id: github-incremental-reconciliation
   tipo: global
   ref: metodo/github-incremental-reconciliation/SKILL.md
@@ -33,7 +33,7 @@ competencias:
 - id: distributed-agent-control
   tipo: dominio
   ref: dominio/distributed-agent-control/SKILL.md
-  versao_minima: 1
+  versao_minima: 3
   ativa_em:
   - backend-integracao
   portao: TTL/stale + duplicacao/reordenacao + identidade/timestamp + observabilidade
@@ -57,3 +57,13 @@ competencias:
     + replay nonce + revogacao por ausencia de key-id
   evidencia: U-RHGD-14 introduz autenticacao de aplicacao do transporte RHGD com chave
     somente em memoria/runtime
+- id: engenharia-graph-first
+  tipo: global
+  ref: metodo/engenharia-graph-first/SKILL.md
+  versao_minima: 1.0.5
+  ativa_em:
+  - backend-integracao
+  - code-context
+  - graph-first
+  portao: GRAPH_SOURCE_COMMIT_BOUND + GRAPH_READ_ONLY_DEFAULT + GRAPH_AGENT_CONTEXT_ENVELOPE_VALID
+  evidencia: U-RHGD-16 federa code_context_ref Hagger sem ampliar autoridade
