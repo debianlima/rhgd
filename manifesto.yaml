@@ -21,6 +21,8 @@ trabalho_compartilhado:
   - contratos/rhgd-0.0.1/hagger-code-context.schema.json
   - tests/test_hagger_code_context_adapter.py
   - tests/verify_u_rhgd_16_hagger_code_context.py
+  - context_envelope_transport.py
+  - tests/test_persistent_envelope_transport.py
   - docs/arquitetura/16-hagger-code-context-federation.md
   - dados/rhgd-0.0.1/U-RHGD-16-hagger-code-context.yaml
   recursos_externos:
