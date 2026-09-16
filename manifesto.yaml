@@ -4,7 +4,31 @@ versao_contrato: 10
 release_alvo: v0.0.1
 estado_release: standby_candidate
 skill_projeto: skills/rhgd/SKILL.md
-trabalho_compartilhado: {}
+trabalho_compartilhado:
+  projeto: rhgd
+  caminho: E:\tmp\rhgd-u16-hagger-code-context
+  unidade: U-RHGD-16-HAGGER-CODE-CONTEXT-FEDERATION
+  descricao: federar code_context_ref Hagger read-only por commit sem criar scheduler ou autoridade RHGD
+  agente: terminal-oracle
+  atualizado_em: '2026-09-16T13:53:16Z'
+  previsao_termino: '2026-09-16T18:53:16Z'
+  zona_exclusao:
+  - manifesto.yaml
+  - estado.md
+  - competencias.yaml
+  - skills/rhgd/SKILL.md
+  - hagger_code_context_adapter.py
+  - contratos/rhgd-hagger-code-context-v1.schema.json
+  - tests/test_hagger_code_context_adapter.py
+  - docs/arquitetura/15-hagger-code-context-federation.md
+  - dados/rhgd-0.0.1/U-RHGD-16-hagger-code-context.yaml
+  recursos_externos:
+  - win110:C:\ProgramData\PGH\CodeGraphRAG-Hagger
+  - win110:C:\ProgramData\PGH\CodeGraphRAG-Indexes
+  authority_effect: NONE
+  execution_effect: NONE
+
+
 entradas:
 - id: 1
   caminho: README.md
